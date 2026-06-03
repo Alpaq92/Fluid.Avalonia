@@ -166,7 +166,7 @@
         </ctrls:ControlExample>
 
         <ctrls:ControlExample Header="A Label captions another control (click to focus its target)."
-                              XamlSource="&lt;Label Target=&quot;{Binding #Field}&quot; Content=&quot;Name&quot; /&gt;">
+                              XamlSource="&lt;Label Target=&quot;{Binding #Field}&quot; Content=&quot;_Name&quot; /&gt;&#10;&lt;TextBox x:Name=&quot;Field&quot; Width=&quot;220&quot; /&gt;">
             <StackPanel Spacing="4">
                 <Label Target="{Binding #Field}" Content="_Name" />
                 <TextBox x:Name="Field" Width="220" />
