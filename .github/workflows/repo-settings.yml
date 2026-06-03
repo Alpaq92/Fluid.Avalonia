@@ -1,0 +1,82 @@
+name: Apply repo settings
+
+# Enforces repository-level knobs as code (auto-merge enablement, allowed merge
+# methods, branch cleanup) plus the security toggles. Complements the branch
+# ruleset in .github/rulesets/ (which governs branch protection).
+#
+# REQUIRED PAT SCOPE:
+#   RELEASE_PLEASE_PAT must include "Administration: read and write".
+#   PATCH /repos/{owner}/{repo} is an admin endpoint GITHUB_TOKEN can't reach.
+#   Grant at https://github.com/settings/personal-access-tokens → edit the PAT →
+#   Repository permissions → Administration → Read and write.
+#
+# Without the PAT this workflow fails with 403 and the repo keeps whatever the
+# UI was last set to.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/repo-settings.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: repo-settings
+  cancel-in-progress: false
+
+jobs:
+  apply:
+    name: PATCH repo settings via API
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify PAT is available
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_PAT }}
+        run: |
+          if [ -z "${GH_TOKEN}" ]; then
+            echo "::error::RELEASE_PLEASE_PAT secret is unset — repo settings PATCH requires a PAT with Administration scope. GITHUB_TOKEN can't be used here."
+            exit 1
+          fi
+
+      - name: Apply settings
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_PAT }}
+        run: |
+          set -euo pipefail
+          echo "Applying repo settings to $GITHUB_REPOSITORY..."
+
+          #   allow_auto_merge       : true  — required by every `gh pr merge --auto`
+          #   allow_squash_merge     : true  — matches the ruleset (squash only)
+          #   allow_merge_commit     : false — ruleset requires linear history
+          #   allow_rebase_merge     : false — squash only; UI alignment
+          #   delete_branch_on_merge : true  — keeps the branch list clean
+          gh api "repos/$GITHUB_REPOSITORY" \
+            --method PATCH \
+            -F allow_auto_merge=true \
+            -F allow_squash_merge=true \
+            -F allow_merge_commit=false \
+            -F allow_rebase_merge=false \
+            -F delete_branch_on_merge=true
+
+          echo "Repository settings applied. Current state:"
+          gh api "repos/$GITHUB_REPOSITORY" --jq '{
+            allow_auto_merge,
+            allow_squash_merge,
+            allow_merge_commit,
+            allow_rebase_merge,
+            delete_branch_on_merge
+          }'
+
+          # Security toggles (dedicated endpoints; PUT enables, idempotent).
+          echo
+          echo "Enabling Dependabot vulnerability alerts..."
+          gh api "repos/$GITHUB_REPOSITORY/vulnerability-alerts" --method PUT
+
+          echo "Enabling Dependabot automated security fixes..."
+          gh api "repos/$GITHUB_REPOSITORY/automated-security-fixes" --method PUT
+
+          echo "Enabling private vulnerability reporting..."
+          gh api "repos/$GITHUB_REPOSITORY/private-vulnerability-reporting" --method PUT

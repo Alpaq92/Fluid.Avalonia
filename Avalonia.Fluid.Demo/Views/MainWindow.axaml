@@ -1,0 +1,20 @@
+<!--
+    MainWindow — the desktop head: a Mica window with an extended client area that draws no native
+    title bar (BorderOnly), hosting the shared MainView (which carries the custom title bar + shell).
+-->
+<Window
+    x:Class="Avalonia.Fluid.Demo.Views.MainWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:views="using:Avalonia.Fluid.Demo.Views"
+    Width="1100"
+    Height="720"
+    MinWidth="720"
+    MinHeight="480"
+    WindowStartupLocation="CenterScreen"
+    Icon="avares://Avalonia.Fluid.Demo/Assets/logo.ico"
+    Background="Transparent"
+    TransparencyLevelHint="Mica">
+
+    <views:MainView x:Name="Shell" />
+</Window>

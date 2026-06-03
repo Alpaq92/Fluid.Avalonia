@@ -1,0 +1,102 @@
+﻿<!--
+    Button — faithful port of WinUI 3 Button_themeresources.xaml.
+
+    The per-state brush mapping matches WinUI exactly:
+      default    bg ControlFillColorDefault   / border ControlElevationBorder        / fg TextFillColorPrimary
+      pointerover bg ControlFillColorSecondary  / border ControlElevationBorder        / fg TextFillColorPrimary
+      pressed     bg ControlFillColorTertiary   / border ControlStrokeColorDefault     / fg TextFillColorSecondary
+      disabled    bg ControlFillColorDisabled   / border ControlStrokeColorDefault     / fg TextFillColorDisabled
+    Accent (Classes="accent") maps to the AccentFillColor* / TextOnAccent* tokens.
+    Padding 11,5,11,6 and the 0.083s background transition are taken from WinUI.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Thickness x:Key="ButtonPadding">11,5,11,6</Thickness>
+
+    <ControlTheme x:Key="{x:Type Button}" TargetType="Button">
+        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="Padding" Value="{DynamicResource ButtonPadding}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
+        <Setter Property="FontWeight" Value="Normal" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ContentPresenter
+                    x:Name="PART_ContentPresenter"
+                    Background="{TemplateBinding Background}"
+                    BorderBrush="{TemplateBinding BorderBrush}"
+                    BorderThickness="{TemplateBinding BorderThickness}"
+                    Content="{TemplateBinding Content}"
+                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                    CornerRadius="{TemplateBinding CornerRadius}"
+                    Padding="{TemplateBinding Padding}"
+                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                    <ContentPresenter.Transitions>
+                        <Transitions>
+                            <BrushTransition Property="Background" Duration="0:0:0.083" />
+                        </Transitions>
+                    </ContentPresenter.Transitions>
+                </ContentPresenter>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="RecognizesAccessKey" Value="True" />
+        </Style>
+
+        <!-- Standard button states -->
+        <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorTertiaryBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
+
+        <!-- Accent button -->
+        <Style Selector="^.accent">
+            <Style Selector="^ /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+            </Style>
+            <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+            </Style>
+            <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource AccentFillColorTertiaryBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlFillColorTransparentBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorSecondaryBrush}" />
+            </Style>
+            <Style Selector="^:disabled /template/ ContentPresenter#PART_ContentPresenter">
+                <Setter Property="Background" Value="{DynamicResource AccentFillColorDisabledBrush}" />
+                <Setter Property="BorderBrush" Value="{DynamicResource ControlFillColorTransparentBrush}" />
+                <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorDisabledBrush}" />
+            </Style>
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

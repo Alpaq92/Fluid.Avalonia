@@ -1,0 +1,47 @@
+<!--
+    ColorPicker / ColorView theme audit.
+
+    The bundled Avalonia ColorView ships chunky 20px pill sliders with a hollow ring thumb,
+    which reads as a foreign control next to the rest of Avalonia.Fluid. These overrides slim
+    the channel tracks down to a slider-like rail and swap in a clean, elevated circular handle
+    that matches our Slider — all via the ColorView's own DynamicResource keys, so no
+    re-templating is needed. (Lives in the demo because the Avalonia.Fluid library doesn't
+    depend on the Avalonia.Controls.ColorPicker package.)
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- (Note: collapsing the ColorView's internal tab strip is scoped to the Accents page's
+         single-section ColorView via its ColorView.Resources — NOT done here, so the standalone
+         ColorPicker on Basic input keeps its spectrum/components tab strip.) -->
+
+    <!-- The ColorView's component header / label chips use legacy (SimpleTheme-era) brushes that
+         render as a flat grey slab next to our Fluent inputs. Make them transparent so the model
+         selector, hex field and R/G/B labels read as part of the Fluent surface. -->
+    <SolidColorBrush x:Key="SystemControlBackgroundBaseLowBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ThemeControlMidBrush" Color="Transparent" />
+
+    <!-- Thin, slider-like channel tracks; the thumb stays full-size so it overhangs the rail. -->
+    <x:Double x:Key="ColorSliderSize">22</x:Double>
+    <x:Double x:Key="ColorSliderTrackSize">6</x:Double>
+    <CornerRadius x:Key="ColorSliderTrackCornerRadius">3</CornerRadius>
+    <CornerRadius x:Key="ColorSliderCornerRadius">11</CornerRadius>
+
+    <!-- A handle that mirrors our Fluent Slider thumb: a light circle with the lit-edge border —
+         flat (no drop shadow), so it reads as part of the theme rather than a foreign control. -->
+    <ControlTheme x:Key="ColorSliderThumbTheme" TargetType="Thumb">
+        <Setter Property="Background" Value="{DynamicResource ControlSolidFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="11" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

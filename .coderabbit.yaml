@@ -1,0 +1,34 @@
+# CodeRabbit configuration — https://docs.coderabbit.ai/reference/configuration
+#
+# Solo OSS .NET repo (a theme library + a demo app). Auto-review every PR
+# (including bot PRs from release-please / Dependabot), low-noise "chill"
+# profile, real Approve / Request-changes reviews (so CodeRabbit's approval
+# can gate the branch ruleset), skipping generated / build output.
+
+language: en-US
+
+reviews:
+  profile: chill
+  request_changes_workflow: true
+  high_level_summary: true
+  poem: false
+  review_status: true
+  collapse_walkthrough: false
+
+  path_filters:
+    - "!**/bin/**"
+    - "!**/obj/**"
+    - "!nupkg/**"
+    - "!publish/**"
+    - "!**/wwwroot/_framework/**"
+    - "!**/*.g.cs"
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - main
+    # Review EVERY PR. CodeRabbit's approval (under its own bot identity)
+    # satisfies the ruleset's "require last push approval" rule. The owner can
+    # still force-merge via the ruleset's admin bypass when needed.
+    ignore_usernames: []

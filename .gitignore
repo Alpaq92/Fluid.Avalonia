@@ -1,0 +1,85 @@
+# Build output
+[Bb]in/
+[Oo]bj/
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+build/
+bld/
+[Ll]og/
+[Ll]ogs/
+artifacts/
+
+# Local publish output (CI publishes fresh; the WASM head deploys to Pages)
+publish/
+nupkg/
+
+# WASM / browser publish
+**/wwwroot/_framework/
+*.br
+*.gz
+
+# NuGet
+*.nupkg
+*.snupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+*.nuget.props
+*.nuget.targets
+project.lock.json
+project.fragment.lock.json
+
+# Test results / coverage
+[Tt]est[Rr]esult*/
+*.trx
+*.coverage
+*.coveragexml
+coverage*.json
+coverage*.xml
+coverage*.info
+BenchmarkDotNet.Artifacts/
+
+# Visual Studio
+.vs/
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.userprefs
+*.cache
+*.ilk
+*.pdb
+*.ipdb
+*.meta
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.vspscc
+*.vssscc
+*.binlog
+
+# JetBrains Rider / ReSharper
+.idea/
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+riderModule.iml
+*.sln.iml
+
+# VS Code
+.vscode/
+
+# OS junk
+.DS_Store
+Thumbs.db
+Desktop.ini
+~$*
+*~
+
+# Agent / assistant working data — never publish
+.claude/

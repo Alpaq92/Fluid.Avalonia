@@ -1,0 +1,64 @@
+<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.PlaygroundPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Grid ColumnDefinitions="*,16,*" MinHeight="420">
+
+        <!-- XAML editor -->
+        <Border
+            Grid.Column="0"
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{DynamicResource OverlayCornerRadius}"
+            ClipToBounds="True">
+            <DockPanel>
+                <Border DockPanel.Dock="Top"
+                        Padding="16,10"
+                        Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="0,0,0,1">
+                    <TextBlock Classes="BodyStrong" Text="XAML" />
+                </Border>
+                <TextBox
+                    x:Name="Editor"
+                    AcceptsReturn="True"
+                    AcceptsTab="True"
+                    TextWrapping="NoWrap"
+                    FontFamily="Cascadia Mono, Cascadia Code, Consolas, monospace"
+                    FontSize="13"
+                    BorderThickness="0"
+                    Background="Transparent"
+                    VerticalContentAlignment="Top"
+                    ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                    ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </DockPanel>
+        </Border>
+
+        <!-- Live preview -->
+        <Border
+            Grid.Column="2"
+            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="{DynamicResource OverlayCornerRadius}"
+            ClipToBounds="True">
+            <DockPanel>
+                <Border DockPanel.Dock="Top"
+                        Padding="16,10"
+                        Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="0,0,0,1">
+                    <TextBlock Classes="BodyStrong" Text="Live preview" />
+                </Border>
+                <ScrollViewer Padding="20">
+                    <ContentControl
+                        x:Name="Preview"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center" />
+                </ScrollViewer>
+            </DockPanel>
+        </Border>
+    </Grid>
+</UserControl>

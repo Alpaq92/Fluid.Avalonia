@@ -1,0 +1,84 @@
+name: Auto-merge approved PRs after cool-off
+
+# Scans open PRs to main; merges those that meet ALL of:
+#   - have an APPROVED review (from you, a contributor, or CodeRabbit)
+#   - have been open for at least COOL_OFF_DAYS (default: 7)
+#   - all required status checks (CI, CodeQL) are passing
+#   - mergeable per GitHub (no conflicts)
+#
+# Why: a one-week sanity window between approval and shipping. (Approval is
+# what starts the clock — not PR creation.)
+#
+# Bot PRs (release-please's release PR, Dependabot's fix(deps):) are NOT
+# touched here — they have their own immediate auto-merge in release.yml and
+# dependabot-auto-merge.yml, and never carry an APPROVED human review, so the
+# filter below naturally excludes them.
+#
+# To merge a specific PR sooner, just merge it by hand (the ruleset's admin
+# bypass lets the owner do that anytime), or run this workflow_dispatch with a
+# smaller cool-off.
+
+on:
+  schedule:
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+    inputs:
+      cool-off-days:
+        description: 'Days to wait between approval and merge (default 7)'
+        required: false
+        default: '7'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: auto-merge-approved
+  cancel-in-progress: false
+
+jobs:
+  auto-merge:
+    name: Merge approved PRs older than the cool-off window
+    runs-on: ubuntu-latest
+    steps:
+      - name: Find and merge eligible PRs
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_PAT || secrets.GITHUB_TOKEN }}
+          COOL_OFF_DAYS: ${{ inputs.cool-off-days || '7' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          threshold_iso=$(date -u -d "$COOL_OFF_DAYS days ago" --iso-8601=seconds)
+          echo "Looking for APPROVED + MERGEABLE PRs created on or before $threshold_iso (>= $COOL_OFF_DAYS days old)"
+
+          eligible=$(gh pr list \
+            --repo "$GITHUB_REPOSITORY" \
+            --base main \
+            --state open \
+            --json number,title,author,createdAt,reviewDecision,mergeable \
+            --jq "
+              .[]
+              | select(.reviewDecision == \"APPROVED\")
+              | select(.mergeable == \"MERGEABLE\")
+              | select(.createdAt <= \"$threshold_iso\")
+              | \"\(.number)\t\(.author.login)\t\(.createdAt)\t\(.title)\"
+            " || true)
+
+          if [ -z "$eligible" ]; then
+            echo "No PRs meet the criteria right now."
+            exit 0
+          fi
+
+          echo "Eligible PRs:"
+          echo "$eligible"
+          echo
+
+          echo "$eligible" | while IFS=$'\t' read -r number author createdAt title; do
+            echo "Merging #$number (by $author, opened $createdAt): $title"
+            gh pr merge "$number" \
+              --repo "$GITHUB_REPOSITORY" \
+              --squash \
+              --auto \
+              --delete-branch=false
+          done

@@ -1,0 +1,99 @@
+<!--
+    ButtonSpinner / NumericUpDown — WinUI NumberBox-style, on Fluent 2 tokens.
+
+    A single bordered input (matching our TextBox surface) with compact chevron spin buttons
+    stacked on the trailing edge. Theming ButtonSpinner covers both the standalone control and
+    NumericUpDown (which hosts a borderless TextBox inside a ButtonSpinner). The border turns
+    accent while the field is focused, like the rest of our inputs.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- One spin button: a subtle, rounded chevron repeat button. -->
+    <ControlTheme x:Key="FluidSpinnerButton" TargetType="RepeatButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="Bg" Background="{TemplateBinding Background}" CornerRadius="4" Margin="2">
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Content="{TemplateBinding Content}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type ButtonSpinner}" TargetType="ButtonSpinner">
+        <Setter Property="Background" Value="{DynamicResource ControlFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="Padding" Value="10,0,0,0" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="Root"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        MinHeight="{TemplateBinding MinHeight}">
+                    <DockPanel>
+                        <StackPanel x:Name="PART_SpinnerPanel"
+                                    DockPanel.Dock="Right"
+                                    Orientation="Horizontal"
+                                    Margin="2,1"
+                                    IsVisible="{TemplateBinding ShowButtonSpinner}">
+                            <RepeatButton x:Name="PART_IncreaseButton"
+                                          Theme="{StaticResource FluidSpinnerButton}"
+                                          VerticalAlignment="Stretch">
+                                <PathIcon Width="11" Height="11"
+                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                          Data="M 1,6.5 L 6,1.5 L 11,6.5 L 9.6,7.9 L 6,4.3 L 2.4,7.9 Z" />
+                            </RepeatButton>
+                            <RepeatButton x:Name="PART_DecreaseButton"
+                                          Theme="{StaticResource FluidSpinnerButton}"
+                                          VerticalAlignment="Stretch">
+                                <PathIcon Width="11" Height="11"
+                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                          Data="M 1,2.5 L 6,7.5 L 11,2.5 L 9.6,1.1 L 6,4.7 L 2.4,1.1 Z" />
+                            </RepeatButton>
+                        </StackPanel>
+
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Foreground="{TemplateBinding Foreground}"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                          Content="{TemplateBinding Content}" />
+                    </DockPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:focus-within /template/ Border#Root">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+        <Style Selector="^:disabled /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

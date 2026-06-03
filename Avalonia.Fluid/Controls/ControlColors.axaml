@@ -1,0 +1,188 @@
+﻿<!--
+    Port of WinUI 3 *_themeresources.xaml color mappings for the selection / toggle controls
+    (CheckBox, RadioButton, ToggleSwitch, Slider, ToggleButton, SplitButton / ToggleSplitButton).
+
+    Avalonia's FluentTheme templates reference the SAME resource keys as WinUI (both derive from
+    the WinUI control set), so redefining these keys to point at our Fluent 2 tokens recolors the
+    controls to exact WinUI values without re-templating them.
+
+    - Non-accent keys are theme-agnostic: a SolidColorBrush whose Color is a theme-aware token.
+    - Accent keys are theme-split (WinUI uses a darker accent shade in Light, lighter in Dark),
+      matching AccentFillColorDefault/Secondary/Tertiary.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.ThemeDictionaries>
+
+        <!-- ============== LIGHT: accent = darker shades ============== -->
+        <ResourceDictionary x:Key="Default">
+            <!-- Default accent level -->
+            <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="SliderThumbBackground" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="SliderTrackValueFill" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminate" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminate" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{DynamicResource SystemAccentColorDark1}" />
+            <!-- PointerOver (Secondary) -->
+            <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SliderThumbBackgroundPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SliderTrackValueFillPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <!-- Pressed (Tertiary) -->
+            <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="SliderThumbBackgroundPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="SliderTrackValueFillPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <!-- SplitButton / ToggleSplitButton checked — mirror ToggleButton so the accent matches the
+                 accent Button (default = AccentFillColorDefault, hover = Secondary, press = Tertiary).
+                 Avalonia's stock SplitButton brushes are NOT in WinUI's Dark1/Light2 shade chain. -->
+            <SolidColorBrush x:Key="SplitButtonBackgroundChecked" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="SplitButtonBorderBrushChecked" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="SplitButtonBackgroundCheckedPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SplitButtonBorderBrushCheckedPointerOver" Color="{DynamicResource SystemAccentColorDark1}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SplitButtonBackgroundCheckedPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+            <SolidColorBrush x:Key="SplitButtonBorderBrushCheckedPressed" Color="{DynamicResource SystemAccentColorDark2}" Opacity="0.8" />
+        </ResourceDictionary>
+
+        <!-- ============== DARK: accent = lighter shades ============== -->
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="ToggleSwitchFillOn" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="ToggleSwitchStrokeOn" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="SliderThumbBackground" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="SliderTrackValueFill" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillChecked" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminate" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeChecked" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminate" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStroke" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="ToggleButtonBackgroundChecked" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="ToggleSwitchFillOnPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="ToggleSwitchStrokeOnPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SliderThumbBackgroundPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SliderTrackValueFillPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="ToggleSwitchFillOnPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="ToggleSwitchStrokeOnPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="SliderThumbBackgroundPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="SliderTrackValueFillPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminatePressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeCheckedPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeIndeterminatePressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokePressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <!-- SplitButton / ToggleSplitButton checked (lighter accent shades for dark). -->
+            <SolidColorBrush x:Key="SplitButtonBackgroundChecked" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="SplitButtonBorderBrushChecked" Color="{DynamicResource SystemAccentColorLight2}" />
+            <SolidColorBrush x:Key="SplitButtonBackgroundCheckedPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SplitButtonBorderBrushCheckedPointerOver" Color="{DynamicResource SystemAccentColorLight2}" Opacity="0.9" />
+            <SolidColorBrush x:Key="SplitButtonBackgroundCheckedPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+            <SolidColorBrush x:Key="SplitButtonBorderBrushCheckedPressed" Color="{DynamicResource SystemAccentColorLight3}" Opacity="0.8" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <!-- ============== Theme-agnostic (token brushes are already theme-aware) ============== -->
+
+    <!-- Accent disabled states -> AccentFillColorDisabled token -->
+    <SolidColorBrush x:Key="ToggleSwitchFillOnDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOnDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="SliderThumbBackgroundDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="SliderTrackValueFillDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillCheckedDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillIndeterminateDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="ToggleButtonBackgroundCheckedDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="SplitButtonBackgroundCheckedDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="SplitButtonBorderBrushCheckedDisabled" Color="{DynamicResource AccentFillColorDisabled}" />
+
+    <!-- SplitButton checked foreground (on-accent text, matching ToggleButton / accent Button) -->
+    <SolidColorBrush x:Key="SplitButtonForegroundChecked" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="SplitButtonForegroundCheckedPointerOver" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="SplitButtonForegroundCheckedPressed" Color="{DynamicResource TextOnAccentFillColorSecondary}" />
+    <SolidColorBrush x:Key="SplitButtonForegroundCheckedDisabled" Color="{DynamicResource TextOnAccentFillColorDisabled}" />
+
+    <!-- ToggleSwitch: off track / knob / content -->
+    <SolidColorBrush x:Key="ToggleSwitchFillOff" Color="{DynamicResource ControlAltFillColorSecondary}" />
+    <SolidColorBrush x:Key="ToggleSwitchFillOffPointerOver" Color="{DynamicResource ControlAltFillColorTertiary}" />
+    <SolidColorBrush x:Key="ToggleSwitchFillOffPressed" Color="{DynamicResource ControlAltFillColorQuarternary}" />
+    <SolidColorBrush x:Key="ToggleSwitchFillOffDisabled" Color="{DynamicResource ControlAltFillColorDisabled}" />
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOff" Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOffPointerOver" Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="ToggleSwitchStrokeOffDisabled" Color="{DynamicResource ControlStrongStrokeColorDisabled}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOff" Color="{DynamicResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOffPointerOver" Color="{DynamicResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOffPressed" Color="{DynamicResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOffDisabled" Color="{DynamicResource TextFillColorDisabled}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOn" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPointerOver" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOnPressed" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="ToggleSwitchKnobFillOnDisabled" Color="{DynamicResource TextOnAccentFillColorDisabled}" />
+
+    <!-- Slider: track + thumb border -->
+    <SolidColorBrush x:Key="SliderTrackFill" Color="{DynamicResource ControlStrongFillColorDefault}" />
+    <SolidColorBrush x:Key="SliderTrackFillPointerOver" Color="{DynamicResource ControlStrongFillColorDefault}" />
+    <SolidColorBrush x:Key="SliderTrackFillPressed" Color="{DynamicResource ControlStrongFillColorDefault}" />
+    <SolidColorBrush x:Key="SliderTrackFillDisabled" Color="{DynamicResource ControlStrongFillColorDisabled}" />
+    <SolidColorBrush x:Key="SliderTickBarFill" Color="{DynamicResource ControlStrongFillColorDefault}" />
+    <SolidColorBrush x:Key="SliderTickBarFillDisabled" Color="{DynamicResource ControlStrongFillColorDisabled}" />
+
+    <!-- CheckBox: unchecked box fill / stroke, glyph foreground -->
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUnchecked" Color="{DynamicResource ControlAltFillColorSecondary}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPointerOver" Color="{DynamicResource ControlAltFillColorTertiary}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedPressed" Color="{DynamicResource ControlAltFillColorQuarternary}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundFillUncheckedDisabled" Color="{DynamicResource ControlAltFillColorDisabled}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUnchecked" Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedPointerOver" Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedPressed" Color="{DynamicResource ControlStrongStrokeColorDisabled}" />
+    <SolidColorBrush x:Key="CheckBoxCheckBackgroundStrokeUncheckedDisabled" Color="{DynamicResource ControlStrongStrokeColorDisabled}" />
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundChecked" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="CheckBoxCheckGlyphForegroundIndeterminate" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+
+    <!-- RadioButton: unchecked ellipse fill / stroke, glyph -->
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseFill" Color="{DynamicResource ControlAltFillColorSecondary}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPointerOver" Color="{DynamicResource ControlAltFillColorTertiary}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseFillPressed" Color="{DynamicResource ControlAltFillColorQuarternary}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseFillDisabled" Color="{DynamicResource ControlAltFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseStroke" Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePointerOver" Color="{DynamicResource ControlStrongStrokeColorDefault}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{DynamicResource ControlStrongStrokeColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{DynamicResource ControlStrongStrokeColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonCheckGlyphFill" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="RadioButtonCheckGlyphFillPointerOver" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+
+    <!-- ToggleButton: checked foreground -->
+    <SolidColorBrush x:Key="ToggleButtonForegroundChecked" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPointerOver" Color="{DynamicResource TextOnAccentFillColorPrimary}" />
+    <SolidColorBrush x:Key="ToggleButtonForegroundCheckedPressed" Color="{DynamicResource TextOnAccentFillColorSecondary}" />
+
+</ResourceDictionary>

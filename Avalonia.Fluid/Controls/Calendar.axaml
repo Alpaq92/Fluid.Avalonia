@@ -1,0 +1,340 @@
+<!--
+    Calendar / CalendarDatePicker — Semi.Avalonia-style, authored on Fluent 2 tokens.
+
+    Roomy month grid with circular day cells, an accent-filled selected day, an accent
+    ring/text for "today", a clean text header with chevron nav buttons, and rounded
+    month/year cells. Theme-aware (light/dark) and driven by the live Windows accent.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ===== Chevron nav buttons (previous / next) ===== -->
+    <ControlTheme x:Key="FluidCalendarNavButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        <Setter Property="Width" Value="32" />
+        <Setter Property="Height" Value="32" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="Bg"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="6">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ===== Header button (month / year title) ===== -->
+    <ControlTheme x:Key="FluidCalendarHeaderButton" TargetType="Button">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="8,4" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="Bg"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="6"
+                        Padding="{TemplateBinding Padding}">
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      HorizontalAlignment="Left"
+                                      VerticalAlignment="Center" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ===== Day-of-week titles get styled inline by CalendarItem; nothing to do here ===== -->
+
+    <!-- ===== CalendarDayButton: circular day cell ===== -->
+    <ControlTheme x:Key="{x:Type CalendarDayButton}" TargetType="CalendarDayButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="MinWidth" Value="36" />
+        <Setter Property="MinHeight" Value="36" />
+        <Setter Property="Margin" Value="1" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="ClickMode" Value="Release" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="18" />
+                    <ContentPresenter x:Name="Content"
+                                      Content="{TemplateBinding Content}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+        </Style>
+
+        <!-- Today: accent ring + accent text -->
+        <Style Selector="^:today">
+            <Setter Property="Foreground" Value="{DynamicResource AccentTextFillColorPrimaryBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="^:today /template/ Border#Root">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+
+        <!-- Selected: accent fill + on-accent text (wins over today) -->
+        <Style Selector="^:selected">
+            <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="^:selected /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+        </Style>
+        <Style Selector="^:selected:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+        </Style>
+
+        <!-- Other-month days -->
+        <Style Selector="^:inactive">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorTertiaryBrush}" />
+        </Style>
+
+        <!-- Blacked-out / unavailable -->
+        <Style Selector="^:blackout">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ===== CalendarButton: month / year cell ===== -->
+    <ControlTheme x:Key="{x:Type CalendarButton}" TargetType="CalendarButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="MinWidth" Value="56" />
+        <Setter Property="MinHeight" Value="44" />
+        <Setter Property="Margin" Value="2" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="ClickMode" Value="Release" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border x:Name="Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="Transparent"
+                            BorderThickness="1"
+                            CornerRadius="8" />
+                    <ContentPresenter Content="{TemplateBinding Content}"
+                                      Foreground="{TemplateBinding Foreground}"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+        </Style>
+        <Style Selector="^:selected">
+            <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="^:selected /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+        <Style Selector="^:inactive">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorTertiaryBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ===== CalendarItem: header + month/year grids ===== -->
+    <ControlTheme x:Key="{x:Type CalendarItem}" TargetType="CalendarItem">
+        <Setter Property="DayTitleTemplate">
+            <Template>
+                <TextBlock Text="{ReflectionBinding}"
+                           FontSize="12"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                           HorizontalAlignment="Center"
+                           VerticalAlignment="Center"
+                           Margin="0,4,0,8" />
+            </Template>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}"
+                        Padding="12">
+                    <Grid RowDefinitions="Auto,*">
+                        <!-- Header -->
+                        <Grid Grid.Row="0" ColumnDefinitions="*,Auto,Auto" Margin="0,0,0,6">
+                            <Button Name="PART_HeaderButton"
+                                    Grid.Column="0"
+                                    Theme="{StaticResource FluidCalendarHeaderButton}"
+                                    Focusable="False" />
+                            <Button Name="PART_PreviousButton"
+                                    Grid.Column="1"
+                                    Theme="{StaticResource FluidCalendarNavButton}"
+                                    Focusable="False">
+                                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="12" Text="&#xEAB5;" />
+                            </Button>
+                            <Button Name="PART_NextButton"
+                                    Grid.Column="2"
+                                    Theme="{StaticResource FluidCalendarNavButton}"
+                                    Focusable="False">
+                                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="12" Text="&#xEAB6;" />
+                            </Button>
+                        </Grid>
+
+                        <!-- Month (day) grid -->
+                        <Grid Name="PART_MonthView"
+                              Grid.Row="1"
+                              IsVisible="False"
+                              ColumnDefinitions="*,*,*,*,*,*,*"
+                              RowDefinitions="Auto,*,*,*,*,*,*" />
+
+                        <!-- Year / decade grid -->
+                        <Grid Name="PART_YearView"
+                              Grid.Row="1"
+                              IsVisible="False"
+                              ColumnDefinitions="*,*,*,*"
+                              RowDefinitions="*,*,*" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- ===== Calendar wrapper ===== -->
+    <ControlTheme x:Key="{x:Type Calendar}" TargetType="Calendar">
+        <!-- Opaque surface: the CalendarDatePicker hosts this in a popup, so a translucent
+             ControlFillColor would let the page content bleed through. -->
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorSecondaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                    <StackPanel Name="PART_Root" HorizontalAlignment="Stretch">
+                        <CalendarItem Name="PART_CalendarItem"
+                                      Background="Transparent"
+                                      BorderBrush="Transparent"
+                                      BorderThickness="0" />
+                    </StackPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- ===== CalendarDatePicker ===== -->
+    <!-- A date field + drop-down button, styled to match the DatePicker: the *outer Border* carries
+         the field surface (fill + crisp lit-edge border + corner radius), and the inner TextBox is
+         borderless/transparent so there's no competing text-field outline. The button shows a Segoe
+         chevron-down; the control fills PART_Popup with our themed Calendar (PART_Calendar). -->
+    <ControlTheme x:Key="{x:Type CalendarDatePicker}" TargetType="CalendarDatePicker">
+        <!-- Match the DatePicker / TimePicker field exactly: a recessed solid fill and the SAME
+             strong (clearly-visible) stroke they use — not the lighter ControlFillColor overlay or
+             the faint lit-edge border — so the closed field reads identically to the other pickers. -->
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <Border Name="PART_Root"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="{TemplateBinding CornerRadius}"
+                            MinHeight="{TemplateBinding MinHeight}">
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Name="PART_TextBox"
+                                     Grid.Column="0"
+                                     Background="Transparent"
+                                     BorderThickness="0"
+                                     CornerRadius="0"
+                                     MinHeight="0"
+                                     PlaceholderText="{TemplateBinding Watermark}"
+                                     UseFloatingPlaceholder="{TemplateBinding UseFloatingWatermark}"
+                                     Foreground="{TemplateBinding Foreground}"
+                                     VerticalContentAlignment="Center"
+                                     Padding="10,0,0,0" />
+
+                            <Button Name="PART_Button"
+                                    Grid.Column="1"
+                                    Theme="{StaticResource FluidCalendarNavButton}"
+                                    Width="28" Height="28"
+                                    Margin="0,0,2,0"
+                                    Focusable="False"
+                                    VerticalAlignment="Center">
+                                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="12" Text="&#xEAB4;" />
+                            </Button>
+
+                            <Popup Name="PART_Popup"
+                                   Grid.Column="0" Grid.ColumnSpan="2"
+                                   IsLightDismissEnabled="True"
+                                   PlacementTarget="{Binding $parent[CalendarDatePicker]}"
+                                   Placement="BottomEdgeAlignedLeft">
+                                <Calendar Name="PART_Calendar" />
+                            </Popup>
+                        </Grid>
+                    </Border>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#PART_Root">
+            <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorTertiaryBrush}" />
+        </Style>
+        <Style Selector="^:focus-within /template/ Border#PART_Root">
+            <Setter Property="BorderBrush" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

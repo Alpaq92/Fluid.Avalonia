@@ -1,0 +1,31 @@
+version: 2
+updates:
+  - package-ecosystem: "nuget"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+    # `fix(deps):` routes into the "Dependencies" section of CHANGELOG.md and
+    # triggers a patch release. Auto-merge squashes using the PR title, so the
+    # squashed commit inherits this prefix.
+    commit-message:
+      prefix: "fix(deps)"
+    groups:
+      nuget-minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "github-actions"
+    # `chore(deps):` is hidden from CHANGELOG and does not trigger a release.
+    commit-message:
+      prefix: "chore(deps)"

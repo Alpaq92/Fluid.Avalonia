@@ -1,0 +1,149 @@
+<!--
+    ScrollBar — SukiUI-style thin overlay scrollbar, authored on Fluent 2 tokens.
+
+    A near-invisible track with a thin rounded thumb that widens and darkens when the
+    pointer is over the bar (animated via a ThicknessTransition on the Thumb margin and a
+    BrushTransition on the thumb fill). Page / line buttons are present for hit-testing but
+    are visually empty, matching the clean SukiUI look while staying theme-aware.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ===== Brushes (theme-aware via Color tokens) ===== -->
+    <SolidColorBrush x:Key="ScrollBarThumbFill" Color="{DynamicResource ControlStrongFillColorDefault}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFillPointerOver" Color="{DynamicResource TextFillColorSecondary}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFillPressed" Color="{DynamicResource TextFillColorPrimary}" />
+    <SolidColorBrush x:Key="ScrollBarThumbFillDisabled" Color="{DynamicResource ControlStrongFillColorDisabled}" />
+    <SolidColorBrush x:Key="ScrollBarTrackFill" Color="Transparent" />
+    <SolidColorBrush x:Key="ScrollBarTrackFillPointerOver" Color="{DynamicResource SubtleFillColorSecondary}" />
+
+    <!-- ===== Empty page/line button (hit area only) ===== -->
+    <ControlTheme x:Key="FluidScrollBarButton" TargetType="RepeatButton">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- ===== Thumb: a single rounded bar; margin controls thinness ===== -->
+    <ControlTheme x:Key="FluidScrollBarThumb" TargetType="Thumb">
+        <Setter Property="Background" Value="{DynamicResource ScrollBarThumbFill}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{TemplateBinding Background}" CornerRadius="4" />
+            </ControlTemplate>
+        </Setter>
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.15" />
+                <ThicknessTransition Property="Margin" Duration="0:0:0.1" />
+            </Transitions>
+        </Setter>
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ScrollBarThumbFillPointerOver}" />
+        </Style>
+        <Style Selector="^:pressed">
+            <Setter Property="Background" Value="{DynamicResource ScrollBarThumbFillPressed}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- ===== ScrollBar ===== -->
+    <ControlTheme x:Key="{x:Type ScrollBar}" TargetType="ScrollBar">
+        <Setter Property="Background" Value="{DynamicResource ScrollBarTrackFill}" />
+        <Setter Property="MinWidth" Value="12" />
+        <Setter Property="MinHeight" Value="12" />
+        <Setter Property="Transitions">
+            <Transitions>
+                <BrushTransition Property="Background" Duration="0:0:0.15" />
+            </Transitions>
+        </Setter>
+
+        <!-- Vertical -->
+        <Style Selector="^:vertical">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border x:Name="TrackRoot"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="6">
+                        <Track Orientation="Vertical"
+                               IsDirectionReversed="True"
+                               Minimum="{TemplateBinding Minimum}"
+                               Maximum="{TemplateBinding Maximum}"
+                               Value="{TemplateBinding Value, Mode=TwoWay}"
+                               ViewportSize="{TemplateBinding ViewportSize}"
+                               DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}">
+                            <Track.DecreaseButton>
+                                <RepeatButton Name="PART_PageUpButton"
+                                              Theme="{StaticResource FluidScrollBarButton}"
+                                              Focusable="False" />
+                            </Track.DecreaseButton>
+                            <Track.IncreaseButton>
+                                <RepeatButton Name="PART_PageDownButton"
+                                              Theme="{StaticResource FluidScrollBarButton}"
+                                              Focusable="False" />
+                            </Track.IncreaseButton>
+                            <Thumb Name="thumb"
+                                   Theme="{StaticResource FluidScrollBarThumb}"
+                                   MinHeight="24"
+                                   Margin="5,0,4,0" />
+                        </Track>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover /template/ Thumb#thumb">
+                <Setter Property="Margin" Value="3,0,2,0" />
+            </Style>
+        </Style>
+
+        <!-- Horizontal -->
+        <Style Selector="^:horizontal">
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border x:Name="TrackRoot"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="6">
+                        <Track Orientation="Horizontal"
+                               Minimum="{TemplateBinding Minimum}"
+                               Maximum="{TemplateBinding Maximum}"
+                               Value="{TemplateBinding Value, Mode=TwoWay}"
+                               ViewportSize="{TemplateBinding ViewportSize}"
+                               DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}">
+                            <Track.DecreaseButton>
+                                <RepeatButton Name="PART_PageLeftButton"
+                                              Theme="{StaticResource FluidScrollBarButton}"
+                                              Focusable="False" />
+                            </Track.DecreaseButton>
+                            <Track.IncreaseButton>
+                                <RepeatButton Name="PART_PageRightButton"
+                                              Theme="{StaticResource FluidScrollBarButton}"
+                                              Focusable="False" />
+                            </Track.IncreaseButton>
+                            <Thumb Name="thumb"
+                                   Theme="{StaticResource FluidScrollBarThumb}"
+                                   MinWidth="24"
+                                   Margin="0,5,0,4" />
+                        </Track>
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+            <Style Selector="^:pointerover /template/ Thumb#thumb">
+                <Setter Property="Margin" Value="0,3,0,2" />
+            </Style>
+        </Style>
+
+        <!-- Track tint on hover -->
+        <Style Selector="^:pointerover">
+            <Setter Property="Background" Value="{DynamicResource ScrollBarTrackFillPointerOver}" />
+        </Style>
+
+        <Style Selector="^:disabled /template/ Thumb#thumb">
+            <Setter Property="Background" Value="{DynamicResource ScrollBarThumbFillDisabled}" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

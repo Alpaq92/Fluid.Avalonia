@@ -1,0 +1,53 @@
+﻿<!--
+    WinUI 3 type-ramp TextBlock classes. Apply with Classes, e.g.
+        <TextBlock Classes="Title" Text="..." />
+-->
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="TextBlock.Caption">
+        <Setter Property="FontSize" Value="{DynamicResource CaptionTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource CaptionTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+
+    <Style Selector="TextBlock.Body">
+        <Setter Property="FontSize" Value="{DynamicResource BodyTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource BodyTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="Normal" />
+    </Style>
+
+    <Style Selector="TextBlock.BodyStrong">
+        <Setter Property="FontSize" Value="{DynamicResource BodyStrongTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource BodyStrongTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="TextBlock.Subtitle">
+        <Setter Property="FontSize" Value="{DynamicResource SubtitleTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource SubtitleTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="TextBlock.Title">
+        <Setter Property="FontSize" Value="{DynamicResource TitleTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource TitleTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="TextBlock.TitleLarge">
+        <Setter Property="FontFamily" Value="{DynamicResource WinUIFontFamilyDisplay}" />
+        <Setter Property="FontSize" Value="{DynamicResource TitleLargeTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource TitleLargeTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+    <Style Selector="TextBlock.Display">
+        <Setter Property="FontFamily" Value="{DynamicResource WinUIFontFamilyDisplay}" />
+        <Setter Property="FontSize" Value="{DynamicResource DisplayTextBlockFontSize}" />
+        <Setter Property="LineHeight" Value="{DynamicResource DisplayTextBlockLineHeight}" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+
+</Styles>

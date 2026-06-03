@@ -1,0 +1,36 @@
+name: Auto-merge trusted-author PRs
+
+# Queues PRs opened by the repo owner for auto-merge as soon as required checks
+# pass — no review, no 7-day cool-off. Bot PRs have their own flows
+# (dependabot-auto-merge.yml, release.yml); the 7-day cool-off
+# (auto-merge-approved.yml) is for external contributors. This only fills the
+# gap for the owner's own PRs.
+
+on:
+  pull_request_target:
+    types: [opened, reopened, ready_for_review, synchronize]
+    branches: [main]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  enable-auto-merge:
+    name: Queue auto-merge for trusted author
+    if: >
+      !github.event.pull_request.draft &&
+      contains(fromJson('["Alpaq92"]'), github.event.pull_request.user.login)
+    runs-on: ubuntu-latest
+    steps:
+      - name: gh pr merge --auto --squash
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_PAT || secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          echo "Queueing PR #$PR_NUMBER (by ${{ github.event.pull_request.user.login }}) for auto-merge"
+          gh pr merge "$PR_NUMBER" \
+            --repo "$GITHUB_REPOSITORY" \
+            --squash \
+            --auto \
+            --delete-branch=false

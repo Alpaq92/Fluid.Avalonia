@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#202020" />
+    <title>Avalonia.Fluid.Demo</title>
+    <style>
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
+        body { background: #202020; }
+        #out { width: 100%; height: 100%; }
+
+        /* Loading splash — shown until the WASM runtime mounts the app:
+           the app icon, an indeterminate progress bar, and the About description. */
+        #loading {
+            position: fixed; inset: 0; z-index: 10;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 26px; padding: 24px; box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', -apple-system, sans-serif;
+            background: #202020;
+            transition: opacity 0.3s ease;
+        }
+        #loading.hide { opacity: 0; pointer-events: none; }
+
+        .splash-logo { width: 96px; height: 96px; }
+
+        /* Indeterminate Fluent-style progress bar: an accent segment sweeping across a thin track. */
+        .splash-bar {
+            position: relative; width: 260px; max-width: 78vw; height: 4px;
+            border-radius: 2px; overflow: hidden;
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .splash-bar::before {
+            content: ''; position: absolute; top: 0; bottom: 0; width: 40%;
+            border-radius: 2px; background: #3CB3FF;
+            animation: splash-indet 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes splash-indet {
+            0%   { left: -45%; }
+            100% { left: 100%; }
+        }
+
+        .splash-desc {
+            max-width: 380px; text-align: center;
+            color: #9d9d9d; font-size: 13px; line-height: 1.5; font-weight: 400;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .splash-bar::before { animation-duration: 3s; }
+        }
+    </style>
+</head>
+<body>
+    <div id="loading">
+        <svg class="splash-logo" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <defs>
+                <linearGradient id="blue" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#3CB3FF" />
+                    <stop offset="1" stop-color="#0A6FD8" />
+                </linearGradient>
+            </defs>
+            <rect x="16" y="16" width="480" height="480" rx="104" ry="104" fill="url(#blue)" />
+            <g transform="scale(21.333)" fill="#FFFFFF">
+                <path d="M6,6V18H10V16H8V8H10V6H6Z" />
+                <path d="M16,16H14V18H18V6H14V8H16V16Z" />
+            </g>
+        </svg>
+
+        <div class="splash-bar" role="progressbar" aria-label="Loading"></div>
+
+        <div class="splash-desc">A Fluent 2 inspired Avalonia theme with its own identity, adapting to your system accent color. Built on Avalonia's FluentTheme with ported Fluent 2 design tokens.</div>
+    </div>
+
+    <div id="out"></div>
+    <script type="module" src="./main.js"></script>
+</body>
+</html>

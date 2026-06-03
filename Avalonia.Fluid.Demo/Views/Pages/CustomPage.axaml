@@ -1,0 +1,8 @@
+<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.CustomPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="clr-namespace:Avalonia.Fluid.Demo.Controls">
+
+    <ctrls:MarkdownView Source="avares://Avalonia.Fluid.Demo/CUSTOM.md" />
+</UserControl>

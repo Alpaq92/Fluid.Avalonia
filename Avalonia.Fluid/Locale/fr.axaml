@@ -1,0 +1,25 @@
+<ResourceDictionary
+    x:Class="Avalonia.Fluid.Locale.fr"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--  Pickers  -->
+    <x:String x:Key="STRING_OK">OK</x:String>
+    <x:String x:Key="STRING_CANCEL">Annuler</x:String>
+    <x:String x:Key="STRING_RESET">Réinitialiser</x:String>
+    <x:String x:Key="STRING_MONTH">mois</x:String>
+    <x:String x:Key="STRING_DAY">jour</x:String>
+    <x:String x:Key="STRING_YEAR">année</x:String>
+    <x:String x:Key="STRING_HOUR">heure</x:String>
+    <x:String x:Key="STRING_MINUTE">min</x:String>
+    <!--  Native Avalonia DatePicker / TimePicker field placeholders (override the FluentTheme defaults)  -->
+    <x:String x:Key="StringDatePickerDayText">jour</x:String>
+    <x:String x:Key="StringDatePickerMonthText">mois</x:String>
+    <x:String x:Key="StringDatePickerYearText">année</x:String>
+    <x:String x:Key="StringTimePickerHourText">heure</x:String>
+    <x:String x:Key="StringTimePickerMinuteText">minute</x:String>
+    <x:String x:Key="StringTimePickerSecondText">seconde</x:String>
+    <!--  Native TextBox / input context menu (right-click Cut / Copy / Paste)  -->
+    <x:String x:Key="StringTextFlyoutCutText">Couper</x:String>
+    <x:String x:Key="StringTextFlyoutCopyText">Copier</x:String>
+    <x:String x:Key="StringTextFlyoutPasteText">Coller</x:String>
+</ResourceDictionary>

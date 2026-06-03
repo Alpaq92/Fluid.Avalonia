@@ -1,0 +1,48 @@
+﻿<!--
+    WinUI 3 tuning layer.
+
+    These resources sit on top of FluentTheme and nudge it toward WinUI 3: the Segoe UI
+    Variable type face, the WinUI corner-radius metrics, and the WinUI type-ramp font sizes
+    and line heights. Accent colors are supplied at runtime by AccentColorService and are
+    intentionally not declared here.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Text-font families default to the platform font; the host app supplies the actual typeface
+         (the demo bundles DejaVu Sans and overrides these in its App.axaml), keeping the theme
+         font-agnostic — same arrangement as SymbolThemeFontFamily below. -->
+    <FontFamily x:Key="ContentControlThemeFontFamily">$Default</FontFamily>
+    <FontFamily x:Key="WinUIFontFamilyDisplay">$Default</FontFamily>
+    <!-- SymbolThemeFontFamily (the icon-glyph font) is supplied by the host app — see the demo's
+         App.axaml, which bundles Codicons and defines this key. The theme uses it (e.g. the Calendar
+         nav chevrons) but no longer bundles the font itself. -->
+
+
+    <!-- Corner radii (WinUI 3 metrics). -->
+    <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
+    <CornerRadius x:Key="OverlayCornerRadius">8</CornerRadius>
+
+    <!-- Base control font size = WinUI Body. -->
+    <x:Double x:Key="ControlContentThemeFontSize">14</x:Double>
+
+    <!-- WinUI 3 type ramp: font sizes. -->
+    <x:Double x:Key="CaptionTextBlockFontSize">12</x:Double>
+    <x:Double x:Key="BodyTextBlockFontSize">14</x:Double>
+    <x:Double x:Key="BodyStrongTextBlockFontSize">14</x:Double>
+    <x:Double x:Key="SubtitleTextBlockFontSize">20</x:Double>
+    <x:Double x:Key="TitleTextBlockFontSize">28</x:Double>
+    <x:Double x:Key="TitleLargeTextBlockFontSize">40</x:Double>
+    <x:Double x:Key="DisplayTextBlockFontSize">68</x:Double>
+
+    <!-- WinUI 3 type ramp: line heights. -->
+    <x:Double x:Key="CaptionTextBlockLineHeight">16</x:Double>
+    <x:Double x:Key="BodyTextBlockLineHeight">20</x:Double>
+    <x:Double x:Key="BodyStrongTextBlockLineHeight">20</x:Double>
+    <x:Double x:Key="SubtitleTextBlockLineHeight">28</x:Double>
+    <x:Double x:Key="TitleTextBlockLineHeight">36</x:Double>
+    <x:Double x:Key="TitleLargeTextBlockLineHeight">52</x:Double>
+    <x:Double x:Key="DisplayTextBlockLineHeight">92</x:Double>
+
+</ResourceDictionary>

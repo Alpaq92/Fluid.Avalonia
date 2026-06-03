@@ -1,0 +1,46 @@
+<!--
+    GroupBox theme — a titled card: a header strip (slightly recessed, divider below) above a padded
+    content region, wrapped in a Fluent card border. Inspired by SukiUI's GroupBox.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls">
+
+    <ControlTheme x:Key="{x:Type ctrls:GroupBox}" TargetType="ctrls:GroupBox">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Top" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource OverlayCornerRadius}"
+                        ClipToBounds="True">
+                    <DockPanel>
+                        <!-- Header strip — the dark Expander-header fill used by the gallery's
+                             "Source code" footer, so the two read the same. -->
+                        <Border DockPanel.Dock="Top"
+                                Background="{DynamicResource ExpanderHeaderBackground}"
+                                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="0,0,0,1"
+                                Padding="14,9">
+                            <ContentPresenter Content="{TemplateBinding Header}"
+                                              ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                              TextElement.FontWeight="SemiBold"
+                                              TextElement.Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+                        </Border>
+
+                        <!-- Body -->
+                        <ContentPresenter Padding="14,12"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </DockPanel>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

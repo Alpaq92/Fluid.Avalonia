@@ -1,0 +1,68 @@
+<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.SettingsPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel MaxWidth="720" HorizontalAlignment="Left" Spacing="24">
+
+        <StackPanel Spacing="8">
+            <TextBlock Classes="BodyStrong" Text="Appearance" />
+            <Border Classes="Card">
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Body" Text="App theme" />
+                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Choose how the app looks. Accent color is taken from your OS (see the Accents page)." />
+                    <StackPanel Margin="0,8,0,0" Spacing="2">
+                        <RadioButton x:Name="LightRadio" GroupName="theme" Content="Light" />
+                        <RadioButton x:Name="DarkRadio" GroupName="theme" Content="Dark" />
+                        <RadioButton x:Name="SystemRadio" GroupName="theme" Content="Use system setting" IsChecked="True" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+            <TextBlock Classes="BodyStrong" Text="Language" />
+            <Border Classes="Card">
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Body" Text="App language" />
+                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Switches the language of the custom pickers at runtime. Defaults to your system language." />
+                    <!-- One radio per bundled language (native name), styled like the theme picker above.
+                         The radios are added in code-behind from the language list. -->
+                    <StackPanel x:Name="LanguagePanel" Margin="0,8,0,0" Spacing="2" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+            <TextBlock Classes="BodyStrong" Text="Title bar" />
+            <Border Classes="Card">
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Body" Text="Title bar contents" />
+                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Choose which elements show in the custom title bar." />
+                    <StackPanel Margin="0,8,0,0" Spacing="4">
+                        <ToggleSwitch x:Name="ShowMenuSwitch" Content="Menu button" IsChecked="True" />
+                        <ToggleSwitch x:Name="ShowIconSwitch" Content="App icon" IsChecked="True" />
+                        <ToggleSwitch x:Name="ShowTitleSwitch" Content="Title" IsChecked="True" />
+                        <ToggleSwitch x:Name="ShowPageNavSwitch" Content="Page navigation buttons" IsChecked="True" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+            <TextBlock Classes="BodyStrong" Text="About" />
+            <Border Classes="Card">
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Body" Text="Avalonia.Fluid Demo" />
+                    <TextBlock Classes="Caption" TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="A Fluent 2 inspired Avalonia theme with its own identity, adapting to your system accent color. Built on Avalonia's FluentTheme with ported Fluent 2 design tokens." />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </StackPanel>
+</UserControl>

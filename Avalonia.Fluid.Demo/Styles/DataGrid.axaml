@@ -1,0 +1,100 @@
+<!--
+    DataGrid refinements — make the bundled Avalonia DataGrid read like our ListBox:
+      • the same bordered, rounded surface,
+      • a quiet, separator-less header (the ListBox has no header chrome),
+      • comfortable rows with ListBox-matching left padding and normal (not accent) text,
+      • a soft hover fill and an accent rounded selected row with on-accent text.
+    Layered after the DataGrid Fluent theme so these win.
+-->
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Container surface, matching the ListBox box. The ListBox sits on an OPAQUE surface
+         (verified at runtime: #FF2B2B2B in dark), so the translucent accent selection composites
+         the same muted blue. ControlFillColorDefault is near-transparent (#0FFFFFFF), which made the
+         same selection render brighter — so use the opaque solid-background fill instead. -->
+    <Style Selector="DataGrid">
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorQuarternaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <!-- Rounded like the GroupBox card; clip so the header strip / rows follow the corners. -->
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="RowBackground" Value="Transparent" />
+    </Style>
+
+    <!-- Header strip: the same dark Expander-header fill the GroupBox header / "Source code" footer use. -->
+    <Style Selector="DataGridColumnHeader">
+        <Setter Property="Background" Value="{DynamicResource ExpanderHeaderBackground}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        <Setter Property="SeparatorBrush" Value="Transparent" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Padding" Value="16,8" />
+        <Setter Property="MinHeight" Value="40" />
+    </Style>
+
+    <!-- Comfortable rows + ListBox-matching left padding and normal text colour. -->
+    <Style Selector="DataGridRow">
+        <Setter Property="MinHeight" Value="40" />
+    </Style>
+    <Style Selector="DataGridCell">
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="FontSize" Value="14" />
+    </Style>
+    <Style Selector="DataGridCell TextBlock">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
+    <!-- Full-width, square hover / accent selection (rounding removed). -->
+    <Style Selector="DataGridRow:pointerover /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="Fill" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
+        <!-- Exactly the Fluent ListBox item selection: base SystemAccentColor at 0.6 opacity, so the
+             translucent accent over the dark surface reads as the same muted blue (verified at runtime
+             the ListBoxItem ContentPresenter is #FF0078D4 @ 0.6). -->
+        <Setter Property="Fill">
+            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" Opacity="0.6" />
+        </Setter>
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="DataGridRow:selected:pointerover /template/ Rectangle#BackgroundRectangle">
+        <Setter Property="Fill">
+            <SolidColorBrush Color="{DynamicResource SystemAccentColor}" Opacity="0.7" />
+        </Setter>
+        <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="DataGridRow:selected DataGridCell TextBlock">
+        <!-- Like the ListBox: keep the primary text colour (white in dark, black in light) on the
+             translucent accent selection, rather than always-white on-accent text. -->
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+    </Style>
+
+    <!-- The current-cell focus frame is two stacked rectangles (a white 2px one and a 1px black one
+         on top). Keep the white frame; drop the black outline by hiding the second rectangle. -->
+    <Style Selector="DataGridCell /template/ Grid#FocusVisual > Rectangle:nth-child(2)">
+        <Setter Property="Stroke" Value="Transparent" />
+    </Style>
+
+    <!-- Match the ListBox's thin (12px) scrollbars — the DataGrid forces a wider 16px track — and
+         inset them so they clear the rounded corners (rows / selection stay full-width). -->
+    <Style Selector="DataGrid /template/ ScrollBar[Orientation=Vertical]">
+        <Setter Property="Width" Value="12" />
+        <Setter Property="Margin" Value="0,4,3,4" />
+    </Style>
+    <Style Selector="DataGrid /template/ ScrollBar[Orientation=Horizontal]">
+        <Setter Property="Height" Value="12" />
+        <Setter Property="Margin" Value="4,0,3,3" />
+    </Style>
+
+    <!-- Drop the default semi-white line under the header (its Fill is set in code, so hide via
+         Opacity instead); the dark header strip already separates it. -->
+    <Style Selector="DataGrid /template/ Rectangle#PART_ColumnHeadersAndRowsSeparator">
+        <Setter Property="Opacity" Value="0" />
+    </Style>
+
+</Styles>

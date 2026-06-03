@@ -1,0 +1,97 @@
+name: Release
+
+# release-please reads Conventional Commits on main (feat:, fix:, deps:,
+# BREAKING CHANGE) and maintains a "Release PR" that bumps the version in
+# .release-please-manifest.json and updates CHANGELOG.md. The PR is queued for
+# auto-merge, so it lands on its own once CI + CodeQL are green. Merging it
+# creates the tag + GitHub Release; the publish job then packs Avalonia.Fluid at
+# the new tag and pushes it to NuGet.org. (The WebAssembly demo deploys to
+# GitHub Pages separately via pages.yml on every push to main.)
+#
+# Releases created by GITHUB_TOKEN don't trigger other workflows, so publish is
+# wired here via `needs:` rather than `on: release`.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Manually publish this existing tag (skips release-please)'
+        required: true
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    name: Open / merge release PR
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    outputs:
+      released: ${{ steps.rp.outputs.releases_created }}
+      tag: ${{ steps.rp.outputs.tag_name }}
+    steps:
+      - id: rp
+        uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5
+        with:
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
+          # PAT preferred so the release-PR merge + tag push fire downstream
+          # workflows (CI, this publish job). Falls back to GITHUB_TOKEN.
+          token: ${{ secrets.RELEASE_PLEASE_PAT || secrets.GITHUB_TOKEN }}
+
+      - name: Enable auto-merge on release PR
+        if: steps.rp.outputs.pr
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_PLEASE_PAT || secrets.GITHUB_TOKEN }}
+          PR_JSON: ${{ steps.rp.outputs.pr }}
+        run: |
+          PR_NUMBER=$(echo "$PR_JSON" | jq -r '.number')
+          gh pr merge --auto --squash "$PR_NUMBER" --repo "$GITHUB_REPOSITORY"
+
+  publish:
+    name: Pack & Publish to NuGet
+    runs-on: ubuntu-latest
+    needs: release-please
+    if: ${{ always() && (needs.release-please.outputs.released == 'true' || github.event_name == 'workflow_dispatch') }}
+    permissions:
+      contents: read
+    steps:
+      - name: Resolve tag
+        id: tag
+        shell: bash
+        run: |
+          TAG="${{ needs.release-please.outputs.tag || inputs.tag }}"
+          echo "name=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+        with:
+          ref: ${{ steps.tag.outputs.name }}
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Pack Avalonia.Fluid
+        run: dotnet pack Avalonia.Fluid/Avalonia.Fluid.csproj --configuration Release -p:Version=${{ steps.tag.outputs.version }} -p:PackageVersion=${{ steps.tag.outputs.version }} -o ./nupkg
+
+      - name: Push to NuGet.org
+        shell: bash
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          if [ -z "${NUGET_API_KEY}" ]; then
+            echo "::error::NUGET_API_KEY secret is unset — add it in repo Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+          dotnet nuget push ./nupkg/*.nupkg --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate

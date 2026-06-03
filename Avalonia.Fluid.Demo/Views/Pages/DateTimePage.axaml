@@ -1,0 +1,91 @@
+<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.DateTimePage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls">
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="A CalendarDatePicker for picking a date from a drop-down calendar."
+                              XamlSource="&lt;CalendarDatePicker /&gt;">
+            <CalendarDatePicker Width="296" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A DatePicker with separate day / month / year fields."
+                              XamlSource="&lt;DatePicker /&gt;">
+            <DatePicker />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A TimePicker for selecting a time value."
+                              XamlSource="&lt;TimePicker /&gt;">
+            <TimePicker />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A TimePicker on a 12-hour clock, with its AM / PM selector."
+                              XamlSource="&lt;TimePicker ClockIdentifier=&quot;12HourClock&quot; /&gt;">
+            <TimePicker ClockIdentifier="12HourClock" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A RadialTimePicker — a TimePicker-style field that opens a concentric ring-slider dial (inner = hour, outer = minute)."
+                              XamlSource="&lt;ctrls:RadialTimePicker /&gt;">
+            <ctrls:RadialTimePicker />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="The same RadialTimePicker on a 24-hour clock (hours 0–23, even hours labelled, no AM / PM)."
+                              XamlSource="&lt;ctrls:RadialTimePicker Is24Hour=&quot;True&quot; /&gt;">
+            <ctrls:RadialTimePicker Is24Hour="True" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A DateTimePicker — a segmented date + time field opening looping spinner columns (month / day / year · hour : minute · AM-PM)."
+                              XamlSource="&lt;ctrls:DateTimePicker /&gt;">
+            <StackPanel Spacing="12">
+                <ctrls:DateTimePicker x:Name="Dtp" />
+                <TextBlock Classes="Caption"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="{Binding #Dtp.SelectedDateTime, StringFormat='Selected: {0}', TargetNullValue='Selected: (nothing yet)'}" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="The same DateTimePicker on a 24-hour clock (no AM / PM column)."
+                              XamlSource="&lt;ctrls:DateTimePicker ClockIdentifier=&quot;24HourClock&quot; /&gt;">
+            <ctrls:DateTimePicker ClockIdentifier="24HourClock" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="An AnalogDateTimePicker — a segmented date + time field whose dropdown pairs a Calendar (date) with the RadialClock dial (time)."
+                              XamlSource="&lt;ctrls:AnalogDateTimePicker /&gt;">
+            <StackPanel Spacing="12">
+                <ctrls:AnalogDateTimePicker x:Name="Adtp" />
+                <TextBlock Classes="Caption"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="{Binding #Adtp.SelectedDateTime, StringFormat='Selected: {0}', TargetNullValue='Selected: (nothing yet)'}" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="The same AnalogDateTimePicker on a 24-hour clock (the dial shows 0–23 and there's no AM / PM column)."
+                              XamlSource="&lt;ctrls:AnalogDateTimePicker ClockIdentifier=&quot;24HourClock&quot; /&gt;">
+            <ctrls:AnalogDateTimePicker ClockIdentifier="24HourClock" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="An inline date + time picker — a Calendar paired with the RadialClock dial (the pieces AnalogDateTimePicker hosts in its flyout), shown directly rather than in a dropdown."
+                              XamlSource="&lt;Calendar /&gt;&#10;&lt;ctrls:RadialClock /&gt;">
+            <StackPanel Spacing="12">
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <Calendar x:Name="InlineCal" VerticalAlignment="Top" />
+                    <!-- Shown at natural size (no Viewbox): a Viewbox's scale transform throws off the
+                         dial's pointer hit-testing, so the minute ring was misread as the hour ring.
+                         Centred against the (taller) calendar's height. -->
+                    <ctrls:RadialClock x:Name="InlineDtClock" VerticalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="16">
+                    <TextBlock Classes="Caption"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="{Binding #InlineCal.SelectedDate, StringFormat='Date: {0:d}', TargetNullValue='Date: (pick one)'}" />
+                    <TextBlock Classes="Caption"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="{Binding #InlineDtClock.Time, StringFormat='Time: {0}'}" />
+                </StackPanel>
+            </StackPanel>
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,51 @@
+﻿<!--
+    Fluent 2 elevation.
+
+    The "lit edge" border: WinUI controls draw a vertical gradient on their 1px border that is
+    lighter at the top and slightly darker at the bottom, making them look raised off the
+    surface. The gradient stops resolve through theme-aware stroke tokens, so a single brush
+    works in both light and dark.
+
+    Plus drop-shadow approximations for the elevation levels (card / flyout / dialog / tooltip).
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <LinearGradientBrush x:Key="ControlElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorSecondary}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="CircleElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorSecondary}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorOnAccentDefault}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource ControlStrokeColorOnAccentDefault}" />
+        <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorOnAccentSecondary}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TextControlElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="0.5" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorSecondary}" />
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="TextControlElevationBorderFocusedBrush" StartPoint="0%,0%" EndPoint="0%,100%">
+        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="0.93" Color="{DynamicResource ControlStrokeColorDefault}" />
+        <GradientStop Offset="1" Color="{DynamicResource SystemAccentColor}" />
+    </LinearGradientBrush>
+
+    <!-- Drop-shadow approximations (offsetX offsetY blur color). -->
+    <BoxShadows x:Key="CardBoxShadow">0 2 8 #28000000</BoxShadows>
+    <BoxShadows x:Key="FlyoutBoxShadow">0 8 32 #33000000</BoxShadows>
+    <BoxShadows x:Key="DialogBoxShadow">0 16 64 #3D000000</BoxShadows>
+    <BoxShadows x:Key="TooltipBoxShadow">0 4 12 #28000000</BoxShadows>
+
+</ResourceDictionary>

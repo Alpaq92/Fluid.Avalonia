@@ -1,0 +1,35 @@
+<!--
+    RadialTimePicker — a TimePicker-style segmented field (hour : minute · AM/PM) that opens a
+    concentric ring-slider dial in a flyout. The dial itself is the reusable RadialClock control
+    (inner ring = hour 1–12 / 0–23, outer ring = minute). OK commits the dial's value to Time;
+    Cancel discards. Is24Hour switches the dial (and the field) to the 24-hour layout.
+-->
+<UserControl
+    x:Class="Avalonia.Fluid.Demo.Controls.RadialTimePicker"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls">
+
+    <!-- The trigger uses the shared Button.picker-field style (Styles/GalleryStyles.axaml), which reuses
+         the stock TimePicker flyout-button theme so this field matches Avalonia's native pickers. -->
+    <Button x:Name="Field" Classes="picker-field" MinWidth="{DynamicResource TimePickerThemeMinWidth}">
+        <Grid x:Name="FieldGrid" ColumnDefinitions="*,Auto,*,Auto,*">
+            <TextBlock x:Name="HourSeg" Classes="seg" Grid.Column="0" />
+            <Rectangle Classes="div" Grid.Column="1" />
+            <TextBlock x:Name="MinuteSeg" Classes="seg" Grid.Column="2" />
+            <Rectangle x:Name="AmPmDiv" Classes="div" Grid.Column="3" />
+            <TextBlock x:Name="AmPmSeg" Classes="seg" Grid.Column="4" />
+        </Grid>
+        <Button.Flyout>
+            <Flyout Placement="Bottom">
+                <StackPanel Spacing="14">
+                    <ctrls:RadialClock x:Name="Clock" />
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Spacing="8">
+                        <Button x:Name="CancelBtn" Content="{DynamicResource STRING_CANCEL}" />
+                        <Button x:Name="OkBtn" Classes="accent" Content="{DynamicResource STRING_OK}" />
+                    </StackPanel>
+                </StackPanel>
+            </Flyout>
+        </Button.Flyout>
+    </Button>
+</UserControl>

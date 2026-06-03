@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    name: Build (Avalonia.Fluid)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Cache NuGet packages
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj', '**/*.props') }}
+          restore-keys: ${{ runner.os }}-nuget-
+
+      # The browser head targets net10.0-browser and needs the WASM workload.
+      - name: Install WASM tools
+        run: dotnet workload install wasm-tools
+
+      - name: Restore
+        run: dotnet restore Avalonia.Fluid.sln
+
+      - name: Build (library + demo + desktop + browser heads)
+        run: dotnet build Avalonia.Fluid.sln --configuration Release --no-restore

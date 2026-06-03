@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <RootNamespace>Avalonia.Fluid</RootNamespace>
+    <AssemblyName>Avalonia.Fluid</AssemblyName>
+  </PropertyGroup>
+
+  <!-- NuGet package metadata. Version is a placeholder; the release workflow
+       overrides it at pack time with the release-please tag. -->
+  <PropertyGroup>
+    <PackageId>Avalonia.Fluid</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>Alpaq92</Authors>
+    <Description>A Fluent 2 inspired Avalonia theme with its own identity, adapting to your system accent color. Built on Avalonia's FluentTheme with ported Fluent 2 design tokens.</Description>
+    <PackageTags>avalonia;theme;fluent;fluent2;winui;accent;mica</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Alpaq92/Avalonia.Fluid</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Alpaq92/Avalonia.Fluid</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- The NuGet.org landing page README (packed as README.md inside the package). -->
+    <None Include="..\nuget-readme.md" Pack="true" PackagePath="\README.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>

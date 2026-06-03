@@ -1,0 +1,245 @@
+<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.StatusInfoPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls"
+    xmlns:labs="using:Avalonia.Labs.Controls"
+    xmlns:shapes="using:Avalonia.Controls.Shapes">
+
+    <UserControl.Styles>
+        <!-- A standalone circular ring spinner (rotating accent Arc). -->
+        <Style Selector="shapes|Arc.spinner">
+            <Setter Property="Width" Value="40" />
+            <Setter Property="Height" Value="40" />
+            <Setter Property="StartAngle" Value="0" />
+            <Setter Property="SweepAngle" Value="290" />
+            <Setter Property="StrokeThickness" Value="4" />
+            <Setter Property="StrokeLineCap" Value="Round" />
+            <Setter Property="Stroke" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+            <Setter Property="RenderTransformOrigin" Value="50%,50%" />
+            <Setter Property="RenderTransform">
+                <RotateTransform />
+            </Setter>
+            <Style.Animations>
+                <Animation Duration="0:0:1" IterationCount="INFINITE">
+                    <KeyFrame Cue="0%">
+                        <Setter Property="RotateTransform.Angle" Value="0" />
+                    </KeyFrame>
+                    <KeyFrame Cue="100%">
+                        <Setter Property="RotateTransform.Angle" Value="360" />
+                    </KeyFrame>
+                </Animation>
+            </Style.Animations>
+        </Style>
+        <Style Selector="Border.infobar">
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="Padding" Value="14,12" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+        </Style>
+        <Style Selector="Border.infobar TextBlock.icon">
+            <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </UserControl.Styles>
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="A determinate ProgressBar."
+                              XamlSource="&lt;ProgressBar Value=&quot;60&quot; /&gt;">
+            <ProgressBar Width="320" Value="60" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="An indeterminate ProgressBar and ProgressRing."
+                              XamlSource="&lt;ProgressBar IsIndeterminate=&quot;True&quot; /&gt;&lt;ProgressBar Classes=&quot;circular&quot; IsIndeterminate=&quot;True&quot; /&gt;">
+            <StackPanel Orientation="Horizontal" Spacing="20" VerticalAlignment="Center">
+                <ProgressBar Width="320" IsIndeterminate="True" />
+                <ProgressBar Classes="circular" Width="40" Height="40" IsIndeterminate="True" />
+                <shapes:Arc Classes="spinner" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A ProgressCircle shows determinate progress as a radial fill with the percentage in the centre — built on the same ring rendering as the RadialTimePicker dial."
+                              XamlSource="&lt;ctrls:ProgressCircle Value=&quot;65&quot; /&gt;">
+            <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                <ctrls:ProgressCircle Value="{Binding #ProgressSlider.Value}" />
+                <StackPanel VerticalAlignment="Center" Spacing="4">
+                    <TextBlock Classes="Caption"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Drag to drive it:" />
+                    <Slider x:Name="ProgressSlider" Width="240" Minimum="0" Maximum="100" Value="40" />
+                </StackPanel>
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A BusyArea overlays its content with a spinner while a task runs (toggle it)."
+                              XamlSource="&lt;ctrls:BusyArea IsBusy=&quot;True&quot; BusyText=&quot;Loading…&quot;&gt;...&lt;/ctrls:BusyArea&gt;">
+            <StackPanel Spacing="12">
+                <ctrls:BusyArea x:Name="Busy"
+                                Width="320" Height="150"
+                                HorizontalAlignment="Left"
+                                BusyText="Loading…"
+                                IsBusy="{Binding #BusyToggle.IsChecked}"
+                                ScrimOpacity="{Binding #ScrimSlider.Value}"
+                                IndicatorStyle="{Binding #StyleBox.SelectedItem}">
+                    <Border CornerRadius="{DynamicResource ControlCornerRadius}"
+                            Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            Padding="16">
+                        <TextBlock Classes="Body"
+                                   VerticalAlignment="Top"
+                                   TextWrapping="Wrap"
+                                   Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat." />
+                    </Border>
+                </ctrls:BusyArea>
+                <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                    <TextBlock Text="Busy" VerticalAlignment="Center" />
+                    <ToggleSwitch x:Name="BusyToggle" IsChecked="True" OnContent="" OffContent="" />
+                    <TextBlock Text="Scrim" VerticalAlignment="Center" />
+                    <Slider x:Name="ScrimSlider" Width="140" VerticalAlignment="Center"
+                            Minimum="0" Maximum="1" Value="0.9" />
+                    <TextBlock Text="Indicator" VerticalAlignment="Center" />
+                    <ComboBox x:Name="StyleBox" VerticalAlignment="Center" SelectedIndex="1">
+                        <x:Static Member="ctrls:BusyIndicatorStyle.Ring" />
+                        <x:Static Member="ctrls:BusyIndicatorStyle.Bar" />
+                        <x:Static Member="ctrls:BusyIndicatorStyle.Circular" />
+                    </ComboBox>
+                </StackPanel>
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="InfoBars communicate status with color and an icon."
+                              XamlSource="&lt;Border Classes=&quot;infobar&quot; Background=&quot;{DynamicResource SystemFillColorAttentionBackgroundBrush}&quot;&gt;...&lt;/Border&gt;">
+            <StackPanel Spacing="10" HorizontalAlignment="Stretch">
+                <Border Classes="infobar" Background="{DynamicResource SystemFillColorAttentionBackgroundBrush}">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorAttentionBrush}" Text="&#xEA74;" />
+                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Informational — a new update is available." />
+                    </StackPanel>
+                </Border>
+                <Border Classes="infobar" Background="{DynamicResource SystemFillColorSuccessBackgroundBrush}">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorSuccessBrush}" Text="&#xEAB2;" />
+                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Success — your changes were saved." />
+                    </StackPanel>
+                </Border>
+                <Border Classes="infobar" Background="{DynamicResource SystemFillColorCautionBackgroundBrush}">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorCautionBrush}" Text="&#xEA6C;" />
+                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Warning — your session expires soon." />
+                    </StackPanel>
+                </Border>
+                <Border Classes="infobar" Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorCriticalBrush}" Text="&#xEA87;" />
+                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Error — couldn’t reach the server." />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="An InfoBadge (from Avalonia.Labs) flags status as a dot or a number, coloured by severity."
+                              XamlSource="&lt;labs:InfoBadge Classes=&quot;Critical&quot; Content=&quot;99&quot; /&gt;&#10;&lt;labs:InfoBadge Classes=&quot;Attention Dot&quot; ShowOnNullContent=&quot;True&quot; /&gt;">
+            <!-- One column per severity: the dot badge sits directly above its matching number badge,
+                 each centred in the column, so a dot always lines up with its full badge below. -->
+            <StackPanel Orientation="Horizontal" Spacing="20" VerticalAlignment="Center">
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <labs:InfoBadge Classes="Attention Dot" ShowOnNullContent="True" HorizontalAlignment="Center" />
+                    <labs:InfoBadge Classes="Attention" Content="1" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <labs:InfoBadge Classes="Informational Dot" ShowOnNullContent="True" HorizontalAlignment="Center" />
+                    <labs:InfoBadge Classes="Informational" Content="8" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <labs:InfoBadge Classes="Success Dot" ShowOnNullContent="True" HorizontalAlignment="Center" />
+                    <labs:InfoBadge Classes="Success" Content="12" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <labs:InfoBadge Classes="Caution Dot" ShowOnNullContent="True" HorizontalAlignment="Center" />
+                    <labs:InfoBadge Classes="Caution" Content="42" HorizontalAlignment="Center" />
+                </StackPanel>
+                <StackPanel Spacing="14" HorizontalAlignment="Center">
+                    <labs:InfoBadge Classes="Critical Dot" ShowOnNullContent="True" HorizontalAlignment="Center" />
+                    <labs:InfoBadge Classes="Critical" Content="99" HorizontalAlignment="Center" />
+                </StackPanel>
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="InfoBadge in context — overlay one on a host (an icon button, an avatar, a nav item) to flag a count or status right where it happens."
+                              XamlSource="&lt;Grid&gt;&#10;    &lt;Button ... /&gt;&#10;    &lt;labs:InfoBadge Classes=&quot;Critical&quot; Content=&quot;9&quot;&#10;                    HorizontalAlignment=&quot;Right&quot; VerticalAlignment=&quot;Top&quot; Margin=&quot;0,-6,-6,0&quot; /&gt;&#10;&lt;/Grid&gt;">
+            <StackPanel Orientation="Horizontal" Spacing="36" VerticalAlignment="Top">
+
+                <!-- 1) Icon button — a count badge overhanging the top-right corner. -->
+                <StackPanel Spacing="8" HorizontalAlignment="Center">
+                    <Grid Width="40" Height="40" HorizontalAlignment="Center">
+                        <Button Width="40" Height="40" Padding="0"
+                                HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="18" Text="&#xEAA2;" />
+                        </Button>
+                        <labs:InfoBadge Classes="Critical" Content="9"
+                                        HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,-6,-16,0" />
+                    </Grid>
+                    <TextBlock Classes="Caption" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Button corner" />
+                </StackPanel>
+
+                <!-- 2) Avatar — a Success 'dot' as an online-status indicator. -->
+                <StackPanel Spacing="8" HorizontalAlignment="Center">
+                    <Grid Width="44" Height="44" HorizontalAlignment="Center">
+                        <Border Width="44" Height="44" CornerRadius="22"
+                                Background="{DynamicResource AccentFillColorDefaultBrush}">
+                            <TextBlock Classes="BodyStrong" Foreground="White"
+                                       HorizontalAlignment="Center" VerticalAlignment="Center" Text="AK" />
+                        </Border>
+                        <!-- The dot straddles the circle's lower-right rim, inside a surface-coloured ring
+                             so it reads against the avatar. The tiny Labs dot is scaled up via a
+                             LayoutTransform so the ring sizes to it; an explicit orange overrides the class. -->
+                        <Border HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                                CornerRadius="999" Padding="2.5">
+                            <LayoutTransformControl>
+                                <LayoutTransformControl.LayoutTransform>
+                                    <ScaleTransform ScaleX="2" ScaleY="2" />
+                                </LayoutTransformControl.LayoutTransform>
+                                <labs:InfoBadge Classes="Caution Dot" ShowOnNullContent="True" Background="#FFFA6800" />
+                            </LayoutTransformControl>
+                        </Border>
+                    </Grid>
+                    <TextBlock Classes="Caption" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Avatar status" />
+                </StackPanel>
+
+                <!-- 3) Nav item — a trailing count badge inline with the row. -->
+                <StackPanel Spacing="8">
+                    <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                            BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}" BorderThickness="1"
+                            CornerRadius="{DynamicResource ControlCornerRadius}" Padding="12,8" Width="220">
+                        <Grid ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock Grid.Column="0" FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="16" VerticalAlignment="Center" Margin="0,0,12,0" Text="&#xEB1C;" />
+                            <TextBlock Grid.Column="1" Classes="Body" VerticalAlignment="Center" Text="Inbox" />
+                            <labs:InfoBadge Grid.Column="2" Classes="Attention" Content="24" VerticalAlignment="Center" />
+                        </Grid>
+                    </Border>
+                    <TextBlock Classes="Caption" HorizontalAlignment="Center"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="Nav item count" />
+                </StackPanel>
+
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A ToolTip appears on hover."
+                              XamlSource="&lt;Button Content=&quot;Hover over me&quot;&gt;&lt;ToolTip.Tip&gt;&lt;TextBlock Text=&quot;This is a tooltip.&quot; /&gt;&lt;/ToolTip.Tip&gt;&lt;/Button&gt;">
+            <Button Content="Hover over me">
+                <ToolTip.Tip>
+                    <TextBlock Text="This is a tooltip." />
+                </ToolTip.Tip>
+            </Button>
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

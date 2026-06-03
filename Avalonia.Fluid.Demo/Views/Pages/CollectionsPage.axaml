@@ -1,0 +1,71 @@
+﻿<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.CollectionsPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls"
+    xmlns:models="using:Avalonia.Fluid.Demo.Models">
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="A DataGrid shows tabular data in rows and columns."
+                              XamlSource="&lt;DataGrid IsReadOnly=&quot;True&quot; GridLinesVisibility=&quot;None&quot; /&gt;">
+            <!-- A rounded clip wrapper (like the GroupBox) so the header strip follows the corners;
+                 ClipToBounds on the DataGrid itself is rectangular and can't round the header. -->
+            <Border Width="560" Height="220"
+                    CornerRadius="{DynamicResource OverlayCornerRadius}"
+                    ClipToBounds="True"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1">
+                <DataGrid x:Name="Grid"
+                          IsReadOnly="True" CanUserResizeColumns="True"
+                          GridLinesVisibility="None"
+                          BorderThickness="0" CornerRadius="0" />
+            </Border>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A ListBox of selectable items (the 50 US states)."
+                              XamlSource="&lt;ListBox ItemsSource=&quot;{x:Static models:UsStates.All}&quot; /&gt;">
+            <ListBox Width="280" Height="180" SelectedIndex="4"
+                     CornerRadius="{DynamicResource OverlayCornerRadius}"
+                     ClipToBounds="True"
+                     ItemsSource="{x:Static models:UsStates.All}">
+                <!-- Inset the inner ScrollViewer so items / scrollbar clear the rounded corners. -->
+                <ListBox.Styles>
+                    <Style Selector="ListBox /template/ ScrollViewer">
+                        <Setter Property="Margin" Value="0,4,2,4" />
+                    </Style>
+                </ListBox.Styles>
+            </ListBox>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A TreeView shows hierarchical data."
+                              XamlSource="&lt;TreeView&gt;&lt;TreeViewItem Header=&quot;Documents&quot;&gt;&lt;TreeViewItem Header=&quot;Resume.docx&quot; /&gt;&lt;/TreeViewItem&gt;&lt;/TreeView&gt;">
+            <TreeView Width="280" Height="200">
+                <TreeViewItem Header="Documents" IsExpanded="True">
+                    <TreeViewItem Header="Resume.docx" />
+                    <TreeViewItem Header="Budget.xlsx" />
+                </TreeViewItem>
+                <TreeViewItem Header="Pictures" IsExpanded="True">
+                    <TreeViewItem Header="Vacation" />
+                    <TreeViewItem Header="Family" />
+                </TreeViewItem>
+            </TreeView>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A TabControl organizes content into tabs."
+                              XamlSource="&lt;TabControl&gt;&lt;TabItem Header=&quot;Account&quot; /&gt;&lt;TabItem Header=&quot;Privacy&quot; /&gt;&lt;TabItem Header=&quot;About&quot; /&gt;&lt;/TabControl&gt;">
+            <TabControl Width="380" Height="160">
+                <TabItem Header="Account">
+                    <TextBlock Classes="Body" Margin="0,12,0,0" Text="Account settings go here." />
+                </TabItem>
+                <TabItem Header="Privacy">
+                    <TextBlock Classes="Body" Margin="0,12,0,0" Text="Privacy settings go here." />
+                </TabItem>
+                <TabItem Header="About">
+                    <TextBlock Classes="Body" Margin="0,12,0,0" Text="About this app." />
+                </TabItem>
+            </TabControl>
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

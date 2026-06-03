@@ -1,0 +1,68 @@
+﻿<UserControl
+    x:Class="Avalonia.Fluid.Demo.Views.Pages.LayoutPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls">
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="An Expander shows or hides secondary content."
+                              XamlSource="&lt;Expander Header=&quot;Expander header&quot; IsExpanded=&quot;True&quot; /&gt;">
+            <Expander Width="420" Header="Expander header" IsExpanded="True">
+                <TextBlock Classes="Body" TextWrapping="Wrap"
+                           Text="This content is revealed when the expander is open." />
+            </Expander>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A card surface — the Fluent card fill, corner radius and shadow holding a title and body text."
+                              XamlSource="&lt;Border Background=&quot;{DynamicResource CardBackgroundFillColorDefaultBrush}&quot;&#10;        BorderBrush=&quot;{DynamicResource CardStrokeColorDefaultBrush}&quot; BorderThickness=&quot;1&quot;&#10;        BoxShadow=&quot;{DynamicResource CardBoxShadow}&quot;&#10;        CornerRadius=&quot;{DynamicResource OverlayCornerRadius}&quot; Padding=&quot;16,12&quot;&gt;&#10;    &lt;StackPanel&gt;&#10;        &lt;TextBlock Classes=&quot;BodyStrong&quot; Text=&quot;Storage&quot; /&gt;&#10;        &lt;TextBlock Classes=&quot;Body&quot; Text=&quot;82 GB of 128 GB used.&quot; /&gt;&#10;    &lt;/StackPanel&gt;&#10;&lt;/Border&gt;">
+            <Border Width="300"
+                    Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    BoxShadow="{DynamicResource CardBoxShadow}"
+                    CornerRadius="{DynamicResource OverlayCornerRadius}"
+                    Padding="16,12">
+                <StackPanel Spacing="3">
+                    <TextBlock Classes="BodyStrong" Text="Storage" />
+                    <TextBlock Classes="Body" TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="82 GB of 128 GB used. Back up your files to free up space." />
+                </StackPanel>
+            </Border>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A HeaderedContentControl groups content under a header."
+                              XamlSource="&lt;HeaderedContentControl Header=&quot;Group&quot; /&gt;">
+            <HeaderedContentControl Width="300" Header="Group">
+                <TextBlock Classes="Body" TextWrapping="Wrap" Margin="0,8,0,0"
+                           Text="Content displayed beneath the header — a lightweight group box." />
+            </HeaderedContentControl>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A GroupBox wraps content in a titled card with a header strip."
+                              XamlSource="&lt;ctrls:GroupBox Header=&quot;Account&quot;&gt;...&lt;/ctrls:GroupBox&gt;">
+            <ctrls:GroupBox Width="320" Header="Account">
+                <StackPanel Spacing="10">
+                    <TextBox PlaceholderText="Display name" />
+                    <CheckBox Content="Email me about updates" IsChecked="True" />
+                    <Button Classes="accent" Content="Save" HorizontalAlignment="Right" />
+                </StackPanel>
+            </ctrls:GroupBox>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A GridSplitter resizes adjacent columns."
+                              XamlSource="&lt;Grid ColumnDefinitions=&quot;*,Auto,*&quot;&gt;&lt;GridSplitter Grid.Column=&quot;1&quot; Width=&quot;8&quot; /&gt;&lt;/Grid&gt;">
+            <Grid Width="420" Height="120" ColumnDefinitions="*,Auto,*">
+                <Border Grid.Column="0" Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}" CornerRadius="4">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Classes="Body" Text="Left" />
+                </Border>
+                <GridSplitter Grid.Column="1" Width="8" />
+                <Border Grid.Column="2" Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}" CornerRadius="4">
+                    <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Classes="Body" Text="Right" />
+                </Border>
+            </Grid>
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

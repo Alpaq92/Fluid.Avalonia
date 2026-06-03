@@ -1,0 +1,63 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Wider flyout presenter for the DateTimePicker: its six spinner columns (~458px) exceed the
+         default FlyoutPresenter MaxWidth (~456), which otherwise clips the OK/Cancel footer. -->
+    <Style Selector="FlyoutPresenter.dtp-flyout">
+        <Setter Property="MaxWidth" Value="660" />
+    </Style>
+
+    <!-- Wider flyout presenter for the AnalogDateTimePicker: a Calendar and the RadialClock dial
+         (256) sit side by side, exceeding the default FlyoutPresenter MaxWidth (~456). The presenter
+         still sizes to content; this just lifts the cap so nothing clips. -->
+    <Style Selector="FlyoutPresenter.adtp-flyout">
+        <Setter Property="MaxWidth" Value="700" />
+    </Style>
+
+    <!--
+        Shared trigger-field for the custom RadialTimePicker / DateTimePicker. It reuses the *stock*
+        TimePicker flyout-button theme and the same resource keys the native DatePicker / TimePicker
+        fields use, so a custom picker's segmented box is visually identical to Avalonia's own: same
+        chrome, hover / pressed / disabled states, dividers, padding and text rhythm. The segments are
+        equal star columns; each segment is a TextBlock.seg, each divider a Rectangle.div.
+    -->
+    <Style Selector="Button.picker-field">
+        <Setter Property="Theme" Value="{StaticResource FluentTimePickerFlyoutButton}" />
+        <Setter Property="Foreground" Value="{DynamicResource TimePickerButtonForeground}" />
+        <Setter Property="Background" Value="{DynamicResource TimePickerButtonBackground}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource TimePickerButtonBorderBrush}" />
+        <Setter Property="BorderThickness" Value="{DynamicResource TimePickerBorderThemeThickness}" />
+        <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+    <Style Selector="Button.picker-field TextBlock.seg">
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Padding" Value="{DynamicResource TimePickerHostPadding}" />
+    </Style>
+    <Style Selector="Button.picker-field TextBlock.placeholder">
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+    </Style>
+    <Style Selector="Button.picker-field Rectangle.div">
+        <Setter Property="Width" Value="{DynamicResource TimePickerSpacerThemeWidth}" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Fill" Value="{DynamicResource TimePickerSpacerFill}" />
+    </Style>
+
+    <!-- Source-code footer inside a ControlExample card: full width, top divider, rounded bottom. -->
+    <Style Selector="Expander.gallery-source">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="BorderThickness" Value="0,1,0,0" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+        <Setter Property="CornerRadius" Value="0,0,4,4" />
+    </Style>
+    <Style Selector="Expander.gallery-source /template/ ToggleButton#ExpanderHeader">
+        <Setter Property="CornerRadius" Value="0,0,4,4" />
+    </Style>
+
+</Styles>

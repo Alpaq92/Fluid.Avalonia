@@ -1,0 +1,23 @@
+﻿<!--
+    WinUI 3 "card" surface. Apply with Classes="Card" on a Border:
+        <Border Classes="Card"> ... </Border>
+    Use Classes="Card Secondary" for the slightly recessed secondary fill.
+-->
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Style Selector="Border.Card">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="Padding" Value="16" />
+        <Setter Property="BoxShadow" Value="{DynamicResource CardBoxShadow}" />
+    </Style>
+
+    <Style Selector="Border.Card.Secondary">
+        <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+    </Style>
+
+</Styles>

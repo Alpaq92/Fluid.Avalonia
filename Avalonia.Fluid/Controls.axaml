@@ -1,0 +1,36 @@
+﻿<!--
+    Aggregates per-control style overrides layered on top of FluentTheme. New control
+    refinements get their own file under Controls/ and are included here (Romzetron pattern).
+-->
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StyleInclude Source="avares://Avalonia.Fluid/Controls/Typography.axaml" />
+    <StyleInclude Source="avares://Avalonia.Fluid/Controls/Card.axaml" />
+
+    <!-- Default the whole window tree to the WinUI 3 typeface. -->
+    <Style Selector="TopLevel">
+        <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
+    </Style>
+
+    <!-- Button (incl. accent) is fully themed in Controls/Button.axaml.
+         Give the remaining FluentTheme controls the WinUI "lit edge" gradient border. -->
+    <Style Selector="ToggleButton">
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+    <Style Selector="ComboBox">
+        <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+    </Style>
+
+    <!-- NumericUpDown hosts a TextBox inside our themed ButtonSpinner; keep the inner field
+         borderless so only the spinner's border shows (no doubled outline). -->
+    <Style Selector="NumericUpDown /template/ TextBox#PART_TextBox">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="MinHeight" Value="0" />
+    </Style>
+
+</Styles>

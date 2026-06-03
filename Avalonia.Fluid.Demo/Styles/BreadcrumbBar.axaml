@@ -1,0 +1,69 @@
+<!--
+    BreadcrumbBar theme — a horizontal trail of crumbs joined by chevrons (WinUI / FluentAvalonia).
+    Earlier crumbs are secondary-coloured and interactive (hand cursor + subtle hover fill); the final
+    crumb is the current location: emphasised, non-interactive, and without a trailing chevron.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Avalonia.Fluid.Demo.Controls">
+
+    <ControlTheme x:Key="{x:Type ctrls:BreadcrumbBar}" TargetType="ctrls:BreadcrumbBar">
+        <Setter Property="ItemsPanel">
+            <ItemsPanelTemplate>
+                <WrapPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </Setter>
+        <Setter Property="Template">
+            <ControlTemplate>
+                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type ctrls:BreadcrumbBarItem}" TargetType="ctrls:BreadcrumbBarItem">
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <Border x:Name="CrumbBorder"
+                            Background="Transparent"
+                            CornerRadius="4"
+                            Padding="6,3">
+                        <ContentPresenter Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          TextElement.Foreground="{TemplateBinding Foreground}"
+                                          TextElement.FontWeight="{TemplateBinding FontWeight}" />
+                    </Border>
+                    <TextBlock x:Name="Chevron"
+                               FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                               FontSize="11"
+                               Margin="2,0"
+                               VerticalAlignment="Center"
+                               Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                               Text="&#xEAB6;" />
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Interactive (non-final) crumbs. -->
+        <Style Selector="^:not(:last)">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="^:not(:last):pointerover /template/ Border#CrumbBorder">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+
+        <!-- The current location: emphasised, no trailing chevron. -->
+        <Style Selector="^:last">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style Selector="^:last /template/ TextBlock#Chevron">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>
