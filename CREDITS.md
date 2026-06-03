@@ -5,6 +5,8 @@ Every third-party project Avalonia.Fluid bundles, depends on, or references, wit
 | Asset | Used for | License |
 | --- | --- | --- |
 | [Avalonia](https://github.com/AvaloniaUI/Avalonia) + `FluentTheme` | The UI framework this theme builds on | MIT |
+| [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml) | Fluent 2 color tokens & the WinUI control `*_themeresources.xaml` values ported from here | MIT (© Microsoft) |
+| [WinUI 3 Gallery](https://github.com/microsoft/WinUI-Gallery) | Structural reference for the demo (data-driven catalog, NavigationView, ItemPage, ControlExample) | MIT (© Microsoft) |
 | [DejaVu Sans](https://dejavu-fonts.github.io/) | Bundled UI **text** font — covers Latin plus the arrows / geometric / box-drawing glyphs (`→ ● ▼ │`) on every platform | Free (Bitstream Vera / DejaVu license) |
 | [Codicons](https://github.com/microsoft/vscode-codicons) | Bundled **icon** font — the UI's symbol glyphs (`SymbolThemeFontFamily`: window buttons, chevrons, nav icons) | MIT (© Microsoft) |
 | [Markdown.Avalonia](https://github.com/whistyun/Markdown.Avalonia) | Renders the Home (`README.md`) and Custom (`CUSTOM.md`) pages | MIT |
