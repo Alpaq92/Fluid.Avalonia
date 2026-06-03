@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.2](https://github.com/Alpaq92/Avalonia.Fluid/compare/v0.1.1...v0.1.2) (2026-06-03)
+
+
+### Bug Fixes
+
+* **demo:** include the Label target in the example source snippet ([9f59360](https://github.com/Alpaq92/Avalonia.Fluid/commit/9f59360bc2f52c06ce17f29774f74378a55788e3))
+
 ## [0.1.1](https://github.com/Alpaq92/Avalonia.Fluid/compare/v0.1.0...v0.1.1) (2026-06-03)
 
 
