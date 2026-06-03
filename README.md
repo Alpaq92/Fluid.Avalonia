@@ -13,6 +13,12 @@ A **Fluent 2 / WinUI 3-inspired** theme for [Avalonia](https://avaloniaui.net/) 
 
 ![Fluid.Avalonia — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Fluid.Avalonia/main/screenshot.png)
 
+Install from NuGet:
+
+```
+dotnet add package Fluid.Avalonia
+```
+
 It ships as a single `Styles` object you drop into your app:
 
 ```
