@@ -1,5 +1,10 @@
 # Avalonia.Fluid
 
+[![NuGet](https://img.shields.io/nuget/v/Avalonia.Fluid.svg?label=NuGet&color=blue)](https://www.nuget.org/packages/Avalonia.Fluid)
+[![Downloads](https://img.shields.io/nuget/dt/Avalonia.Fluid.svg?label=Downloads&color=blue)](https://www.nuget.org/packages/Avalonia.Fluid)
+[![CI](https://img.shields.io/github/actions/workflow/status/Alpaq92/Avalonia.Fluid/ci.yml?branch=main&label=CI)](https://github.com/Alpaq92/Avalonia.Fluid/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/Alpaq92/Avalonia.Fluid/blob/main/LICENSE)
+
 A **Fluent 2 / WinUI 3-inspired theme for [Avalonia](https://github.com/AvaloniaUI/Avalonia)** with its own identity, adapting to your system accent color. Built on Avalonia's `FluentTheme` with ported Fluent 2 design tokens — lit-edge elevation, card surfaces, a Mica-ready window look, and a Fluent-tuned set of control themes.
 
 ![Avalonia.Fluid demo — the Home page split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Avalonia.Fluid/main/screenshot.png)
