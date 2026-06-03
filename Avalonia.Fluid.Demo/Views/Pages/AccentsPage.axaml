@@ -14,7 +14,7 @@
             </StackPanel>
         </ctrls:ControlExample>
 
-        <ctrls:ControlExample Header="The accent is read from the OS where possible — Windows, macOS and Linux (GNOME / KDE / Cinnamon).">
+        <ctrls:ControlExample Header="The theme picks up your system's accent automatically on Windows, macOS and Linux (GNOME / KDE / Cinnamon).">
             <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
                 <Border x:Name="CurrentSwatch"
                         Width="48" Height="48"
