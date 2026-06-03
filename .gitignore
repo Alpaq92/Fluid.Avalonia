@@ -71,8 +71,11 @@ _ReSharper*/
 riderModule.iml
 *.sln.iml
 
-# VS Code
-.vscode/
+# VS Code — ignore local state, but share the project run/build configs
+.vscode/*
+!.vscode/launch.json
+!.vscode/tasks.json
+!.vscode/extensions.json
 
 # OS junk
 .DS_Store
