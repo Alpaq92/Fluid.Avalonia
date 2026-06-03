@@ -22,7 +22,7 @@ can compare the result side by side.
 
 The demo runs in the browser via Avalonia's **WebAssembly** head, deployed to **GitHub Pages**:
 
-> **Live demo →** **<https://alpaq92.github.io/Avalonia.Fluid/>** *(deployed from the WebAssembly head on every push to `main`)*
+> **Live demo →** **<https://alpaq92.github.io/Avalonia.Fluid/>** *(deployed from the WASM head on every push to `main`)*
 
 The solution is split into a shared library plus per-platform heads:
 
