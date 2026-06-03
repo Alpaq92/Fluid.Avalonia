@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v0.1.2...v1.0.0) (2026-06-03)
+
+
+### Documentation
+
+* add the NuGet install step ahead of the 1.0.0 release ([938261c](https://github.com/Alpaq92/Fluid.Avalonia/commit/938261cde21f9bdb9a2674bb9085adbb94898ff1))
+
 ## [0.1.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v0.1.1...v0.1.2) (2026-06-03)
 
 
