@@ -29,8 +29,8 @@ The repository also contains **Avalonia.Fluid.Demo**, a demo app that mirrors th
 Microsoft's **WinUI 3 Gallery** (data-driven navigation, per-item pages, a Settings page) so you
 can compare the result side by side.
 
-> 📖 **Deep dive:** the architecture, the demo-app internals, and the coverage / roadmap matrix
-> live in **[OVERVIEW.md](OVERVIEW.md)**.
+> 📖 **Deep dive:** the architecture and how the resource layering works, the demo-app internals,
+> and the full coverage / roadmap matrix all live in **[OVERVIEW.md](OVERVIEW.md)**.
 
 ## Live demo
 
