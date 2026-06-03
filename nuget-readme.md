@@ -7,7 +7,7 @@
 
 A **Fluent 2 / WinUI 3-inspired theme for [Avalonia](https://github.com/AvaloniaUI/Avalonia)** with its own identity, adapting to your system accent color. Built on Avalonia's `FluentTheme` with ported Fluent 2 design tokens — lit-edge elevation, card surfaces, a Mica-ready window look, and a Fluent-tuned set of control themes.
 
-![Avalonia.Fluid demo — the Home page split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Avalonia.Fluid/main/screenshot.png)
+![Avalonia.Fluid demo — the Accents page split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Avalonia.Fluid/main/screenshot.png)
 
 ## Install
 

@@ -13,7 +13,7 @@ A theme for [Avalonia](https://avaloniaui.net/) **12** (.NET 8): a **Fluent 2 in
 its own identity — drawing on WinUI 3 for its tokens and metrics, then adapting automatically to
 whatever accent color the user has set (Windows, with macOS and Linux fallbacks).
 
-![Avalonia.Fluid — the demo's Home page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Avalonia.Fluid/main/screenshot.png)
+![Avalonia.Fluid — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Avalonia.Fluid/main/screenshot.png)
 
 It ships as a single `Styles` object you drop into your app:
 
