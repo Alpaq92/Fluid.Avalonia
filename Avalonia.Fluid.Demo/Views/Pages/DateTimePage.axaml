@@ -66,6 +66,16 @@
             <ctrls:AnalogDateTimePicker ClockIdentifier="24HourClock" />
         </ctrls:ControlExample>
 
+        <ctrls:ControlExample Header="An inline slider date + time picker — the looping spinner columns shown directly (the wheels DateTimePicker hosts in its dropdown), two-way bound to a date + time."
+                              XamlSource="&lt;ctrls:DateTimeSpinners /&gt;">
+            <StackPanel Spacing="12" HorizontalAlignment="Left">
+                <ctrls:DateTimeSpinners x:Name="InlineSpinners" />
+                <TextBlock Classes="Caption"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="{Binding #InlineSpinners.SelectedDateTime, StringFormat='Selected: {0}', TargetNullValue='Selected: (nothing yet)'}" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
         <ctrls:ControlExample Header="An inline date + time picker — a Calendar paired with the RadialClock dial (the pieces AnalogDateTimePicker hosts in its flyout), shown directly rather than in a dropdown."
                               XamlSource="&lt;Calendar /&gt;&#10;&lt;ctrls:RadialClock /&gt;">
             <StackPanel Spacing="12">
