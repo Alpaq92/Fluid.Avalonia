@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia.Demo.Desktop", "Fluid.Avalonia.Demo.Desktop\Fluid.Avalonia.Demo.Desktop.csproj", "{D1CE7258-3965-4EAA-AAE9-BD1AA59F8255}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia", "Fluid.Avalonia\Fluid.Avalonia.csproj", "{139240A1-274E-4AA3-BC46-C6FB6C03F4AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia.Demo", "Fluid.Avalonia.Demo\Fluid.Avalonia.Demo.csproj", "{08579315-6D41-489A-B895-7C3806EF5939}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia.Demo.Browser", "Fluid.Avalonia.Demo.Browser\Fluid.Avalonia.Demo.Browser.csproj", "{9ACBD085-C6DB-4CE6-91D7-6C8D7BCEECDD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia.Demo.Desktop", "Fluid.Avalonia.Demo.Desktop\Fluid.Avalonia.Demo.Desktop.csproj", "{D1CE7258-3965-4EAA-AAE9-BD1AA59F8255}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
