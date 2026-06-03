@@ -18,5 +18,3 @@
 * **deps:** Bump the nuget-minor-and-patch group with 1 update ([#1](https://github.com/Alpaq92/Avalonia.Fluid/issues/1)) ([e4980a8](https://github.com/Alpaq92/Avalonia.Fluid/commit/e4980a868787aaaf190bd8e7dd585562b16c51b2))
 * **theme:** vertically center native DatePicker/TimePicker segment text ([9a8087f](https://github.com/Alpaq92/Avalonia.Fluid/commit/9a8087f02fdca10aa193c491a7412eb09687c790))
 * **theme:** vertically center picker segment text with any font ([2fd732d](https://github.com/Alpaq92/Avalonia.Fluid/commit/2fd732d95bbc1f817ca63d2d1354ae724d3f69ee))
-
-## Changelog
