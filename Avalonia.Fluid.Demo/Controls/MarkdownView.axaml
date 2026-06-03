@@ -129,11 +129,11 @@
                     <Style Selector=".Markdown_Avalonia_MarkdownViewer Grid.Table">
                         <Setter Property="mdc:AutoScaleColumnDefinitions.IsEnabled" Value="True" />
                     </Style>
-                    <!-- Outer frame: rounded, clipped, divider-colored border -->
+                    <!-- Outer frame: no border line (it read as a hard outline on light); just a
+                         rounded, clipped, subtly-tinted surface to host the zebra rows. -->
                     <Style Selector=".Markdown_Avalonia_MarkdownViewer Border.Table">
                         <Setter Property="Margin" Value="0,10" />
-                        <Setter Property="BorderBrush" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
-                        <Setter Property="BorderThickness" Value="1" />
+                        <Setter Property="BorderThickness" Value="0" />
                         <Setter Property="CornerRadius" Value="6" />
                         <Setter Property="ClipToBounds" Value="True" />
                         <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
@@ -141,15 +141,18 @@
                     <Style Selector=".Markdown_Avalonia_MarkdownViewer Border.TightTable">
                         <Setter Property="HorizontalAlignment" Value="Left" />
                     </Style>
-                    <!-- Cells: internal gridlines + comfortable padding -->
+                    <!-- Cells: no internal gridlines — a full grid of hairlines reads as hard
+                         outlines on a light background. Comfortable padding + zebra striping +
+                         a single header underline carry the structure instead. -->
                     <Style Selector=".Markdown_Avalonia_MarkdownViewer Grid.Table > Border">
-                        <Setter Property="BorderBrush" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
-                        <Setter Property="BorderThickness" Value="0,0,1,1" />
+                        <Setter Property="BorderThickness" Value="0" />
                         <Setter Property="Padding" Value="14,9" />
                     </Style>
-                    <!-- Header row -->
+                    <!-- Header row: subtle underline only -->
                     <Style Selector=".Markdown_Avalonia_MarkdownViewer Border.TableHeader">
                         <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+                        <Setter Property="BorderBrush" Value="{DynamicResource DividerStrokeColorDefaultBrush}" />
+                        <Setter Property="BorderThickness" Value="0,0,0,1" />
                     </Style>
                     <Style Selector=".Markdown_Avalonia_MarkdownViewer Border.TableHeader ctxt|CTextBlock">
                         <Setter Property="FontWeight" Value="SemiBold" />
