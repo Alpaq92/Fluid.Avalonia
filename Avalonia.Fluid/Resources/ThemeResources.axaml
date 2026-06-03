@@ -24,6 +24,17 @@
     <CornerRadius x:Key="ControlCornerRadius">4</CornerRadius>
     <CornerRadius x:Key="OverlayCornerRadius">8</CornerRadius>
 
+    <!-- Picker field segment-text padding. Avalonia's FluentTheme defaults are vertically asymmetric
+         (0,3,0,6) — a hand-tuning for Segoe UI's metrics — which leaves the DatePicker / TimePicker
+         day · month · year and hour : minute text sitting high under a different font. Make them
+         vertically symmetric so the segment text centers regardless of typeface (the segment
+         TextBlocks also get VerticalAlignment=Center in Controls.axaml). The custom RadialTimePicker /
+         DateTimePicker fields read TimePickerHostPadding too, so this centers them as well. Horizontal
+         components are preserved (the month keeps its 9px left indent). -->
+    <Thickness x:Key="TimePickerHostPadding">0,4,0,4</Thickness>
+    <Thickness x:Key="DatePickerHostPadding">0,4,0,4</Thickness>
+    <Thickness x:Key="DatePickerHostMonthPadding">9,4,0,4</Thickness>
+
     <!-- Base control font size = WinUI Body. -->
     <x:Double x:Key="ControlContentThemeFontSize">14</x:Double>
 
