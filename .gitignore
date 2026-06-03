@@ -86,3 +86,6 @@ Desktop.ini
 
 # Agent / assistant working data — never publish
 .claude/
+
+# Raw (pre-processing) screenshot backup; the optimized screenshot.png is committed
+screenshot.original.png
