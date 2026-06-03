@@ -1,6 +1,6 @@
 # Credits
 
-Every third-party project Avalonia.Fluid bundles, depends on, or references, with its license:
+Every third-party project Fluid.Avalonia bundles, depends on, or references, with its license:
 
 | Asset | Used for | License |
 | --- | --- | --- |

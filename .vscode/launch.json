@@ -1,16 +1,16 @@
 {
-    // Runs the Desktop head (Avalonia.Fluid.Demo.Desktop) on F5. Requires the C# extension
+    // Runs the Desktop head (Fluid.Avalonia.Demo.Desktop) on F5. Requires the C# extension
     // (or C# Dev Kit). The preLaunchTask builds the Desktop project first.
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Desktop (Avalonia.Fluid.Demo.Desktop)",
+            "name": "Desktop (Fluid.Avalonia.Demo.Desktop)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build-desktop",
-            "program": "${workspaceFolder}/Avalonia.Fluid.Demo.Desktop/bin/Debug/net8.0/Avalonia.Fluid.Demo.Desktop.dll",
+            "program": "${workspaceFolder}/Fluid.Avalonia.Demo.Desktop/bin/Debug/net8.0/Fluid.Avalonia.Demo.Desktop.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/Avalonia.Fluid.Demo.Desktop",
+            "cwd": "${workspaceFolder}/Fluid.Avalonia.Demo.Desktop",
             "console": "internalConsole",
             "stopAtEntry": false
         }

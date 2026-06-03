@@ -1,0 +1,107 @@
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Views.Pages.AccentsPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="Choose which source drives the accent. Checking one option makes it active and applies it.">
+            <StackPanel Orientation="Horizontal" Spacing="24">
+                <CheckBox x:Name="ModeSystem" Content="System accent" />
+                <CheckBox x:Name="ModePreset" Content="Preset" />
+                <CheckBox x:Name="ModeCustom" Content="Custom" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="The theme picks up your system's accent automatically on Windows, macOS and Linux (GNOME / KDE / Cinnamon).">
+            <StackPanel Orientation="Horizontal" Spacing="16" VerticalAlignment="Center">
+                <Border x:Name="CurrentSwatch"
+                        Width="48" Height="48"
+                        CornerRadius="8"
+                        Background="{DynamicResource AccentFillColorDefaultBrush}"
+                        BorderBrush="{DynamicResource ControlElevationBorderBrush}"
+                        BorderThickness="1" />
+                <StackPanel VerticalAlignment="Center" Spacing="2">
+                    <TextBlock Classes="Body" Text="Current accent" />
+                    <TextBlock x:Name="CurrentHex" Classes="Caption"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+                <Button x:Name="SysAccentBtn" Content="Use system accent" VerticalAlignment="Center" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="Or pick from a Metro-inspired preset palette — handy when the OS has no accent to read.">
+            <WrapPanel x:Name="PresetPanel" MaxWidth="520" />
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="Or set one yourself with a ColorPicker. The whole theme re-tints live.">
+            <TabControl Width="360">
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                   FontSize="18" Text="&#xEB5C;"
+                                   ToolTip.Tip="Color Space" />
+                    </TabItem.Header>
+                    <Grid Margin="0,12,0,4" Height="270"
+                          HorizontalAlignment="Left"
+                          ColumnDefinitions="Auto,Auto">
+                        <ColorSpectrum x:Name="Spectrum"
+                                       Width="270" Height="270"
+                                       Components="SaturationValue"
+                                       Shape="Box"
+                                       Margin="0,0,8,0" />
+                        <ColorSlider x:Name="HueSlider"
+                                     Grid.Column="1"
+                                     Orientation="Vertical"
+                                     Width="20"
+                                     ColorModel="Hsva"
+                                     ColorComponent="Component1"
+                                     VerticalAlignment="Stretch" />
+                    </Grid>
+                </TabItem>
+                <TabItem>
+                    <TabItem.Header>
+                        <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                   FontSize="18" Text="&#xEB52;"
+                                   ToolTip.Tip="Sliders" />
+                    </TabItem.Header>
+                    <!-- Held in a 270-tall area (matching the Color space tab) so switching tabs
+                         doesn't resize the card; the ColorView keeps its natural size, top-aligned. -->
+                    <Panel Height="270" Margin="0,12,0,4" HorizontalAlignment="Left">
+                        <ColorView x:Name="ComponentsPicker"
+                                   VerticalAlignment="Top"
+                                   IsAlphaEnabled="False"
+                                   IsAlphaVisible="False"
+                                   IsColorPaletteVisible="False"
+                                   IsColorComponentsVisible="True"
+                                   IsColorPreviewVisible="True"
+                                   IsColorSpectrumVisible="False">
+                            <!-- Scoped to this ColorView only: kill the leftover accent tab-pipe line
+                                 (its internal tab strip is collapsed) and the grey label/# chips,
+                                 without touching our outer TabControl underline or disabled inputs. -->
+                            <ColorView.Resources>
+                                <!-- This view shows only the components section, so collapse its
+                                     redundant single-tab strip (scoped here, not globally). -->
+                                <x:Double x:Key="ColorViewTabStripHeight">0</x:Double>
+                                <SolidColorBrush x:Key="TabItemHeaderSelectedPipeFill" Color="Transparent" />
+                                <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="Transparent" />
+                            </ColorView.Resources>
+                        </ColorView>
+                    </Panel>
+                </TabItem>
+            </TabControl>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="Live preview — these controls all read the accent through DynamicResource, so they re-tint instantly.">
+            <StackPanel Spacing="16" MaxWidth="420">
+                <Button Classes="accent" Content="Accent button" HorizontalAlignment="Left" />
+                <ToggleSwitch IsChecked="True" Content="Toggle" />
+                <CheckBox IsChecked="True" Content="Check box" />
+                <Slider Value="60" Maximum="100" />
+                <ProgressBar Value="60" Maximum="100" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

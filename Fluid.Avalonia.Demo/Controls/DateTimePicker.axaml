@@ -1,0 +1,52 @@
+<!--
+    DateTimePicker — a native-picker-style segmented field (month / day / year · hour : minute · AM-PM)
+    that opens a flyout of looping spinner columns. The columns themselves are the reusable
+    DateTimeSpinners control. OK commits its value to SelectedDateTime; Cancel discards; Reset returns
+    the time to a default. ClockIdentifier chooses 12-hour (with AM/PM) or 24-hour.
+-->
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Controls.DateTimePicker"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <Button x:Name="Trigger"
+            Classes="picker-field">
+        <!-- Month gets a wider share (1.3*) — it holds the longest label (e.g. Polish "miesiąc"). -->
+        <Grid x:Name="FieldGrid" ColumnDefinitions="1.3*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*">
+            <!-- Date: month / day / year -->
+            <TextBlock x:Name="MonthText" Classes="seg" Grid.Column="0" />
+            <Rectangle Classes="div" Grid.Column="1" />
+            <TextBlock x:Name="DayText" Classes="seg" Grid.Column="2" />
+            <Rectangle Classes="div" Grid.Column="3" />
+            <TextBlock x:Name="YearText" Classes="seg" Grid.Column="4" />
+
+            <!-- divider between date and time -->
+            <Rectangle Classes="div" Grid.Column="5" />
+
+            <!-- Time: hour : minute · AM/PM -->
+            <TextBlock x:Name="HourText" Classes="seg" Grid.Column="6" />
+            <Rectangle Classes="div" Grid.Column="7" />
+            <TextBlock x:Name="MinuteText" Classes="seg" Grid.Column="8" />
+            <Rectangle x:Name="AmPmDiv" Classes="div" Grid.Column="9" />
+            <!-- AM/PM lives in an Auto column (sized to the 2-letter designator); the .seg padding is 0
+                 horizontal, so add a small margin to keep it off the divider and the field's edge. -->
+            <TextBlock x:Name="AmPmText" Classes="seg" Grid.Column="10" Margin="8,0" />
+        </Grid>
+        <Button.Flyout>
+            <Flyout Placement="BottomEdgeAlignedLeft" FlyoutPresenterClasses="dtp-flyout">
+                <StackPanel Spacing="14">
+                    <ctrls:DateTimeSpinners x:Name="Spinners" />
+
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Button x:Name="ResetBtn" Grid.Column="0" Content="{DynamicResource STRING_RESET}" />
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="CancelBtn" Content="{DynamicResource STRING_CANCEL}" />
+                            <Button x:Name="OkBtn" Classes="accent" Content="{DynamicResource STRING_OK}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Flyout>
+        </Button.Flyout>
+    </Button>
+</UserControl>

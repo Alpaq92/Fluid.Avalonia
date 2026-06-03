@@ -4,7 +4,7 @@ name: Release
 # BREAKING CHANGE) and maintains a "Release PR" that bumps the version in
 # .release-please-manifest.json and updates CHANGELOG.md. The PR is queued for
 # auto-merge, so it lands on its own once CI + CodeQL are green. Merging it
-# creates the tag + GitHub Release; the publish job then packs Avalonia.Fluid at
+# creates the tag + GitHub Release; the publish job then packs Fluid.Avalonia at
 # the new tag and pushes it to NuGet.org. (The WebAssembly demo deploys to
 # GitHub Pages separately via pages.yml on every push to main.)
 #
@@ -82,8 +82,8 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Pack Avalonia.Fluid
-        run: dotnet pack Avalonia.Fluid/Avalonia.Fluid.csproj --configuration Release -p:Version=${{ steps.tag.outputs.version }} -p:PackageVersion=${{ steps.tag.outputs.version }} -o ./nupkg
+      - name: Pack Fluid.Avalonia
+        run: dotnet pack Fluid.Avalonia/Fluid.Avalonia.csproj --configuration Release -p:Version=${{ steps.tag.outputs.version }} -p:PackageVersion=${{ steps.tag.outputs.version }} -o ./nupkg
 
       - name: Push to NuGet.org
         shell: bash

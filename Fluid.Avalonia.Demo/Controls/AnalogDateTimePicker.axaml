@@ -1,0 +1,56 @@
+<!--
+    AnalogDateTimePicker — a segmented date + time field (month / day / year · hour : minute · AM-PM)
+    that opens a dropdown pairing a Calendar (for the date) with a RadialClock dial (for the time),
+    side by side — an analog clock face instead of digital spinner wheels. The flyout seeds both from
+    SelectedDateTime on open; OK commits the chosen day + dial time back to SelectedDateTime, Cancel
+    discards, Reset returns the time to its default. ClockIdentifier switches between 12-hour and 24-hour.
+-->
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Controls.AnalogDateTimePicker"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <!-- The trigger uses the shared Button.picker-field style (Styles/GalleryStyles.axaml). -->
+    <Button x:Name="Trigger" Classes="picker-field">
+        <!-- Month gets a wider share (1.3*) — it holds the longest label (e.g. Polish "miesiąc"). -->
+        <Grid x:Name="FieldGrid" ColumnDefinitions="1.3*,Auto,*,Auto,*,Auto,*,Auto,*,Auto,*">
+            <!-- Date: month / day / year -->
+            <TextBlock x:Name="MonthText" Classes="seg" Grid.Column="0" />
+            <Rectangle Classes="div" Grid.Column="1" />
+            <TextBlock x:Name="DayText" Classes="seg" Grid.Column="2" />
+            <Rectangle Classes="div" Grid.Column="3" />
+            <TextBlock x:Name="YearText" Classes="seg" Grid.Column="4" />
+
+            <!-- divider between date and time -->
+            <Rectangle Classes="div" Grid.Column="5" />
+
+            <!-- Time: hour : minute · AM/PM -->
+            <TextBlock x:Name="HourText" Classes="seg" Grid.Column="6" />
+            <Rectangle Classes="div" Grid.Column="7" />
+            <TextBlock x:Name="MinuteText" Classes="seg" Grid.Column="8" />
+            <Rectangle x:Name="AmPmDiv" Classes="div" Grid.Column="9" />
+            <!-- AM/PM lives in an Auto column (sized to the 2-letter designator); the .seg padding is 0
+                 horizontal, so add a small margin to keep it off the divider and the field's edge. -->
+            <TextBlock x:Name="AmPmText" Classes="seg" Grid.Column="10" Margin="8,0" />
+        </Grid>
+        <Button.Flyout>
+            <Flyout Placement="Bottom" FlyoutPresenterClasses="adtp-flyout">
+                <StackPanel Spacing="14">
+                    <StackPanel Orientation="Horizontal" Spacing="16">
+                        <Calendar x:Name="Cal" VerticalAlignment="Top" />
+                        <ctrls:RadialClock x:Name="Clock" />
+                    </StackPanel>
+
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <Button x:Name="ResetBtn" Grid.Column="0" Content="{DynamicResource STRING_RESET}" />
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8">
+                            <Button x:Name="CancelBtn" Content="{DynamicResource STRING_CANCEL}" />
+                            <Button x:Name="OkBtn" Classes="accent" Content="{DynamicResource STRING_OK}" />
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Flyout>
+        </Button.Flyout>
+    </Button>
+</UserControl>

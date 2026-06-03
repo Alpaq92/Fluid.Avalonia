@@ -8,4 +8,12 @@
     <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
   </PropertyGroup>
 
+  <!-- The package/namespace is Fluid.Avalonia, which sits OUTSIDE the framework's `Avalonia`
+       root namespace, so types in the `Avalonia` namespace (Rect, StyledProperty,
+       AvaloniaPropertyChangedEventArgs, VisualTreeAttachmentEventArgs, …) are no longer visible
+       via parent-namespace lookup. Make them globally available so code uses them unqualified. -->
+  <ItemGroup>
+    <Using Include="Avalonia" />
+  </ItemGroup>
+
 </Project>

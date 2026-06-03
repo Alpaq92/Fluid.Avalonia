@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Shared gallery library (App, Views, Controls, Pages, assets). The desktop and browser heads
+       reference it. Assembly name stays "Fluid.Avalonia.Demo" so the avares:// URIs resolve. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>Fluid.Avalonia.Demo</RootNamespace>
+    <AssemblyName>Fluid.Avalonia.Demo</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\**" />
+    <!-- README is rendered live on the Home page; CUSTOM.md on the Custom page. -->
+    <AvaloniaResource Include="..\README.md" Link="README.md" />
+    <AvaloniaResource Include="..\CUSTOM.md" Link="CUSTOM.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Labs.Controls" Version="12.0.2" />
+    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="$(AvaloniaVersion)" />
+    <PackageReference Include="Markdown.Avalonia" Version="12.0.0-a3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fluid.Avalonia\Fluid.Avalonia.csproj" />
+  </ItemGroup>
+
+</Project>

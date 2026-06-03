@@ -95,7 +95,7 @@ by SukiUI's `GroupBox` (and the classic WPF `GroupBox` that Avalonia lacks).
 
 ## Theme & shell
 
-### Avalonia.Fluid theme
+### Fluid.Avalonia theme
 
 A WinUI 3 / Fluent 2 look layered over `FluentTheme`: light/dark Fluent 2 colour tokens, lit-edge
 elevation borders, card surfaces, and a Fluent-tuned set of control themes (`NumericUpDown` /
@@ -112,9 +112,9 @@ into the Accents page and the colour picker.
 
 ### Localization
 
-Runtime localization the **Semi.Avalonia / SukiUI** way, shipped **inside the `Avalonia.Fluid` theme
-library itself** (`Avalonia.Fluid/Locale/<code>.axaml`, currently en / pl / de / fr / es) — per-culture
-`ResourceDictionary` files of keyed `<x:String>` entries that `Avalonia.Fluid.Locale.LocaleManager` merges
+Runtime localization the **Semi.Avalonia / SukiUI** way, shipped **inside the `Fluid.Avalonia` theme
+library itself** (`Fluid.Avalonia/Locale/<code>.axaml`, currently en / pl / de / fr / es) — per-culture
+`ResourceDictionary` files of keyed `<x:String>` entries that `Fluid.Avalonia.Locale.LocaleManager` merges
 into the app and swaps at runtime, so the theme carries its own translations. The picker buttons (OK / Cancel / Reset)
 use `{DynamicResource STRING_*}` (so they update live on switch); the segmented field's placeholders are
 painted in code, so they re-read on a `LanguageChanged` event. Several **native** Avalonia controls localize
@@ -142,4 +142,4 @@ default chrome.
 ### Playground
 
 A live XAML sandbox page — type Avalonia markup and see it rendered instantly, themed by
-Avalonia.Fluid.
+Fluid.Avalonia.

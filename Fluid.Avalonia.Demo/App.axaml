@@ -1,0 +1,49 @@
+<Application
+    x:Class="Fluid.Avalonia.Demo.App"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:winui="clr-namespace:Fluid.Avalonia;assembly=Fluid.Avalonia"
+    xmlns:labs="using:Avalonia.Labs.Controls"
+    RequestedThemeVariant="Default">
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/ControlExample.axaml" />
+                <!-- ColorView theme audit (overrides the bundled ColorPicker slider sizing / thumb). -->
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/ColorPicker.axaml" />
+                <!-- BusyArea (SukiUI-inspired) overlay control theme. -->
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/BusyArea.axaml" />
+                <!-- Composite controls ported from FluentAvalonia / SukiUI, themed to Fluent 2. -->
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/BreadcrumbBar.axaml" />
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/GroupBox.axaml" />
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/BinarySelector.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Fonts bundled in the app and exposed to the Fluid.Avalonia theme, so text + glyphs render
+                 on every platform — including the browser, which has no system-font fallback. -->
+            <!-- Text: DejaVu Sans (broad coverage — Latin incl. pl/de, arrows, geometric, box-drawing). -->
+            <FontFamily x:Key="ContentControlThemeFontFamily">avares://Fluid.Avalonia.Demo/Assets/Fonts/DejaVuSans.ttf#DejaVu Sans</FontFamily>
+            <FontFamily x:Key="WinUIFontFamilyDisplay">avares://Fluid.Avalonia.Demo/Assets/Fonts/DejaVuSans.ttf#DejaVu Sans</FontFamily>
+            <!-- Icons: VS Code Codicons (MIT) — the UI's symbol glyphs (window buttons, chevrons, nav icons). -->
+            <FontFamily x:Key="SymbolThemeFontFamily">avares://Fluid.Avalonia.Demo/Assets/Fonts/codicon.ttf#codicon</FontFamily>
+        </ResourceDictionary>
+    </Application.Resources>
+
+    <Application.Styles>
+        <winui:FluidTheme />
+        <!-- Avalonia.Labs control themes (provides the InfoBadge control). -->
+        <labs:ControlThemes />
+        <!-- Colour the 'Attention' InfoBadge with the app accent (the selected colour preset / live OS
+             accent), matching WinUI where Attention = system accent — rather than Labs' fixed gold. -->
+        <Style Selector="labs|InfoBadge.Attention">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+        <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
+        <!-- ListBox-aligned DataGrid refinements (after the DataGrid Fluent theme so they win). -->
+        <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/DataGrid.axaml" />
+        <!-- ColorView / ColorPicker control themes (not pulled in by FluentTheme). -->
+        <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+        <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/GalleryStyles.axaml" />
+    </Application.Styles>
+
+</Application>

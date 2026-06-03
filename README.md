@@ -1,11 +1,11 @@
-# Avalonia.Fluid
+# Fluid.Avalonia
 
 <p align="center">
-  <a href="https://www.nuget.org/packages/Avalonia.Fluid"><img src="https://img.shields.io/nuget/v/Avalonia.Fluid.svg?label=NuGet&color=blue" alt="NuGet version" /></a>
-  <a href="https://www.nuget.org/packages/Avalonia.Fluid"><img src="https://img.shields.io/nuget/dt/Avalonia.Fluid.svg?label=Downloads&color=blue" alt="NuGet downloads" /></a>
-  <a href="https://github.com/Alpaq92/Avalonia.Fluid/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alpaq92/Avalonia.Fluid/ci.yml?branch=main&label=CI" alt="CI" /></a>
-  <a href="https://github.com/Alpaq92/Avalonia.Fluid/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alpaq92/Avalonia.Fluid/release.yml?branch=main&label=Release" alt="Release" /></a>
-  <a href="https://alpaq92.github.io/Avalonia.Fluid/"><img src="https://img.shields.io/badge/demo-live-success" alt="Live demo" /></a>
+  <a href="https://www.nuget.org/packages/Fluid.Avalonia"><img src="https://img.shields.io/nuget/v/Fluid.Avalonia.svg?label=NuGet&color=blue" alt="NuGet version" /></a>
+  <a href="https://www.nuget.org/packages/Fluid.Avalonia"><img src="https://img.shields.io/nuget/dt/Fluid.Avalonia.svg?label=Downloads&color=blue" alt="NuGet downloads" /></a>
+  <a href="https://github.com/Alpaq92/Fluid.Avalonia/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alpaq92/Fluid.Avalonia/ci.yml?branch=main&label=CI" alt="CI" /></a>
+  <a href="https://github.com/Alpaq92/Fluid.Avalonia/actions/workflows/release.yml"><img src="https://img.shields.io/github/actions/workflow/status/Alpaq92/Fluid.Avalonia/release.yml?branch=main&label=Release" alt="Release" /></a>
+  <a href="https://alpaq92.github.io/Fluid.Avalonia/"><img src="https://img.shields.io/badge/demo-live-success" alt="Live demo" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
 </p>
 
@@ -13,19 +13,19 @@ A theme for [Avalonia](https://avaloniaui.net/) **12** (.NET 8): a **Fluent 2 in
 its own identity — drawing on WinUI 3 for its tokens and metrics, then adapting automatically to
 whatever accent color the user has set (Windows, with macOS and Linux fallbacks).
 
-![Avalonia.Fluid — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Avalonia.Fluid/main/screenshot.png)
+![Fluid.Avalonia — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Fluid.Avalonia/main/screenshot.png)
 
 It ships as a single `Styles` object you drop into your app:
 
 ```
-<Application xmlns:fluid="clr-namespace:Avalonia.Fluid;assembly=Avalonia.Fluid">
+<Application xmlns:fluid="clr-namespace:Fluid.Avalonia;assembly=Fluid.Avalonia">
   <Application.Styles>
     <fluid:FluidTheme />
   </Application.Styles>
 </Application>
 ```
 
-The repository also contains **Avalonia.Fluid.Demo**, a demo app that mirrors the structure of
+The repository also contains **Fluid.Avalonia.Demo**, a demo app that mirrors the structure of
 Microsoft's **WinUI 3 Gallery** (data-driven navigation, per-item pages, a Settings page) so you
 can compare the result side by side.
 
@@ -36,15 +36,15 @@ can compare the result side by side.
 
 The demo runs in the browser via Avalonia's **WebAssembly** head, deployed to **GitHub Pages**:
 
-> **Live demo →** **<https://alpaq92.github.io/Avalonia.Fluid/>** *(deployed from the WASM head on every push to `main`)*
+> **Live demo →** **<https://alpaq92.github.io/Fluid.Avalonia/>** *(deployed from the WASM head on every push to `main`)*
 
 The solution is split into a shared library plus per-platform heads:
 
 | Project | Role |
 | --- | --- |
-| `Avalonia.Fluid.Demo` | Shared gallery library (App, Views, Controls, pages, assets). |
-| `Avalonia.Fluid.Demo.Desktop` | Desktop head — the Mica window + custom title bar. |
-| `Avalonia.Fluid.Demo.Browser` | WebAssembly head — hosts the shared `MainView` as the single top-level. |
+| `Fluid.Avalonia.Demo` | Shared gallery library (App, Views, Controls, pages, assets). |
+| `Fluid.Avalonia.Demo.Desktop` | Desktop head — the Mica window + custom title bar. |
+| `Fluid.Avalonia.Demo.Browser` | WebAssembly head — hosts the shared `MainView` as the single top-level. |
 
 The desktop window's content was factored into a shared `MainView` so both heads reuse the exact
 same shell; Windows-only bits (Mica, the `WM_SETICON` taskbar fix, the registry accent read) are
@@ -54,7 +54,7 @@ Actions"** once. Build it locally with:
 
 ```
 dotnet workload install wasm-tools
-dotnet publish Avalonia.Fluid.Demo.Browser -c Release
+dotnet publish Fluid.Avalonia.Demo.Browser -c Release
 ```
 
 ---
@@ -71,7 +71,7 @@ dotnet publish Avalonia.Fluid.Demo.Browser -c Release
   control, updating instantly when the user changes it. Where no OS accent is available, apps can
   pick from a **Metro-inspired preset palette** (20 swatches) or set any color manually (e.g.
   with a `ColorPicker`) via `AccentColorService.SetAccent` / `UseSystemAccent`.
-- **Cross-platform & self-contained.** One library (`Avalonia.Fluid`) targeting `net8.0` with no
+- **Cross-platform & self-contained.** One library (`Fluid.Avalonia`) targeting `net8.0` with no
   third-party theme dependencies — it layers on Avalonia's built-in `FluentTheme`. Platform
   specifics (registry / `defaults` / `gsettings` accent readers, Mica, dark title bar) are guarded
   and degrade gracefully everywhere.
@@ -102,7 +102,7 @@ were built specifically for this project**, with no direct equivalent in vanilla
 `FluentColorPicker`, `BreadcrumbBar`, `GroupBox`, and more.
 
 Each one is catalogued — with what it is and a live example — in **[CUSTOM.md](CUSTOM.md)**, a
-detailed reference for every custom control and feature authored for Avalonia.Fluid (also rendered
+detailed reference for every custom control and feature authored for Fluid.Avalonia (also rendered
 live on the demo's **Custom** page).
 
 ## Building & running
@@ -111,7 +111,7 @@ Requires the **.NET 8 SDK** (pinned via `global.json`).
 
 ```
 dotnet build
-dotnet run --project Avalonia.Fluid.Demo
+dotnet run --project Fluid.Avalonia.Demo
 ```
 
 The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon), falling back to Avalonia's

@@ -1,0 +1,38 @@
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Views.Pages.ScrollingPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="A ScrollViewer scrolls content that exceeds its bounds."
+                              XamlSource="&lt;ScrollViewer&gt;&lt;StackPanel&gt;...&lt;/StackPanel&gt;&lt;/ScrollViewer&gt;">
+            <ScrollViewer
+                Width="420"
+                Height="200"
+                Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}">
+                <StackPanel Margin="12" Spacing="8">
+                    <TextBlock Classes="Body" Text="Line 1" />
+                    <TextBlock Classes="Body" Text="Line 2" />
+                    <TextBlock Classes="Body" Text="Line 3" />
+                    <TextBlock Classes="Body" Text="Line 4" />
+                    <TextBlock Classes="Body" Text="Line 5" />
+                    <TextBlock Classes="Body" Text="Line 6" />
+                    <TextBlock Classes="Body" Text="Line 7" />
+                    <TextBlock Classes="Body" Text="Line 8" />
+                    <TextBlock Classes="Body" Text="Line 9" />
+                    <TextBlock Classes="Body" Text="Line 10" />
+                    <TextBlock Classes="Body" Text="Line 11" />
+                    <TextBlock Classes="Body" Text="Line 12" />
+                </StackPanel>
+            </ScrollViewer>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A standalone ScrollBar."
+                              XamlSource="&lt;ScrollBar Orientation=&quot;Horizontal&quot; Minimum=&quot;0&quot; Maximum=&quot;100&quot; Value=&quot;30&quot; ViewportSize=&quot;20&quot; /&gt;">
+            <ScrollBar Width="200" Orientation="Horizontal" Minimum="0" Maximum="100" Value="30" ViewportSize="20" />
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,168 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:conv="using:Avalonia.Data.Converters"
+    xmlns:local="using:Fluid.Avalonia.Demo.Controls">
+
+    <ControlTheme x:Key="{x:Type local:ControlExample}" TargetType="local:ControlExample">
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Margin" Value="0,0,0,16" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <StackPanel Spacing="8">
+
+                    <!-- Header / description above the card -->
+                    <TextBlock
+                        Classes="Body"
+                        Text="{TemplateBinding Header}"
+                        TextWrapping="Wrap"
+                        IsVisible="{Binding Header, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}" />
+
+                    <Border
+                        Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource ControlCornerRadius}">
+                        <DockPanel>
+
+                            <!-- Collapsible source-code footer -->
+                            <Expander
+                                DockPanel.Dock="Bottom"
+                                Classes="gallery-source"
+                                Header="Source code"
+                                IsVisible="{Binding XamlSource, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:StringConverters.IsNotNullOrEmpty}}">
+                                <ScrollViewer
+                                    HorizontalScrollBarVisibility="Auto"
+                                    MaxHeight="360">
+                                    <SelectableTextBlock
+                                        FontFamily="Cascadia Code, Cascadia Mono, Consolas, monospace"
+                                        FontSize="13"
+                                        Padding="16"
+                                        Text="{TemplateBinding XamlSource}" />
+                                </ScrollViewer>
+                            </Expander>
+
+                            <!-- Example + options row -->
+                            <Grid ColumnDefinitions="*,Auto">
+                                <ContentPresenter
+                                    Grid.Column="0"
+                                    Margin="20"
+                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}"
+                                    ContentTemplate="{TemplateBinding ContentTemplate}" />
+
+                                <Border
+                                    Grid.Column="1"
+                                    MinWidth="200"
+                                    Padding="16"
+                                    Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}"
+                                    BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1,0,0,0"
+                                    IsVisible="{Binding Options, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static conv:ObjectConverters.IsNotNull}}">
+                                    <ContentPresenter Content="{TemplateBinding Options}" />
+                                </Border>
+                            </Grid>
+                        </DockPanel>
+                    </Border>
+                </StackPanel>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- NavigationView-style item: rounded hover, accent selection pill on the left. -->
+    <ControlTheme x:Key="NavItem" TargetType="ListBoxItem">
+        <Setter Property="Margin" Value="4,1" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border
+                    x:Name="Root"
+                    MinHeight="36"
+                    Background="{TemplateBinding Background}"
+                    CornerRadius="4">
+                    <Grid>
+                        <Border
+                            x:Name="Indicator"
+                            Width="3"
+                            Height="16"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="{DynamicResource AccentFillColorDefaultBrush}"
+                            CornerRadius="1.5"
+                            Opacity="0" />
+                        <ContentPresenter
+                            x:Name="PART_ContentPresenter"
+                            Margin="14,0,12,0"
+                            VerticalAlignment="Center"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <Style Selector="^:pointerover /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:selected /template/ Border#Root">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:selected /template/ Border#Indicator">
+            <Setter Property="Opacity" Value="1" />
+        </Style>
+    </ControlTheme>
+
+    <!-- A thin, non-interactive divider row for the nav list (assigned to separator items). -->
+    <ControlTheme x:Key="NavSeparatorItem" TargetType="ListBoxItem">
+        <Setter Property="Margin" Value="14,3" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Height="1" Background="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+    <!-- LabeledTextInput: a recessed bordered box split into a small label chip + a borderless
+         field, lifted from the ColorView's component inputs. -->
+    <ControlTheme x:Key="{x:Type local:LabeledTextInput}" TargetType="local:LabeledTextInput">
+        <Setter Property="MinHeight" Value="32" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <!-- A label "chip" butted against a standard TextBox, exactly like the ColorView's
+                     component inputs: the chip carries the left border + rounded-left corners, the
+                     TextBox carries the rest, so the two read as one rounded, recessed field. -->
+                <Grid ColumnDefinitions="Auto,*" MinHeight="{TemplateBinding MinHeight}">
+                    <Border Grid.Column="0"
+                            MinWidth="34"
+                            Padding="8,0"
+                            Background="{DynamicResource TextControlBackgroundDisabled}"
+                            BorderBrush="{DynamicResource TextControlBorderBrush}"
+                            BorderThickness="1,1,0,1"
+                            CornerRadius="4,0,0,4">
+                        <TextBlock Text="{TemplateBinding Label}"
+                                   FontWeight="SemiBold"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Foreground="{DynamicResource TextControlForegroundDisabled}" />
+                    </Border>
+                    <TextBox Grid.Column="1"
+                             MinWidth="120"
+                             CornerRadius="0,4,4,0"
+                             VerticalContentAlignment="Center"
+                             PlaceholderText="{TemplateBinding Watermark}"
+                             Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+                </Grid>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

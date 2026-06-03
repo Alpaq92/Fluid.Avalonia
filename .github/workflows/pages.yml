@@ -1,6 +1,6 @@
 name: Deploy live demo to GitHub Pages
 
-# Builds the Avalonia.Fluid.Demo WebAssembly head and publishes it to GitHub Pages.
+# Builds the Fluid.Avalonia.Demo WebAssembly head and publishes it to GitHub Pages.
 # Enable once in the repo: Settings → Pages → Build and deployment → Source = "GitHub Actions".
 
 on:
@@ -33,7 +33,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Publish Browser head
-        run: dotnet publish Avalonia.Fluid.Demo.Browser/Avalonia.Fluid.Demo.Browser.csproj -c Release -o publish
+        run: dotnet publish Fluid.Avalonia.Demo.Browser/Fluid.Avalonia.Demo.Browser.csproj -c Release -o publish
 
       - name: Disable Jekyll (keep _framework, leading-underscore files)
         run: touch publish/wwwroot/.nojekyll

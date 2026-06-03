@@ -1,4 +1,4 @@
-# Avalonia.Fluid — overview & deep dive
+# Fluid.Avalonia — overview & deep dive
 
 The architecture, the demo-app internals, and the coverage/roadmap matrix — the longer-form
 companion to the [README](README.md).
@@ -16,7 +16,7 @@ The project is built on one key observation:
 That means we don't have to re-template every control. We override the **resource layer** with
 authentic Fluent 2 values, and Avalonia's existing templates render them.
 
-### Architecture (the `Avalonia.Fluid` library)
+### Architecture (the `Fluid.Avalonia` library)
 
 | Layer | File | What it does |
 |-------|------|--------------|
@@ -58,7 +58,7 @@ authentic Fluent 2 values, and Avalonia's existing templates render them.
 Because every accent brush is a `DynamicResource`, changing the OS accent, picking a preset, or
 toggling light/dark re-resolves the whole UI with no restart.
 
-## The demo app (`Avalonia.Fluid.Demo`)
+## The demo app (`Fluid.Avalonia.Demo`)
 
 A WinUI 3 Gallery-style shell, using the Gallery's **data-driven** structure:
 
@@ -90,7 +90,7 @@ A WinUI 3 Gallery-style shell, using the Gallery's **data-driven** structure:
   - **Custom** — renders [`CUSTOM.md`](CUSTOM.md) the same way: a catalogue of every non-vanilla
     control and theme/shell feature authored for this project.
   - **Playground** — a live XAML sandbox (in the spirit of SukiUI's Playground): type Avalonia
-    markup in an editor and see it rendered instantly in a preview pane, themed by Avalonia.Fluid,
+    markup in an editor and see it rendered instantly in a preview pane, themed by Fluid.Avalonia,
     with a graceful parse-error panel. Rendered via `AvaloniaRuntimeXamlLoader`
     (`Avalonia.Markup.Xaml.Loader`).
   - **Accents** — try the live system accent, pick from the outlined Metro-inspired preset
@@ -125,10 +125,10 @@ A WinUI 3 Gallery-style shell, using the Gallery's **data-driven** structure:
 - A Mica window. The custom title bar uses `SystemDecorations="BorderOnly"` so Avalonia's own
   drawn title/caption buttons are suppressed (no duplicated title) while the resize border is kept.
 - **Localization** done the way [Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia) /
-  [SukiUI](https://github.com/kikipoulet/SukiUI) do it — and, like them, it lives **in the `Avalonia.Fluid`
-  theme library itself** (`Avalonia.Fluid/Locale/<code>.axaml`: en / pl / de / fr / es): per-culture
+  [SukiUI](https://github.com/kikipoulet/SukiUI) do it — and, like them, it lives **in the `Fluid.Avalonia`
+  theme library itself** (`Fluid.Avalonia/Locale/<code>.axaml`: en / pl / de / fr / es): per-culture
   `ResourceDictionary` files of keyed `<x:String>`, merged and swapped at runtime by
-  `Avalonia.Fluid.Locale.LocaleManager`. **Pure Avalonia, no localization package.** The custom pickers' OK / Cancel /
+  `Fluid.Avalonia.Locale.LocaleManager`. **Pure Avalonia, no localization package.** The custom pickers' OK / Cancel /
   Reset labels and their field placeholders switch language live — and so do several **native** Avalonia
   controls, by overriding Avalonia's own theme string keys: the `DatePicker` / `TimePicker` field
   placeholders (`StringDatePicker*Text` / `StringTimePicker*Text`) and the `TextBox` right-click

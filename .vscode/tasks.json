@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Avalonia.Fluid.Demo.Desktop/Avalonia.Fluid.Demo.Desktop.csproj",
+                "${workspaceFolder}/Fluid.Avalonia.Demo.Desktop/Fluid.Avalonia.Demo.Desktop.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],

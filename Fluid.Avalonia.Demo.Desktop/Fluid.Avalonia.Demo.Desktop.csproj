@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Desktop head: the Windows/macOS/Linux entry point. Hosts the shared Fluid.Avalonia.Demo
+       library's App in a classic desktop lifetime. -->
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <ApplicationManifest>..\Fluid.Avalonia.Demo\app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\Fluid.Avalonia.Demo\Assets\logo.ico</ApplicationIcon>
+    <RootNamespace>Fluid.Avalonia.Demo</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fluid.Avalonia.Demo\Fluid.Avalonia.Demo.csproj" />
+  </ItemGroup>
+
+</Project>

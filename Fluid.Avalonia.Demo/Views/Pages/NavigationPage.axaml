@@ -1,0 +1,88 @@
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Views.Pages.NavigationPage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <StackPanel>
+
+        <ctrls:ControlExample Header="A TabControl organizes content into tabs."
+                              XamlSource="&lt;TabControl&gt;&lt;TabItem Header=&quot;Home&quot; /&gt;&lt;TabItem Header=&quot;Documents&quot; /&gt;&lt;TabItem Header=&quot;Settings&quot; /&gt;&lt;/TabControl&gt;">
+            <TabControl Width="460" Height="180">
+                <TabItem Header="Home">
+                    <TextBlock Classes="Body" Margin="0,12,0,0" Text="Home content." />
+                </TabItem>
+                <TabItem Header="Documents">
+                    <TextBlock Classes="Body" Margin="0,12,0,0" Text="Documents content." />
+                </TabItem>
+                <TabItem Header="Settings">
+                    <TextBlock Classes="Body" Margin="0,12,0,0" Text="Settings content." />
+                </TabItem>
+            </TabControl>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A TabStrip shows selectable tabs without hosting content."
+                              XamlSource="&lt;TabStrip&gt;&lt;TabStripItem&gt;Mail&lt;/TabStripItem&gt;&lt;TabStripItem&gt;Calendar&lt;/TabStripItem&gt;&lt;TabStripItem&gt;People&lt;/TabStripItem&gt;&lt;/TabStrip&gt;">
+            <TabStrip SelectedIndex="0">
+                <TabStripItem>Mail</TabStripItem>
+                <TabStripItem>Calendar</TabStripItem>
+                <TabStripItem>People</TabStripItem>
+            </TabStrip>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A BreadcrumbBar shows the trail to the current location — click an earlier crumb to navigate back."
+                              XamlSource="&lt;ctrls:BreadcrumbBar ItemsSource=&quot;{Binding Trail}&quot; ItemClicked=&quot;OnCrumbClicked&quot; /&gt;">
+            <StackPanel Spacing="10" HorizontalAlignment="Left">
+                <ctrls:BreadcrumbBar x:Name="Crumbs" />
+                <TextBlock x:Name="CrumbReadout"
+                           Classes="Caption"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="Click a crumb to see its index and value." />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A Carousel paged by a PipsPager."
+                              XamlSource="&lt;Carousel x:Name=&quot;DemoCarousel&quot; /&gt;&lt;PipsPager NumberOfPages=&quot;3&quot; SelectedPageIndex=&quot;{Binding #DemoCarousel.SelectedIndex, Mode=TwoWay}&quot; /&gt;">
+            <StackPanel Spacing="12" HorizontalAlignment="Left">
+                <Carousel x:Name="DemoCarousel" Width="320" Height="120" SelectedIndex="0">
+                    <Border Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}" CornerRadius="6">
+                        <TextBlock Classes="Subtitle" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Page 1" />
+                    </Border>
+                    <Border Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}" CornerRadius="6">
+                        <TextBlock Classes="Subtitle" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Page 2" />
+                    </Border>
+                    <Border Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}" CornerRadius="6">
+                        <TextBlock Classes="Subtitle" HorizontalAlignment="Center" VerticalAlignment="Center" Text="Page 3" />
+                    </Border>
+                </Carousel>
+                <PipsPager HorizontalAlignment="Center"
+                           NumberOfPages="3"
+                           SelectedPageIndex="{Binding #DemoCarousel.SelectedIndex, Mode=TwoWay}" />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A SplitView — the basis of a NavigationView pane."
+                              XamlSource="&lt;SplitView DisplayMode=&quot;Inline&quot; IsPaneOpen=&quot;True&quot; OpenPaneLength=&quot;150&quot;&gt;&lt;SplitView.Pane&gt;...&lt;/SplitView.Pane&gt;&lt;/SplitView&gt;">
+            <Border
+                Width="460"
+                Height="200"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="{DynamicResource ControlCornerRadius}"
+                ClipToBounds="True">
+                <SplitView DisplayMode="Inline" IsPaneOpen="True" OpenPaneLength="150"
+                           PaneBackground="{DynamicResource CardBackgroundFillColorSecondaryBrush}">
+                    <SplitView.Pane>
+                        <StackPanel Margin="8" Spacing="4">
+                            <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Content="Home" />
+                            <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Content="Library" />
+                            <Button HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Background="Transparent" BorderThickness="0" Content="Settings" />
+                        </StackPanel>
+                    </SplitView.Pane>
+                    <TextBlock Margin="16" Classes="Body" Text="Content pane" />
+                </SplitView>
+            </Border>
+        </ctrls:ControlExample>
+
+    </StackPanel>
+</UserControl>

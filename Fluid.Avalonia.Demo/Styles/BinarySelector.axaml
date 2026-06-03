@@ -1,0 +1,90 @@
+<!--
+    BinarySelector theme — a two-option segmented selector: both sides are shown inside the track and an
+    accent pill slides to the active one (the active label sits on the pill in white, the other dims).
+    Off = pill left (LeftValue active); checked = pill right (RightValue active). The label of each side
+    is its LeftContent / RightContent (set in code to fall back to the value). Fluent-aligned: app-accent
+    pill, neutral track, Fluent text tokens. Inspired by the "AM / PM" sliding-segment dribbble pattern.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <ControlTheme x:Key="{x:Type ctrls:BinarySelector}" TargetType="ctrls:BinarySelector">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="FontSize" Value="15" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="Track"
+                        Height="36" MinWidth="132" CornerRadius="18" Padding="3"
+                        Background="{DynamicResource ControlAltFillColorSecondaryBrush}"
+                        BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                        BorderThickness="1">
+                    <Grid ColumnDefinitions="*,*">
+                        <!-- The sliding selection pill, sitting under the active side. -->
+                        <Border x:Name="Sel" Grid.Column="0" CornerRadius="15"
+                                Background="{DynamicResource AccentFillColorDefaultBrush}" />
+
+                        <!-- Both sides stay visible; the active one sits on the accent pill. -->
+                        <ContentPresenter x:Name="PART_LeftContent" Grid.Column="0"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" Padding="14,0"
+                                          FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}"
+                                          Foreground="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+                        <ContentPresenter x:Name="PART_RightContent" Grid.Column="1"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center" Padding="14,0"
+                                          FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}"
+                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Hover: lift the accent pill. -->
+        <Style Selector="^:pointerover /template/ Border#Sel">
+            <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
+        </Style>
+
+        <!-- Checked (right active): pill slides right; right label turns white, left dims. -->
+        <Style Selector="^:checked /template/ Border#Sel">
+            <Setter Property="Grid.Column" Value="1" />
+        </Style>
+        <Style Selector="^:checked /template/ ContentPresenter#PART_LeftContent">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:checked /template/ ContentPresenter#PART_RightContent">
+            <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
+        </Style>
+
+        <!-- Disabled: neutral pill, dimmed labels (matching the stock ToggleSwitch). After the checked
+             rules so it wins for a checked + disabled control. -->
+        <Style Selector="^:disabled /template/ Border#Sel">
+            <Setter Property="Background" Value="{DynamicResource ControlFillColorDisabledBrush}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_LeftContent">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
+        <Style Selector="^:disabled /template/ ContentPresenter#PART_RightContent">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorDisabledBrush}" />
+        </Style>
+
+        <!-- Compact variant — a smaller pill that fits inside the RadialClock dial's centre. -->
+        <Style Selector="^.compact">
+            <Setter Property="FontSize" Value="12" />
+        </Style>
+        <Style Selector="^.compact /template/ Border#Track">
+            <Setter Property="Height" Value="24" />
+            <Setter Property="MinWidth" Value="66" />
+            <Setter Property="CornerRadius" Value="12" />
+        </Style>
+        <Style Selector="^.compact /template/ Border#Sel">
+            <Setter Property="CornerRadius" Value="10" />
+        </Style>
+        <Style Selector="^.compact /template/ ContentPresenter">
+            <Setter Property="Padding" Value="7,0" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

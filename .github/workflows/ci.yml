@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build (Avalonia.Fluid)
+    name: Build (Fluid.Avalonia)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,7 +33,7 @@ jobs:
         run: dotnet workload install wasm-tools
 
       - name: Restore
-        run: dotnet restore Avalonia.Fluid.sln
+        run: dotnet restore Fluid.Avalonia.sln
 
       - name: Build (library + demo + desktop + browser heads)
-        run: dotnet build Avalonia.Fluid.sln --configuration Release --no-restore
+        run: dotnet build Fluid.Avalonia.sln --configuration Release --no-restore
