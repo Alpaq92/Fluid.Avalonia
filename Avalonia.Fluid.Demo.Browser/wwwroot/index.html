@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#202020" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#202020" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f3f3" />
     <title>Avalonia.Fluid.Demo</title>
     <style>
         html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
@@ -47,6 +48,16 @@
 
         @media (prefers-reduced-motion: reduce) {
             .splash-bar::before { animation-duration: 3s; }
+        }
+
+        /* Follow the system colour scheme so the splash matches the app's light/dark base
+           (the WASM head has no Mica, so the app falls back to the solid WinUI base colour:
+           #202020 dark / #f3f3f3 light). Default above is dark; this overrides for light. */
+        @media (prefers-color-scheme: light) {
+            body,
+            #loading { background: #f3f3f3; }
+            .splash-bar { background: rgba(0, 0, 0, 0.10); }
+            .splash-desc { color: #5d5d5d; }
         }
     </style>
 </head>
