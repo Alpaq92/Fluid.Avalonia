@@ -187,7 +187,7 @@
             </StackPanel>
         </ctrls:ControlExample>
 
-        <ctrls:ControlExample Header="A modal Window — open one to compare its OS title bar with the demo's FluidWindow chrome.">
+        <ctrls:ControlExample Header="A modal Window — open one to check a native Avalonia Window (available only on Desktops, blocked in Browser view).">
             <Button x:Name="OpenWindowButton" Content="Open a modal Window" />
         </ctrls:ControlExample>
 
