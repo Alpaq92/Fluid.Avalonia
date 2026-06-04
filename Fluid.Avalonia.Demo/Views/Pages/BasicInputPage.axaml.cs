@@ -66,6 +66,14 @@ public partial class BasicInputPage : UserControl
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
         };
 
+        // Align the body with the OS title bar (the theme's solid base surface). The dialog is modal,
+        // so the theme variant can't change while it's open — resolving the current variant is fine.
+        if (this.TryFindResource("SolidBackgroundFillColorBaseBrush", ActualThemeVariant, out var bg)
+            && bg is IBrush baseBrush)
+        {
+            window.Background = baseBrush;
+        }
+
         var acknowledge = new Button
         {
             Content = "Acknowledged",

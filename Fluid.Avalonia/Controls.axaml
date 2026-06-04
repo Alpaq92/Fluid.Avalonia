@@ -14,6 +14,13 @@
         <Setter Property="FontFamily" Value="{DynamicResource ContentControlThemeFontFamily}" />
     </Style>
 
+    <!-- A plain Window (OS-drawn title bar) takes the solid base background so its body reads as one
+         surface with the dark caption. Exact-type selector — FluidWindow and other Window subclasses
+         (which bring their own chrome / Mica) are left untouched. -->
+    <Style Selector="Window">
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+    </Style>
+
     <!-- Button (incl. accent) is fully themed in Controls/Button.axaml.
          Give the remaining FluentTheme controls the WinUI "lit edge" gradient border. -->
     <Style Selector="ToggleButton">
