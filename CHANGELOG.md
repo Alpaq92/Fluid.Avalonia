@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.1.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.0.3...v1.1.0) (2026-06-04)
+
+
+### Features
+
+* add a reusable FluidWindow control ([d3422a4](https://github.com/Alpaq92/Fluid.Avalonia/commit/d3422a4ce26978a978a76e7a7486ef50356f5a13))
+* **demo:** add a standard-Window example on the Basic input page ([16086c3](https://github.com/Alpaq92/Fluid.Avalonia/commit/16086c31816ad920a04eda1f52d71f29442e284f))
+* **demo:** make the example window a modal dialog with a close button ([a339057](https://github.com/Alpaq92/Fluid.Avalonia/commit/a339057f792bb82f4d9438b73645aaf5bfcdb8bf))
+
+
+### Bug Fixes
+
+* **theme:** align a plain Window's background with the OS title bar ([574fc3c](https://github.com/Alpaq92/Fluid.Avalonia/commit/574fc3cbd4bd4751f9611433bff989c5f1fe4c70))
+
 ## [1.0.3](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.0.2...v1.0.3) (2026-06-04)
 
 
