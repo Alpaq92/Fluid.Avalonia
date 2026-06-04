@@ -28,25 +28,15 @@ That means we don't have to re-template every control. We override the **resourc
 
 ### Accent flow
 
-```text
-1 · Resolve the accent — first match wins
-      manual override  →  SetAccent(color)                ← preset palette · ColorPicker
-      Windows          →  registry AccentPalette (7 shades)
-      macOS            →  AppleAccentColor
-      Linux            →  GNOME accent-color · KDE kdeglobals
-      Avalonia         →  PlatformSettings.AccentColor1
-      fallback         →  neutral Fluent blue
-                        │
-                        ▼
-2 · AccentColorService  —  single color → 6 shades (FluentTheme HSL steps),
-                           re-resolved live on ColorValuesChanged
-                        │
-                        ▼
-3 · Application.Resources  —  SystemAccentColor  +  Light1–3 / Dark1–3
-                        │
-                        ▼   every accent brush reads these via DynamicResource
-   Consumers  —  AccentFillColorDefaultBrush · ToggleSwitchFillOn ·
-                 CheckBoxCheckBackgroundFillChecked · accent Button · …
+```mermaid
+flowchart TD
+    SRC["<b>1 · Resolve the accent</b> — <i>first match wins</i><br/>① Manual override — <code>SetAccent(color)</code> · preset palette / ColorPicker<br/>② Windows — registry <code>AccentPalette</code> (7 shades)<br/>③ macOS — <code>AppleAccentColor</code><br/>④ Linux — GNOME <code>accent-color</code> / KDE <code>kdeglobals</code><br/>⑤ Avalonia — <code>PlatformSettings.AccentColor1</code><br/>⑥ Fallback — neutral Fluent blue"]
+    SRC -->|single color| SVC["<b>2 · AccentColorService</b><br/>derives 6 shades via FluentTheme HSL steps<br/>re-resolves live on <code>ColorValuesChanged</code>"]
+    SVC --> RES["<b>3 · Application.Resources</b><br/><code>SystemAccentColor</code> + <code>Light1–3</code> / <code>Dark1–3</code>"]
+    RES -->|via DynamicResource| CONS["<b>Consumers</b><br/><code>AccentFillColorDefaultBrush</code> · <code>ToggleSwitchFillOn</code><br/><code>CheckBoxCheckBackgroundFillChecked</code> · accent Button · …"]
+
+    classDef stage stroke:#3b82f6,stroke-width:2px;
+    class SRC,SVC,RES stage;
 ```
 
 Because every accent brush is a `DynamicResource`, changing the OS accent, picking a preset, or toggling light/dark re-resolves the whole UI with no restart.
