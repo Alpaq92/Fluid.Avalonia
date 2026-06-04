@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.1.0...v1.1.1) (2026-06-04)
+
+
+### Documentation
+
+* clarify the modal-window example and note it in OVERVIEW ([e986204](https://github.com/Alpaq92/Fluid.Avalonia/commit/e986204c5433e22192acc2cd574403794076b169))
+
 ## [1.1.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.0.3...v1.1.0) (2026-06-04)
 
 
