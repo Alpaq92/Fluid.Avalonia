@@ -32,6 +32,17 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="MinHeight" Value="0" />
     </Style>
+    <!-- The base Background above only covers the rest state; the stock TextBox theme repaints
+         its PART_BorderElement on pointer-over / focus, which showed as a lighter patch over just
+         the text area (left) while the spinner side kept the ButtonSpinner hover fill — a two-tone
+         field. Pin that inner border transparent in those states too, so the ButtonSpinner is the
+         single field surface and the whole control hovers/focuses as one uniform shade. -->
+    <Style Selector="NumericUpDown /template/ TextBox#PART_TextBox:pointerover /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="NumericUpDown /template/ TextBox#PART_TextBox:focus /template/ Border#PART_BorderElement">
+        <Setter Property="Background" Value="Transparent" />
+    </Style>
 
     <!-- The native DatePicker / TimePicker segment text gets no VerticalAlignment in the stock
          FluentTheme template (it's positioned by an asymmetric host padding of 0,3,0,6), so with a
