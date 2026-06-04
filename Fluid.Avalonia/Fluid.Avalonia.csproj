@@ -20,11 +20,14 @@
     <RepositoryUrl>https://github.com/Alpaq92/Fluid.Avalonia</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
   <ItemGroup>
     <!-- The NuGet.org landing page README (packed as README.md inside the package). -->
     <None Include="..\nuget-readme.md" Pack="true" PackagePath="\README.md" />
+    <!-- The package icon shown on nuget.org. -->
+    <None Include="icon.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
