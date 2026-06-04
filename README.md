@@ -64,7 +64,7 @@ dotnet publish Fluid.Avalonia.Demo.Browser -c Release
 
 ## Why
 
-This started as a request for an Avalonia theme that looks like WinUI 3, using [Romzetron.Avalonia](https://github.com/Romzetron/Romzetron.Avalonia) as a reference for solution structure and the semantic-brush styling architecture, with three deliberate differences from it:
+This started as a quest to align Avalonia with WinUI 3 — and what began as migrating the visual tokens soon grew into something more, as enhancements and new controls were added along the way. It draws on [Romzetron.Avalonia](https://github.com/Romzetron/Romzetron.Avalonia) as a reference for solution structure and the semantic-brush styling architecture, with three deliberate differences from it:
 
 1. **No baked-in accent** — adapt to whatever accent the user has set in their OS (Windows, macOS or Linux). A Metro-inspired preset palette and manual `ColorPicker` selection are offered as *options*, not as a hard-coded default.
 2. **Avalonia 12 / .NET 8.**
