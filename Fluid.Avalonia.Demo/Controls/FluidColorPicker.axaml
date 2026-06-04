@@ -1,5 +1,5 @@
 <!--
-    FluentColorPicker — a Fluent-styled color dropdown for the demo.
+    FluidColorPicker — a Fluid-styled color dropdown for the demo.
 
     The bundled ColorPicker opens a ColorView whose tab strip uses bare icon glyphs and a button
     that shows only a swatch. This control instead reuses the exact editors from the Accents page
@@ -8,7 +8,7 @@
     across all three editors in code-behind, mirroring AccentsPage.
 -->
 <UserControl
-    x:Class="Fluid.Avalonia.Demo.Controls.FluentColorPicker"
+    x:Class="Fluid.Avalonia.Demo.Controls.FluidColorPicker"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:primitives="using:Avalonia.Controls.Primitives">

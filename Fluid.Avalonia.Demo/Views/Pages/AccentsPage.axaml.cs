@@ -87,7 +87,7 @@ public partial class AccentsPage : UserControl
                 Background = new SolidColorBrush(preset.Color),
                 CornerRadius = new CornerRadius(10),
                 BorderThickness = new Thickness(1),
-                // Subtle but visible stroke, matching the FluentColorPicker preset swatches.
+                // Subtle but visible stroke, matching the FluidColorPicker preset swatches.
                 [!Border.BorderBrushProperty] = new DynamicResourceExtension("ControlStrongStrokeColorDefaultBrush"),
             };
 

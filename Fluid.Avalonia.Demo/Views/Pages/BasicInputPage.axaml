@@ -174,8 +174,8 @@
         </ctrls:ControlExample>
 
         <ctrls:ControlExample Header="A color dropdown with named tabs (Color Space / Preset / Sliders), matching the Accents page."
-                              XamlSource="&lt;ctrls:FluentColorPicker /&gt;">
-            <ctrls:FluentColorPicker />
+                              XamlSource="&lt;ctrls:FluidColorPicker /&gt;">
+            <ctrls:FluidColorPicker />
         </ctrls:ControlExample>
 
         <ctrls:ControlExample Header="A LabeledTextInput pairs a label chip with a field (as used by the color sliders)."

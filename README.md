@@ -74,7 +74,7 @@ Rather than hand-porting ~70 control templates (and fighting Avalonia 12 templat
 
 ## Custom controls
 
-The demo isn't only re-themed stock controls. A number of **composite controls and shell features were built specifically for this project**, with no direct equivalent in vanilla Avalonia — the `RadialTimePicker` and its reusable `RadialClock` dial, the segmented `DateTimePicker` / `DateTimeSpinners` and `AnalogDateTimePicker`, `RadialSlider`, `ProgressCircle`, `BinarySelector`, `FluentColorPicker`, `BreadcrumbBar`, `GroupBox`, and more.
+The demo isn't only re-themed stock controls. A number of **composite controls and shell features were built specifically for this project**, with no direct equivalent in vanilla Avalonia — the `RadialTimePicker` and its reusable `RadialClock` dial, the segmented `DateTimePicker` / `DateTimeSpinners` and `AnalogDateTimePicker`, `RadialSlider`, `ProgressCircle`, `BinarySelector`, `FluidColorPicker`, `BreadcrumbBar`, `GroupBox`, and more.
 
 Each one is catalogued — with what it is and a live example — in **[CUSTOM.md](CUSTOM.md)**, a detailed reference for every custom control and feature authored for Fluid.Avalonia (also rendered live on the demo's **Custom** page).
 

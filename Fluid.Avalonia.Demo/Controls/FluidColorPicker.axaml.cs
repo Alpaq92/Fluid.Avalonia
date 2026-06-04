@@ -10,15 +10,15 @@ using Avalonia.Media;
 namespace Fluid.Avalonia.Demo.Controls;
 
 /// <summary>
-/// A Fluent color dropdown: a labelled <see cref="DropDownButton"/> (swatch + hex) whose flyout
+/// A Fluid color dropdown: a labelled <see cref="DropDownButton"/> (swatch + hex) whose flyout
 /// hosts the same three editors used on the Accents page — a spectrum + hue slider, a preset
 /// palette, and a components slider view. Colour state is mirrored across all editors and the
 /// button in code, the same way <c>AccentsPage</c> keeps its pickers in sync.
 /// </summary>
-public partial class FluentColorPicker : UserControl
+public partial class FluidColorPicker : UserControl
 {
     public static readonly StyledProperty<Color> SelectedColorProperty =
-        AvaloniaProperty.Register<FluentColorPicker, Color>(
+        AvaloniaProperty.Register<FluidColorPicker, Color>(
             nameof(SelectedColor),
             defaultValue: Color.FromRgb(0x21, 0x96, 0xF3),
             defaultBindingMode: BindingMode.TwoWay);
@@ -32,7 +32,7 @@ public partial class FluentColorPicker : UserControl
 
     private bool _syncing;   // guards programmatic editor writes from looping back as user edits
 
-    public FluentColorPicker()
+    public FluidColorPicker()
     {
         InitializeComponent();
         BuildPresets();

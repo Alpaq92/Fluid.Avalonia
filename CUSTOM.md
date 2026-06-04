@@ -4,9 +4,9 @@ Everything below is built on top of stock Avalonia and its `FluentTheme` — com
 
 ## Controls
 
-### FluentColorPicker
+### FluidColorPicker
 
-A Fluent-styled colour dropdown — a swatch + hex button opening a flyout with glyph tabs (Color space · Preset · Sliders), Metro preset swatches and a shared previewer. The stock `ColorPicker` is not re-templatable to this look.
+A Fluid-styled colour dropdown — a swatch + hex button opening a flyout with glyph tabs (Color space · Preset · Sliders), Metro preset swatches and a shared previewer. The stock `ColorPicker` is not re-templatable to this look.
 
 ### RadialTimePicker
 
