@@ -9,7 +9,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
 </p>
 
-A **Fluent 2 / WinUI 3-inspired** theme for [Avalonia](https://avaloniaui.net/) **12** (.NET 8). It pairs authentic WinUI tokens and metrics with an identity of its own, and picks up the user's accent color automatically — read from Windows, with macOS and Linux fallbacks.
+A **Fluent 2-inspired** Avalonia theme with its own identity, adapting to your system accent color — read from Windows, with macOS and Linux fallbacks. Built on [Avalonia](https://avaloniaui.net/) **12** (.NET 8) and its `FluentTheme` with ported Fluent 2 design tokens, it brings authentic WinUI tokens and metrics.
 
 ![Fluid.Avalonia — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Fluid.Avalonia/main/screenshot.png)
 
