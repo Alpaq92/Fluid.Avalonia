@@ -1,0 +1,135 @@
+<!--
+    FluidWindow — a WinUI 3-style window: extended client area, custom title bar (icon, title, a
+    free TitleBarContent slot, and minimize / maximize / close), Mica-transparent background with a
+    solid fallback. Caption glyphs are vector Paths so the chrome is self-contained regardless of the
+    host app's fonts.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:fluid="clr-namespace:Fluid.Avalonia">
+
+    <!-- A flat 46x40 caption hit target with a Subtle hover/press fill. -->
+    <ControlTheme x:Key="FluidCaptionButton" TargetType="Button">
+        <Setter Property="Width" Value="46" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="MinHeight" Value="0" />
+        <Setter Property="CornerRadius" Value="0" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border x:Name="Bg" Background="{TemplateBinding Background}">
+                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"
+                                      Content="{TemplateBinding Content}" />
+                </Border>
+            </ControlTemplate>
+        </Setter>
+        <Style Selector="^:pointerover /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Bg">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+        </Style>
+    </ControlTheme>
+
+    <!-- The close button: the WinUI close-red hover with a white glyph. -->
+    <ControlTheme x:Key="FluidCaptionCloseButton" TargetType="Button" BasedOn="{StaticResource FluidCaptionButton}">
+        <Style Selector="^:pointerover /template/ Border#Bg">
+            <Setter Property="Background" Value="#C42B1C" />
+        </Style>
+        <Style Selector="^:pointerover">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+        <Style Selector="^:pressed /template/ Border#Bg">
+            <Setter Property="Background" Value="#B0271A" />
+        </Style>
+    </ControlTheme>
+
+    <ControlTheme x:Key="{x:Type fluid:FluidWindow}" TargetType="fluid:FluidWindow">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="TransparencyBackgroundFallback" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Panel>
+                    <Border x:Name="PART_TransparencyFallback" IsHitTestVisible="False" />
+                    <Border Background="{TemplateBinding Background}" IsHitTestVisible="False" />
+                    <Panel Margin="{TemplateBinding OffScreenMargin}">
+                        <VisualLayerManager>
+                            <Grid RowDefinitions="Auto,*">
+
+                                <!-- Custom title bar (sits in the extended client area). -->
+                                <Grid x:Name="PART_TitleBar" Grid.Row="0"
+                                      Height="{TemplateBinding TitleBarHeight}"
+                                      Background="Transparent"
+                                      ColumnDefinitions="Auto,Auto,*,Auto">
+
+                                    <Image Grid.Column="0" Width="18" Height="18" Margin="14,0,0,0"
+                                           VerticalAlignment="Center"
+                                           IsVisible="{TemplateBinding ShowIcon}"
+                                           Source="{TemplateBinding IconSource}"
+                                           RenderOptions.BitmapInterpolationMode="HighQuality" />
+
+                                    <TextBlock Grid.Column="1" Margin="10,0,0,0" VerticalAlignment="Center"
+                                               FontSize="12"
+                                               IsVisible="{TemplateBinding ShowTitle}"
+                                               Text="{TemplateBinding Title}"
+                                               Foreground="{DynamicResource TextFillColorPrimaryBrush}" />
+
+                                    <ContentPresenter Grid.Column="2"
+                                                      Content="{TemplateBinding TitleBarContent}"
+                                                      VerticalAlignment="Stretch" />
+
+                                    <StackPanel Grid.Column="3" Orientation="Horizontal" VerticalAlignment="Top">
+                                        <Button x:Name="PART_MinimizeButton" Theme="{StaticResource FluidCaptionButton}"
+                                                ToolTip.Tip="Minimize">
+                                            <Path Stroke="{Binding $parent[Button].Foreground}" StrokeThickness="1"
+                                                  Data="M0,5 L10,5" />
+                                        </Button>
+                                        <Button x:Name="PART_MaximizeButton" Theme="{StaticResource FluidCaptionButton}"
+                                                ToolTip.Tip="Maximize">
+                                            <Panel>
+                                                <Path x:Name="PART_MaximizeGlyph"
+                                                      Stroke="{Binding $parent[Button].Foreground}" StrokeThickness="1"
+                                                      Data="M0.5,0.5 L9.5,0.5 L9.5,9.5 L0.5,9.5 Z" />
+                                                <Path x:Name="PART_RestoreGlyph" IsVisible="False"
+                                                      Stroke="{Binding $parent[Button].Foreground}" StrokeThickness="1"
+                                                      Data="M0.5,2.5 L7.5,2.5 L7.5,9.5 L0.5,9.5 Z M2.5,2.5 L2.5,0.5 L9.5,0.5 L9.5,7.5 L7.5,7.5" />
+                                            </Panel>
+                                        </Button>
+                                        <Button x:Name="PART_CloseButton" Theme="{StaticResource FluidCaptionCloseButton}"
+                                                ToolTip.Tip="Close">
+                                            <Path Stroke="{Binding $parent[Button].Foreground}" StrokeThickness="1"
+                                                  Data="M0,0 L10,10 M10,0 L0,10" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Window body. -->
+                                <ContentPresenter x:Name="PART_ContentPresenter" Grid.Row="1"
+                                                  Content="{TemplateBinding Content}"
+                                                  ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                  Padding="{TemplateBinding Padding}"
+                                                  HorizontalContentAlignment="Stretch"
+                                                  VerticalContentAlignment="Stretch" />
+                            </Grid>
+                        </VisualLayerManager>
+                    </Panel>
+                </Panel>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Swap the maximize glyph for the restore glyph while the window is maximized. -->
+        <Style Selector="^:maximized /template/ Path#PART_MaximizeGlyph">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <Style Selector="^:maximized /template/ Path#PART_RestoreGlyph">
+            <Setter Property="IsVisible" Value="True" />
+        </Style>
+    </ControlTheme>
+
+</ResourceDictionary>

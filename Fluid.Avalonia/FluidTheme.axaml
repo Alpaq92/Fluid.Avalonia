@@ -18,6 +18,7 @@
                 <ResourceInclude Source="avares://Fluid.Avalonia/Controls/ScrollBar.axaml" />
                 <ResourceInclude Source="avares://Fluid.Avalonia/Controls/Calendar.axaml" />
                 <ResourceInclude Source="avares://Fluid.Avalonia/Controls/NumericUpDown.axaml" />
+                <ResourceInclude Source="avares://Fluid.Avalonia/Controls/FluidWindow.axaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Styles.Resources>
