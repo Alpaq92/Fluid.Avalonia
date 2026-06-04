@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.0.2...v1.0.3) (2026-06-04)
+
+
+### Bug Fixes
+
+* **theme:** keep the NumericUpDown field uniform on hover/focus ([a39e8cd](https://github.com/Alpaq92/Fluid.Avalonia/commit/a39e8cd8c7c3e3d4dd9e63d8b7a47e806b68e474))
+
 ## [1.0.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.0.1...v1.0.2) (2026-06-04)
 
 
