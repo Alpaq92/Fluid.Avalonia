@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.0.0...v1.0.1) (2026-06-04)
+
+
+### Bug Fixes
+
+* add a package icon and flesh out the NuGet readme ([f717914](https://github.com/Alpaq92/Fluid.Avalonia/commit/f7179145dacb324dec96d515c2eb77c9aac4fadd))
+
 ## [1.0.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v0.1.2...v1.0.0) (2026-06-03)
 
 
