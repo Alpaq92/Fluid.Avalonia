@@ -84,36 +84,10 @@ Avalonia has a few controls with no direct WinUI 3 counterpart; they still pick 
 
 ## Contributing
 
-Contributions are welcome. Everything reaches `main` through a pull request — a branch ruleset blocks direct pushes (the owner keeps an admin bypass for emergencies). The ruleset is versioned as code under [`.github/rulesets/`](.github/rulesets/), so the rules below are the source of truth, not screenshots.
+Community input is very welcome — this is a small, friendly project with plenty of room to help. Bug reports, feature ideas, new or refined control themes, accent and localization additions, documentation fixes, and pull requests are all appreciated. If you're weighing a larger change or aren't sure about an approach, open an issue first and we'll talk it through.
 
-### Opening a PR
+Everything lands on `main` through a pull request, gated by an automated build, code-scanning, and a review — and the repo leans on automation ([release-please](https://github.com/googleapis/release-please) versioning, auto-merge, NuGet publish, live-demo deploy) so a green PR ships with very little manual fuss. Commit and PR titles follow [Conventional Commits](https://www.conventionalcommits.org/); beyond that, the pipeline takes over.
 
-Branch (or fork), make your change, and open a PR against `main`. Commit and PR titles follow [**Conventional Commits**](https://www.conventionalcommits.org/), because [release-please](https://github.com/googleapis/release-please) reads them to drive the version and changelog: `feat:` / `fix:` / `perf:` / `deps:` / `revert:` appear in the changelog (and `feat` / `fix` bump the version), while `docs:` / `chore:` / `refactor:` / `test:` / `build:` / `ci:` are silent. Merges are **squash**, so the **PR title becomes the commit message** — make it a valid Conventional Commit.
+The full mechanics — the required checks, the merge rules for each kind of PR, and what happens on a release — live in their own doc:
 
-### What a PR must pass
-
-| Gate | What it checks |
-| --- | --- |
-| **CI — `Build (Fluid.Avalonia)`** | `dotnet restore` + `build` of the whole solution (library + demo + Desktop + Browser/WASM heads) in Release, on .NET 8 & 10 with the `wasm-tools` workload. |
-| **CodeQL** | Code scanning must be clean at *high or higher*. |
-| **One approving review** | [CodeRabbit](https://coderabbit.ai) auto-reviews every PR (`.coderabbit.yaml`) and its approval satisfies the rule; a human approval counts too. |
-
-On top of those: squash-only, linear history, no force-push and no branch deletion.
-
-### How PRs actually merge
-
-Green PRs land on their own through GitHub auto-merge (always squash) — you rarely click *Merge* yourself. Which automation handles a PR depends on who opened it:
-
-| PR source | Merges once… |
-| --- | --- |
-| **Maintainer** ([`auto-merge-trusted.yml`](.github/workflows/auto-merge-trusted.yml)) | the required checks pass — no review wait, no cool-off. |
-| **External contributor** ([`auto-merge-approved.yml`](.github/workflows/auto-merge-approved.yml)) | it is approved, mergeable, checks are green, and it has been open **≥ 7 days** — a one-week sanity window (the job runs every 6 h; a maintainer can merge sooner by hand). |
-| **Dependabot** ([`dependabot-auto-merge.yml`](.github/workflows/dependabot-auto-merge.yml)) | the required checks pass — no cool-off. |
-| **release-please** release PR ([`release.yml`](.github/workflows/release.yml)) | checks and the review are green. |
-
-The owner can always force-merge through the ruleset's admin bypass.
-
-### After it lands on `main`
-
-- **release-please** keeps a `chore(main): release X.Y.Z` PR up to date from the Conventional Commits since the last tag; merging it bumps `.release-please-manifest.json` + `CHANGELOG.md`, tags `vX.Y.Z`, cuts a GitHub Release, and **publishes the package to NuGet**.
-- **[`pages.yml`](.github/workflows/pages.yml)** redeploys the WebAssembly demo to GitHub Pages.
+**[AUTOMATION.md](AUTOMATION.md)** — how the PR flow, CI/CD, and releases are wired up.
