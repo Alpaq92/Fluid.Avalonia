@@ -2,6 +2,7 @@ using System;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
+using Avalonia.Layout;
 using Avalonia.Media;
 
 namespace Fluid.Avalonia.Demo.Views.Pages;
@@ -63,16 +64,33 @@ public partial class BasicInputPage : UserControl
             CanResize = false,
             ShowInTaskbar = false,
             WindowStartupLocation = WindowStartupLocation.CenterOwner,
-            Content = new TextBlock
+        };
+
+        var acknowledge = new Button
+        {
+            Content = "Acknowledged",
+            HorizontalAlignment = HorizontalAlignment.Right,
+        };
+        acknowledge.Click += (_, _) => window.Close();
+
+        window.Content = new StackPanel
+        {
+            Margin = new Thickness(20),
+            Spacing = 16,
+            Children =
             {
-                Margin = new Thickness(20),
-                TextWrapping = TextWrapping.Wrap,
-                Text = "This is a standard Avalonia Window. The Fluid.Avalonia demo itself runs in a "
-                     + "FluidWindow — Fluid's custom Mica title bar — while this window keeps the "
-                     + "platform's default title bar. Same theme, different chrome.",
+                new TextBlock
+                {
+                    TextWrapping = TextWrapping.Wrap,
+                    Text = "This is a standard Avalonia Window. The Fluid.Avalonia demo itself runs "
+                         + "in a FluidWindow — Fluid's custom Mica title bar — while this window "
+                         + "keeps the platform's default title bar. Same theme, different chrome.",
+                },
+                acknowledge,
             },
         };
 
-        window.Show(owner);
+        // Modal: ShowDialog disables the owner (the demo window) until this one is closed.
+        _ = window.ShowDialog(owner);
     }
 }
