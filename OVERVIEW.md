@@ -25,6 +25,7 @@ That means we don't have to re-template every control. We override the **resourc
 | Calendar | `Controls/Calendar.axaml` | Semi.Avalonia-style `Calendar` / `CalendarItem` / `CalendarDayButton` / `CalendarButton` themes — a roomy month grid with circular day cells, an accent-filled selected day and an accent ring for today, an opaque popup surface, and Codicon chevron nav glyphs. Also a retemplated `CalendarDatePicker` whose drop-down button is a Codicon chevron-down (the popup hosts the themed `Calendar` via the `PART_Calendar` part). |
 | NumericUpDown | `Controls/NumericUpDown.axaml` | A WinUI NumberBox-style `ButtonSpinner` theme (also used by `NumericUpDown`): a single bordered field matching our TextBox, compact side-by-side chevron spin buttons, and an accent border on focus. |
 | Typography / cards | `Controls/Typography.axaml`, `Controls/Card.axaml` | Type-ramp `TextBlock` classes and a reusable `Border.Card` surface. |
+| Window | `Controls/FluidWindow.axaml(.cs)` | **`FluidWindow`** — a `Window` subclass packaging the WinUI 3 chrome: an extended client area + custom title bar (icon, title, a free `TitleBarContent` slot, and minimize / maximize / close), a Mica backdrop with a solid fallback, and a frame that follows the light/dark theme (DWM). Window drag + double-tap-maximize are built in, caption glyphs are vector (no symbol font needed), and the Windows-only bits are guarded so it degrades gracefully off-Windows. |
 
 ### Accent flow
 
