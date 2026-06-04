@@ -187,5 +187,9 @@
             </StackPanel>
         </ctrls:ControlExample>
 
+        <ctrls:ControlExample Header="A standard Avalonia Window — open one to compare its OS title bar with the demo's FluidWindow chrome.">
+            <Button x:Name="OpenWindowButton" Content="Open a standard Window" />
+        </ctrls:ControlExample>
+
     </StackPanel>
 </UserControl>
