@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.2.0...v1.2.1) (2026-06-09)
+
+
+### Refactoring
+
+* rename AccentColorService to AccentService (Presets -&gt; Preset) ([a812dd3](https://github.com/Alpaq92/Fluid.Avalonia/commit/a812dd353e4c135a8d1ad8490a2952b402b6db83))
+
 ## [1.2.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.1.1...v1.2.0) (2026-06-09)
 
 
