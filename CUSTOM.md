@@ -6,7 +6,7 @@ Everything below is built on top of stock Avalonia and its `FluentTheme` — com
 
 ### FluidColorPicker
 
-A Fluid-styled colour dropdown — a swatch + hex button opening a flyout with glyph tabs (Color space · Preset · Sliders), Metro preset swatches and a shared previewer. The stock `ColorPicker` is not re-templatable to this look.
+A Fluid-styled colour dropdown — a swatch + hex button opening a flyout with glyph tabs (Color space · Preset · Sliders), Open Color preset swatches and a shared previewer. The stock `ColorPicker` is not re-templatable to this look.
 
 ### RadialTimePicker
 
@@ -56,7 +56,7 @@ A WinUI 3 / Fluent 2 look layered over `FluentTheme`: light/dark Fluent 2 colour
 
 ### OS accent integration
 
-An accent-colour service that reads the Windows accent from the registry (with cross-platform fallbacks), plus a curated palette of 20 Metro presets and an API to apply a custom accent — wired into the Accents page and the colour picker.
+An accent-colour service that reads the Windows accent from the registry (with cross-platform fallbacks), plus a curated palette of 20 Open Color presets and an API to apply a custom accent — wired into the Accents page and the colour picker.
 
 ### Localization
 

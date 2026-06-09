@@ -31,7 +31,7 @@
             </StackPanel>
         </ctrls:ControlExample>
 
-        <ctrls:ControlExample Header="Or pick from a Metro-inspired preset palette — handy when the OS has no accent to read.">
+        <ctrls:ControlExample Header="Or pick from the Open Color preset palette — handy when the OS has no accent to read.">
             <WrapPanel x:Name="PresetPanel" MaxWidth="520" />
         </ctrls:ControlExample>
 

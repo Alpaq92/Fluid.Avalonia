@@ -49,33 +49,34 @@ public static class AccentColorService
     public readonly record struct AccentPreset(string Name, Color Color);
 
     /// <summary>
-    /// A Metro-inspired set of 20 accent presets (the Windows 8 "Metro" UI palette,
-    /// https://www.w3schools.com/colors/colors_metro.asp), offered as a manual alternative to the
-    /// system accent. Ordered around the wheel through the earth tones, ending with a light and a
-    /// dark neutral so there's always a bright and a muted option.
+    /// A set of 20 accent presets drawn from the MIT-licensed Open Color palette
+    /// (https://yeun.github.io/open-color/), offered as a manual alternative to the system accent.
+    /// Grouped into a rainbow sweep: the twelve Open Color hues in spectral order, and where a hue
+    /// has a deep jewel-tone variant (shade 9) it leads its full-strength (shade 6) sibling — darker
+    /// swatch first within each group — closing with the two neutrals (dark, then light).
     /// </summary>
     public static IReadOnlyList<AccentPreset> Presets { get; } = new[]
     {
-        new AccentPreset("Red", Color.FromRgb(0xE5, 0x14, 0x00)),
-        new AccentPreset("Orange", Color.FromRgb(0xFA, 0x68, 0x00)),
-        new AccentPreset("Amber", Color.FromRgb(0xF0, 0xA3, 0x0A)),
-        new AccentPreset("Yellow", Color.FromRgb(0xE3, 0xC8, 0x00)),
-        new AccentPreset("Lime", Color.FromRgb(0xA4, 0xC4, 0x00)),
-        new AccentPreset("Green", Color.FromRgb(0x60, 0xA9, 0x17)),
-        new AccentPreset("Emerald", Color.FromRgb(0x00, 0x8A, 0x00)),
-        new AccentPreset("Teal", Color.FromRgb(0x00, 0xAB, 0xA9)),
-        new AccentPreset("Cyan", Color.FromRgb(0x1B, 0xA1, 0xE2)),
-        new AccentPreset("Cobalt", Color.FromRgb(0x00, 0x50, 0xEF)),
-        new AccentPreset("Indigo", Color.FromRgb(0x6A, 0x00, 0xFF)),
-        new AccentPreset("Violet", Color.FromRgb(0xAA, 0x00, 0xFF)),
-        new AccentPreset("Pink", Color.FromRgb(0xF4, 0x72, 0xD0)),
-        new AccentPreset("Magenta", Color.FromRgb(0xD8, 0x00, 0x73)),
-        new AccentPreset("Brown", Color.FromRgb(0x82, 0x5A, 0x2C)),
-        new AccentPreset("Olive", Color.FromRgb(0x6D, 0x87, 0x64)),
-        new AccentPreset("Steel", Color.FromRgb(0x64, 0x76, 0x87)),
-        new AccentPreset("Mauve", Color.FromRgb(0x76, 0x60, 0x8A)),
-        new AccentPreset("Silver", Color.FromRgb(0xC8, 0xC8, 0xC8)),
-        new AccentPreset("Charcoal", Color.FromRgb(0x1D, 0x1D, 0x1D)),
+        new AccentPreset("Deep Red", Color.FromRgb(0xC9, 0x2A, 0x2A)),
+        new AccentPreset("Red", Color.FromRgb(0xFF, 0x6B, 0x6B)),
+        new AccentPreset("Deep Orange", Color.FromRgb(0xD9, 0x48, 0x0F)),
+        new AccentPreset("Orange", Color.FromRgb(0xFF, 0x92, 0x2B)),
+        new AccentPreset("Yellow", Color.FromRgb(0xFC, 0xC4, 0x19)),
+        new AccentPreset("Lime", Color.FromRgb(0x94, 0xD8, 0x2D)),
+        new AccentPreset("Deep Green", Color.FromRgb(0x2B, 0x8A, 0x3E)),
+        new AccentPreset("Green", Color.FromRgb(0x51, 0xCF, 0x66)),
+        new AccentPreset("Deep Teal", Color.FromRgb(0x08, 0x7F, 0x5B)),
+        new AccentPreset("Teal", Color.FromRgb(0x20, 0xC9, 0x97)),
+        new AccentPreset("Cyan", Color.FromRgb(0x22, 0xB8, 0xCF)),
+        new AccentPreset("Deep Blue", Color.FromRgb(0x18, 0x64, 0xAB)),
+        new AccentPreset("Blue", Color.FromRgb(0x33, 0x9A, 0xF0)),
+        new AccentPreset("Indigo", Color.FromRgb(0x5C, 0x7C, 0xFA)),
+        new AccentPreset("Violet", Color.FromRgb(0x84, 0x5E, 0xF7)),
+        new AccentPreset("Deep Grape", Color.FromRgb(0x86, 0x2E, 0x9C)),
+        new AccentPreset("Grape", Color.FromRgb(0xCC, 0x5D, 0xE8)),
+        new AccentPreset("Pink", Color.FromRgb(0xF0, 0x65, 0x95)),
+        new AccentPreset("Dark Gray", Color.FromRgb(0x21, 0x25, 0x29)),
+        new AccentPreset("Light Gray", Color.FromRgb(0xE9, 0xEC, 0xEF)),
     };
 
     /// <summary>

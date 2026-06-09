@@ -17,4 +17,4 @@ Every third-party project Fluid.Avalonia bundles, depends on, or references, wit
 | [Material Design Icons](https://pictogrammers.com/library/mdi/) | The *code-array* glyph in the app icon | Apache 2.0 |
 | [List-of-US-States](https://github.com/jasonong/List-of-US-States) | Sample data for the Collections `ListBox` | Public data |
 | [ohana-api](https://github.com/codeforamerica/ohana-api) sample addresses | Sample data for the Collections `DataGrid` | Code for America |
-| [Metro color palette](https://www.w3schools.com/colors/colors_metro.asp) | The 20 accent preset hues | Reference |
+| [Open Color](https://yeun.github.io/open-color/) | The 20 accent preset swatches | MIT |

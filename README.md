@@ -59,14 +59,14 @@ dotnet publish Fluid.Avalonia.Demo.Browser -c Release
 ## What it is?
 
 - **A WinUI 3 look for Avalonia.** Fluent 2 color tokens, a WinUI type ramp (rendered in the bundled, cross-platform **DejaVu Sans** font), 4 px / 8 px corner radii, the "lit-edge" control border, drop-shadow elevation, and Mica window backdrop. Symbol glyphs come from the bundled **Codicons** icon font, so both text and icons render identically on desktop and in the browser.
-- **Live accent integration, on every OS.** The accent is read from the host where possible — the full seven-shade **Windows** `AccentPalette`, the **macOS** `AppleAccentColor`, and the **Linux** GNOME (`accent-color`) / KDE (`kdeglobals`) / Cinnamon (Mint theme name) accent — and flows into every accented control, updating instantly when the user changes it. Where no OS accent is available, apps can pick from a **Metro-inspired preset palette** (20 swatches) or set any color manually (e.g. with a `ColorPicker`) via `AccentColorService.SetAccent` / `UseSystemAccent`.
+- **Live accent integration, on every OS.** The accent is read from the host where possible — the full seven-shade **Windows** `AccentPalette`, the **macOS** `AppleAccentColor`, and the **Linux** GNOME (`accent-color`) / KDE (`kdeglobals`) / Cinnamon (Mint theme name) accent — and flows into every accented control, updating instantly when the user changes it. Where no OS accent is available, apps can pick from the **Open Color preset palette** (20 swatches) or set any color manually (e.g. with a `ColorPicker`) via `AccentColorService.SetAccent` / `UseSystemAccent`.
 - **Cross-platform & self-contained.** One library (`Fluid.Avalonia`) targeting `net8.0` with no third-party theme dependencies — it layers on Avalonia's built-in `FluentTheme`. Platform specifics (registry / `defaults` / `gsettings` accent readers, Mica, dark title bar) are guarded and degrade gracefully everywhere.
 
 ## Why?
 
 This started as a quest to align Avalonia with WinUI 3 — and what began as migrating the visual tokens soon grew into something more, as enhancements and new controls were added along the way. It draws on [Romzetron.Avalonia](https://github.com/Romzetron/Romzetron.Avalonia) as a reference for solution structure and the semantic-brush styling architecture, with three deliberate differences from it:
 
-1. **No baked-in accent** — adapt to whatever accent the user has set in their OS (Windows, macOS or Linux). A Metro-inspired preset palette and manual `ColorPicker` selection are offered as *options*, not as a hard-coded default.
+1. **No baked-in accent** — adapt to whatever accent the user has set in their OS (Windows, macOS or Linux). An Open Color preset palette and manual `ColorPicker` selection are offered as *options*, not as a hard-coded default.
 2. **Avalonia 12 / .NET 8.**
 3. **As close to WinUI 3 as possible** — no per-control "set the color explicitly" override mechanism; theming is purely token-driven, the way Fluent 2 works.
 
@@ -100,7 +100,7 @@ The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon)
 - **[Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia)** — reference for the roomy circular-day Calendar styling.
 - **[Markdown.Avalonia](https://github.com/whistyun/Markdown.Avalonia)** — renders the Home page.
 - **[Material Design Icons](https://pictogrammers.com/library/mdi/)** (Apache-2.0) — the *code-array* glyph used in the app icon.
-- **[Metro color palette](https://www.w3schools.com/colors/colors_metro.asp)** — the 20 accent preset swatches (Metro hues).
+- **[Open Color](https://yeun.github.io/open-color/)** (MIT) — the 20 accent preset swatches.
 - **[Avalonia](https://github.com/AvaloniaUI/Avalonia)** — the `FluentTheme` we build on.
 
 ## Credits
