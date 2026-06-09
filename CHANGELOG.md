@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.1.1...v1.2.0) (2026-06-09)
+
+
+### Features
+
+* switch accent presets to the Open Color palette ([f505e52](https://github.com/Alpaq92/Fluid.Avalonia/commit/f505e527398de1deef053ab09b5d2fbf7d84ec43))
+
 ## [1.1.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.1.0...v1.1.1) (2026-06-04)
 
 
