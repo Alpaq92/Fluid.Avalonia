@@ -22,6 +22,6 @@ public class FluidTheme : Styles
         AvaloniaXamlLoader.Load(sp, this);
 
         if (Application.Current is { } app)
-            AccentColorService.Apply(app);
+            AccentService.Apply(app);
     }
 }

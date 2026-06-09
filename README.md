@@ -29,6 +29,24 @@ It ships as a single `Styles` object you drop into your app:
 </Application>
 ```
 
+The accent adapts to the OS automatically, but you can also drive it from code — `AccentService` exposes the built-in preset palette plus a small apply / reset API:
+
+```
+using System.Linq;
+using Fluid.Avalonia;
+
+// the 20 built-in Open Color presets, each with a Name + Color
+foreach (var p in AccentService.Preset)
+    Console.WriteLine($"{p.Name}: {p.Color}");
+
+// apply one as the app accent…
+var teal = AccentService.Preset.First(p => p.Name == "Teal");
+AccentService.SetAccent(teal.Color);
+
+// …or hand back to the live OS accent
+AccentService.UseSystemAccent();
+```
+
 The repository also contains **Fluid.Avalonia.Demo**, a demo app that mirrors the structure of Microsoft's **WinUI 3 Gallery** (data-driven navigation, per-item pages, a Settings page) so you can compare the result side by side.
 
 > **Deep dive:** the architecture and how the resource layering works, the demo-app internals, and the full coverage / roadmap matrix all live in **[OVERVIEW.md](OVERVIEW.md)**.
@@ -59,7 +77,7 @@ dotnet publish Fluid.Avalonia.Demo.Browser -c Release
 ## What it is?
 
 - **A WinUI 3 look for Avalonia.** Fluent 2 color tokens, a WinUI type ramp (rendered in the bundled, cross-platform **DejaVu Sans** font), 4 px / 8 px corner radii, the "lit-edge" control border, drop-shadow elevation, and Mica window backdrop. Symbol glyphs come from the bundled **Codicons** icon font, so both text and icons render identically on desktop and in the browser.
-- **Live accent integration, on every OS.** The accent is read from the host where possible — the full seven-shade **Windows** `AccentPalette`, the **macOS** `AppleAccentColor`, and the **Linux** GNOME (`accent-color`) / KDE (`kdeglobals`) / Cinnamon (Mint theme name) accent — and flows into every accented control, updating instantly when the user changes it. Where no OS accent is available, apps can pick from the **Open Color preset palette** (20 swatches) or set any color manually (e.g. with a `ColorPicker`) via `AccentColorService.SetAccent` / `UseSystemAccent`.
+- **Live accent integration, on every OS.** The accent is read from the host where possible — the full seven-shade **Windows** `AccentPalette`, the **macOS** `AppleAccentColor`, and the **Linux** GNOME (`accent-color`) / KDE (`kdeglobals`) / Cinnamon (Mint theme name) accent — and flows into every accented control, updating instantly when the user changes it. Where no OS accent is available, apps can pick from the **Open Color preset palette** (20 swatches) or set any color manually (e.g. with a `ColorPicker`) via `AccentService.SetAccent` / `UseSystemAccent`.
 - **Cross-platform & self-contained.** One library (`Fluid.Avalonia`) targeting `net8.0` with no third-party theme dependencies — it layers on Avalonia's built-in `FluentTheme`. Platform specifics (registry / `defaults` / `gsettings` accent readers, Mica, dark title bar) are guarded and degrade gracefully everywhere.
 
 ## Why?

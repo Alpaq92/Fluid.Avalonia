@@ -28,7 +28,7 @@ namespace Fluid.Avalonia;
 /// For single-color sources the six shades are derived with the same HSL lightness steps
 /// FluentTheme uses, so the ramp stays consistent with the rest of the theme.
 /// </summary>
-public static class AccentColorService
+public static class AccentService
 {
     private const string AccentKey = "SystemAccentColor";
     private const string Light1Key = "SystemAccentColorLight1";
@@ -55,7 +55,7 @@ public static class AccentColorService
     /// has a deep jewel-tone variant (shade 9) it leads its full-strength (shade 6) sibling — darker
     /// swatch first within each group — closing with the two neutrals (dark, then light).
     /// </summary>
-    public static IReadOnlyList<AccentPreset> Presets { get; } = new[]
+    public static IReadOnlyList<AccentPreset> Preset { get; } = new[]
     {
         new AccentPreset("Deep Red", Color.FromRgb(0xC9, 0x2A, 0x2A)),
         new AccentPreset("Red", Color.FromRgb(0xFF, 0x6B, 0x6B)),

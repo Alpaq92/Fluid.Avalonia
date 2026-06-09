@@ -3,7 +3,7 @@
 
     These resources sit on top of FluentTheme and nudge it toward WinUI 3: the Segoe UI
     Variable type face, the WinUI corner-radius metrics, and the WinUI type-ramp font sizes
-    and line heights. Accent colors are supplied at runtime by AccentColorService and are
+    and line heights. Accent colors are supplied at runtime by AccentService and are
     intentionally not declared here.
 -->
 <ResourceDictionary

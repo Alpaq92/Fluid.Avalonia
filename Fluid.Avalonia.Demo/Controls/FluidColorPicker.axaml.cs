@@ -38,7 +38,7 @@ public partial class FluidColorPicker : UserControl
         BuildPresets();
 
         // Start from the live accent, push it into every editor + the button, then listen.
-        SelectedColor = AccentColorService.CurrentAccent;
+        SelectedColor = AccentService.CurrentAccent;
         PushToEditors(SelectedColor);
         UpdateButton(SelectedColor);
 
@@ -90,7 +90,7 @@ public partial class FluidColorPicker : UserControl
     // The same Material-inspired preset swatches the Accents page offers.
     private void BuildPresets()
     {
-        foreach (var preset in AccentColorService.Presets)
+        foreach (var preset in AccentService.Preset)
         {
             var color = preset.Color;
             var swatch = new Border

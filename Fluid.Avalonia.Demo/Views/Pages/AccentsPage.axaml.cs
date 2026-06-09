@@ -21,7 +21,7 @@ public partial class AccentsPage : UserControl
     {
         InitializeComponent();
 
-        _selectedPreset = AccentColorService.Presets[0].Color;
+        _selectedPreset = AccentService.Preset[0].Color;
         BuildPresetSwatches();
 
         SysAccentBtn.Click += (_, _) => SetMode(Mode.System, apply: true);
@@ -36,7 +36,7 @@ public partial class AccentsPage : UserControl
         SetMode(Mode.System, apply: false);
         Dispatcher.UIThread.Post(() =>
         {
-            PushColorToEditors(AccentColorService.CurrentAccent);
+            PushColorToEditors(AccentService.CurrentAccent);
             UpdateReadout();
             Spectrum.ColorChanged += OnPickerColorChanged;
             HueSlider.ColorChanged += OnPickerColorChanged;
@@ -46,7 +46,7 @@ public partial class AccentsPage : UserControl
 
     private void OnPickerColorChanged(object? sender, ColorChangedEventArgs e)
     {
-        if (_syncing || e.NewColor == AccentColorService.CurrentAccent)
+        if (_syncing || e.NewColor == AccentService.CurrentAccent)
             return;
 
         // A user edit on any editor switches to Custom and applies the color.
@@ -57,7 +57,7 @@ public partial class AccentsPage : UserControl
         ModeCustom.IsChecked = true;
         _updating = false;
 
-        AccentColorService.SetAccent(e.NewColor);
+        AccentService.SetAccent(e.NewColor);
 
         // Mirror onto the other editors so the spectrum, hue slider and sliders tab stay in sync.
         _syncing = true;
@@ -80,7 +80,7 @@ public partial class AccentsPage : UserControl
 
     private void BuildPresetSwatches()
     {
-        foreach (var preset in AccentColorService.Presets)
+        foreach (var preset in AccentService.Preset)
         {
             var swatch = new Border
             {
@@ -153,15 +153,15 @@ public partial class AccentsPage : UserControl
         switch (mode)
         {
             case Mode.System:
-                AccentColorService.UseSystemAccent();
+                AccentService.UseSystemAccent();
                 SyncFromCurrent();
                 break;
             case Mode.Preset:
-                AccentColorService.SetAccent(_selectedPreset);
+                AccentService.SetAccent(_selectedPreset);
                 SyncFromCurrent();
                 break;
             case Mode.Custom:
-                AccentColorService.SetAccent(Spectrum.Color);
+                AccentService.SetAccent(Spectrum.Color);
                 UpdateReadout();
                 break;
         }
@@ -172,14 +172,14 @@ public partial class AccentsPage : UserControl
     {
         Dispatcher.UIThread.Post(() =>
         {
-            PushColorToEditors(AccentColorService.CurrentAccent);
+            PushColorToEditors(AccentService.CurrentAccent);
             UpdateReadout();
         }, DispatcherPriority.Background);
     }
 
     private void UpdateReadout()
     {
-        var c = AccentColorService.CurrentAccent;
+        var c = AccentService.CurrentAccent;
         CurrentSwatch.Background = new SolidColorBrush(c);
         CurrentHex.Text = $"#{c.R:X2}{c.G:X2}{c.B:X2}";
     }

@@ -18,7 +18,7 @@ public partial class App : Application
         LocaleManager.UseSystemDefault();
 
         // Ensure the accent palette is published now that the platform is fully ready.
-        Fluid.Avalonia.AccentColorService.Apply(this);
+        Fluid.Avalonia.AccentService.Apply(this);
 
         switch (ApplicationLifetime)
         {

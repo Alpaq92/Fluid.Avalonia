@@ -4,7 +4,7 @@
     Values are taken from WinUI 3 Common_themeresources. Each token is published both as a
     Color (<Token>) and a SolidColorBrush (<Token>Brush), matching WinUI naming so markup can
     use either. Accent-derived brushes resolve through the live accent shades that
-    AccentColorService publishes (SystemAccentColor / ...Light1-3 / ...Dark1-3).
+    AccentService publishes (SystemAccentColor / ...Light1-3 / ...Dark1-3).
 
     Light values live under the "Default" theme dictionary (Light variants fall back to it);
     Dark values live under "Dark".

@@ -32,7 +32,7 @@ Add the theme in `App.axaml`:
 </Application>
 ```
 
-The accent color is read from the OS automatically (Windows registry, with macOS / Linux / Avalonia fallbacks). Apply or override it at runtime via `Fluid.Avalonia.AccentColorService`.
+The accent color is read from the OS automatically (Windows registry, with macOS / Linux / Avalonia fallbacks). Apply or override it at runtime via `Fluid.Avalonia.AccentService`.
 
 > **Fonts:** the theme is font-agnostic — supply your own text and symbol fonts via `ContentControlThemeFontFamily` / `SymbolThemeFontFamily`. (The demo bundles DejaVu Sans for text and Codicons for icons.)
 
