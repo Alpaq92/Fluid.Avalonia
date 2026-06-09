@@ -62,7 +62,7 @@ dotnet publish Fluid.Avalonia.Demo.Browser -c Release
 - **Live accent integration, on every OS.** The accent is read from the host where possible — the full seven-shade **Windows** `AccentPalette`, the **macOS** `AppleAccentColor`, and the **Linux** GNOME (`accent-color`) / KDE (`kdeglobals`) / Cinnamon (Mint theme name) accent — and flows into every accented control, updating instantly when the user changes it. Where no OS accent is available, apps can pick from a **Metro-inspired preset palette** (20 swatches) or set any color manually (e.g. with a `ColorPicker`) via `AccentColorService.SetAccent` / `UseSystemAccent`.
 - **Cross-platform & self-contained.** One library (`Fluid.Avalonia`) targeting `net8.0` with no third-party theme dependencies — it layers on Avalonia's built-in `FluentTheme`. Platform specifics (registry / `defaults` / `gsettings` accent readers, Mica, dark title bar) are guarded and degrade gracefully everywhere.
 
-## Why
+## Why?
 
 This started as a quest to align Avalonia with WinUI 3 — and what began as migrating the visual tokens soon grew into something more, as enhancements and new controls were added along the way. It draws on [Romzetron.Avalonia](https://github.com/Romzetron/Romzetron.Avalonia) as a reference for solution structure and the semantic-brush styling architecture, with three deliberate differences from it:
 
@@ -100,6 +100,7 @@ The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon)
 - **[Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia)** — reference for the roomy circular-day Calendar styling.
 - **[Markdown.Avalonia](https://github.com/whistyun/Markdown.Avalonia)** — renders the Home page.
 - **[Material Design Icons](https://pictogrammers.com/library/mdi/)** (Apache-2.0) — the *code-array* glyph used in the app icon.
+- **[Metro color palette](https://www.w3schools.com/colors/colors_metro.asp)** — the 20 accent preset swatches (Metro hues).
 - **[Avalonia](https://github.com/AvaloniaUI/Avalonia)** — the `FluentTheme` we build on.
 
 ## Credits
