@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.2.1...v1.3.0) (2026-06-09)
+
+
+### Features
+
+* BreadcrumbBar (directory picker + overflow collapse), system-tray menu, UseSystemAccent overloads ([ec2b81a](https://github.com/Alpaq92/Fluid.Avalonia/commit/ec2b81a8ef9d413578f9c531de606b6d06b95eb7))
+
 ## [1.2.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.2.0...v1.2.1) (2026-06-09)
 
 
