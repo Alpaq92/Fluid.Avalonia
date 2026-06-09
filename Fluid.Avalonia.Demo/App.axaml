@@ -24,7 +24,7 @@
             <!-- Text: DejaVu Sans (broad coverage — Latin incl. pl/de, arrows, geometric, box-drawing). -->
             <FontFamily x:Key="ContentControlThemeFontFamily">avares://Fluid.Avalonia.Demo/Assets/Fonts/DejaVuSans.ttf#DejaVu Sans</FontFamily>
             <FontFamily x:Key="WinUIFontFamilyDisplay">avares://Fluid.Avalonia.Demo/Assets/Fonts/DejaVuSans.ttf#DejaVu Sans</FontFamily>
-            <!-- Icons: VS Code Codicons (MIT) — the UI's symbol glyphs (window buttons, chevrons, nav icons). -->
+            <!-- Icons: VS Code Codicons (CC-BY-4.0) — the UI's symbol glyphs (window buttons, chevrons, nav icons). -->
             <FontFamily x:Key="SymbolThemeFontFamily">avares://Fluid.Avalonia.Demo/Assets/Fonts/codicon.ttf#codicon</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
@@ -37,6 +37,11 @@
              accent), matching WinUI where Attention = system accent — rather than Labs' fixed gold. -->
         <Style Selector="labs|InfoBadge.Attention">
             <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
+        </Style>
+        <!-- The BreadcrumbBar chevron-dropdown flyout: trim the presenter padding so the scroll bar
+             sits at the right edge and item highlights run edge-to-edge. -->
+        <Style Selector="FlyoutPresenter.bc-children">
+            <Setter Property="Padding" Value="0,6" />
         </Style>
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <!-- ListBox-aligned DataGrid refinements (after the DataGrid Fluent theme so they win). -->

@@ -1,7 +1,10 @@
 <!--
-    BreadcrumbBar theme — a horizontal trail of crumbs joined by chevrons (WinUI / FluentAvalonia).
-    Earlier crumbs are secondary-coloured and interactive (hand cursor + subtle hover fill); the final
-    crumb is the current location: emphasised, non-interactive, and without a trailing chevron.
+    BreadcrumbBar theme — a horizontal trail of crumbs joined by chevrons.
+    Reimplemented after WPF-UI's BreadcrumbBar (MIT) and extended with Dirkster99-style per-crumb
+    dropdowns (MIT): when a ChildrenSelector is set (the :dropdown state) each chevron becomes a
+    clickable trigger that opens a flyout listing that crumb's children — a directory picker. Earlier
+    crumbs are secondary-coloured and interactive (hand cursor + subtle hover fill); the final crumb is
+    the current location: emphasised. All colours come from the Fluent 2 token set.
 -->
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
@@ -11,58 +14,180 @@
     <ControlTheme x:Key="{x:Type ctrls:BreadcrumbBar}" TargetType="ctrls:BreadcrumbBar">
         <Setter Property="ItemsPanel">
             <ItemsPanelTemplate>
-                <WrapPanel Orientation="Horizontal" />
+                <ctrls:BreadcrumbOverflowPanel />
             </ItemsPanelTemplate>
         </Setter>
         <Setter Property="Template">
             <ControlTemplate>
-                <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                <!-- The "…" overflow chip overlaps the start of the trail: the panel reserves space for
+                     it when crumbs collapse, and it's left-aligned in the same cell. -->
+                <Grid ClipToBounds="True">
+                    <ItemsPresenter ItemsPanel="{TemplateBinding ItemsPanel}" />
+                    <Border x:Name="PART_Overflow"
+                            IsVisible="False"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            Background="Transparent"
+                            CornerRadius="4"
+                            Padding="6,3"
+                            Cursor="Hand">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout Placement="BottomEdgeAlignedLeft" FlyoutPresenterClasses="bc-children">
+                                <ListBox x:Name="OverflowList"
+                                         MinWidth="160"
+                                         MaxWidth="320"
+                                         MaxHeight="340"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         Padding="0">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding}"
+                                                       MaxWidth="280"
+                                                       TextTrimming="CharacterEllipsis"
+                                                       VerticalAlignment="Center" />
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                        <StackPanel Orientation="Horizontal" Spacing="4" VerticalAlignment="Center">
+                            <TextBlock Text="…"
+                                       FontSize="{DynamicResource TabItemHeaderFontSize}"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       VerticalAlignment="Center" />
+                            <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                       FontSize="11"
+                                       Text="&#xEAB6;"
+                                       Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                       VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Border>
+                </Grid>
             </ControlTemplate>
         </Setter>
+
+        <!-- Hover fill on the "…" overflow chip, matching the crumb chevrons. -->
+        <Style Selector="^ /template/ Border#PART_Overflow:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
     </ControlTheme>
 
     <ControlTheme x:Key="{x:Type ctrls:BreadcrumbBarItem}" TargetType="ctrls:BreadcrumbBarItem">
         <Setter Property="Focusable" Value="False" />
-        <Setter Property="FontSize" Value="14" />
+        <!-- The inline crumb trail matches the TabStrip's font size + weight. -->
+        <Setter Property="FontSize" Value="{DynamicResource TabItemHeaderFontSize}" />
+        <Setter Property="FontWeight" Value="{DynamicResource TabItemHeaderThemeFontWeight}" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
         <Setter Property="Template">
             <ControlTemplate>
-                <StackPanel Orientation="Horizontal">
-                    <Border x:Name="CrumbBorder"
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+
+                    <!-- The crumb itself (optional icon + text). Navigates on click. -->
+                    <Border x:Name="PART_CrumbBorder"
                             Background="Transparent"
                             CornerRadius="4"
                             Padding="6,3">
-                        <ContentPresenter Content="{TemplateBinding Content}"
-                                          ContentTemplate="{TemplateBinding ContentTemplate}"
-                                          TextElement.Foreground="{TemplateBinding Foreground}"
-                                          TextElement.FontWeight="{TemplateBinding FontWeight}" />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <ContentControl Content="{TemplateBinding Icon}"
+                                            Margin="{TemplateBinding IconMargin}"
+                                            VerticalAlignment="Center" />
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              TextElement.Foreground="{TemplateBinding Foreground}"
+                                              TextElement.FontWeight="{TemplateBinding FontWeight}"
+                                              VerticalAlignment="Center" />
+                        </StackPanel>
                     </Border>
-                    <TextBlock x:Name="Chevron"
-                               FontFamily="{DynamicResource SymbolThemeFontFamily}"
-                               FontSize="11"
-                               Margin="2,0"
-                               VerticalAlignment="Center"
-                               Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                               Text="&#xEAB6;" />
+
+                    <!-- The chevron: a plain separator by default, an interactive children-dropdown in :dropdown mode. -->
+                    <Border x:Name="PART_Chevron"
+                            Background="Transparent"
+                            CornerRadius="4"
+                            Padding="4,3"
+                            Margin="1,0"
+                            VerticalAlignment="Center">
+                        <FlyoutBase.AttachedFlyout>
+                            <Flyout Placement="BottomEdgeAlignedLeft" FlyoutPresenterClasses="bc-children">
+                                <ListBox x:Name="ChildList"
+                                         MinWidth="200"
+                                         MaxWidth="360"
+                                         MaxHeight="340"
+                                         Background="Transparent"
+                                         BorderThickness="0"
+                                         Padding="0">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                                                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                                           FontSize="16"
+                                                           Text="&#xEA83;"
+                                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                           VerticalAlignment="Center" />
+                                                <!-- Long directory names trim with an ellipsis. -->
+                                                <TextBlock Text="{Binding}"
+                                                           MaxWidth="240"
+                                                           TextTrimming="CharacterEllipsis"
+                                                           VerticalAlignment="Center" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </Flyout>
+                        </FlyoutBase.AttachedFlyout>
+                        <TextBlock x:Name="ChevronGlyph"
+                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                   FontSize="11"
+                                   Text="&#xEAB6;"
+                                   Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                   VerticalAlignment="Center" />
+                    </Border>
                 </StackPanel>
             </ControlTemplate>
         </Setter>
 
-        <!-- Interactive (non-final) crumbs. -->
-        <Style Selector="^:not(:last)">
+        <!-- Interactive crumb (earlier crumb, or any crumb in directory/dropdown mode): hand cursor + hover fill. -->
+        <Style Selector="^:not(:last) /template/ Border#PART_CrumbBorder">
             <Setter Property="Cursor" Value="Hand" />
         </Style>
-        <Style Selector="^:not(:last):pointerover /template/ Border#CrumbBorder">
+        <Style Selector="^:dropdown /template/ Border#PART_CrumbBorder">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="^:not(:last) /template/ Border#PART_CrumbBorder:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:dropdown /template/ Border#PART_CrumbBorder:pointerover">
             <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
         </Style>
 
-        <!-- The current location: emphasised, no trailing chevron. -->
+        <!-- The current location: emphasised. -->
         <Style Selector="^:last">
             <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
             <Setter Property="FontWeight" Value="SemiBold" />
         </Style>
-        <Style Selector="^:last /template/ TextBlock#Chevron">
+
+        <!-- Chevron as a plain separator (no ChildrenSelector): inert, and hidden after the final crumb. -->
+        <Style Selector="^:not(:dropdown) /template/ Border#PART_Chevron">
+            <Setter Property="IsHitTestVisible" Value="False" />
+        </Style>
+        <Style Selector="^:last:not(:dropdown) /template/ Border#PART_Chevron">
             <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <!-- A leaf (a file, or an empty folder) has nothing to drop into — hide its chevron. -->
+        <Style Selector="^:leaf /template/ Border#PART_Chevron">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <!-- Chevron as a children-dropdown trigger (directory mode): hand cursor + hover fill + brighter glyph. -->
+        <Style Selector="^:dropdown /template/ Border#PART_Chevron">
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+        <Style Selector="^:dropdown /template/ Border#PART_Chevron:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+        <Style Selector="^:dropdown /template/ Border#PART_Chevron:pointerover TextBlock#ChevronGlyph">
+            <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         </Style>
     </ControlTheme>
 

@@ -109,12 +109,36 @@ public static class AccentService
             Refresh(app);
     }
 
-    /// <summary>Clears any manual override and reverts to the live OS accent.</summary>
-    public static void UseSystemAccent()
+    /// <summary>
+    /// Clears any manual override and reverts to the live OS accent. Where no system accent can be
+    /// read (an unsupported platform), the accent falls back to a neutral Fluent blue — unless
+    /// <paramref name="throwIfUnsupported"/> is <see langword="true"/>, in which case a
+    /// <see cref="PlatformNotSupportedException"/> is thrown instead. The default (<see langword="false"/>)
+    /// preserves the original never-throw behaviour. If the service hasn't been applied to an app yet
+    /// (see <see cref="Apply"/>), it is a no-op and never throws.
+    /// </summary>
+    public static void UseSystemAccent(bool throwIfUnsupported = false)
+    {
+        _override = null;
+        if (_app is not { } app)
+            return;
+
+        var ramp = ResolveRamp(app);
+        if (ramp is null && throwIfUnsupported)
+            throw new PlatformNotSupportedException("No system accent color is available on this platform.");
+
+        Publish(app, ramp ?? RampFromSeed(FallbackAccent));
+    }
+
+    /// <summary>
+    /// Clears any manual override and reverts to the live OS accent, using <paramref name="fallback"/>
+    /// (instead of the built-in neutral blue) when no system accent is available. Never throws.
+    /// </summary>
+    public static void UseSystemAccent(Color fallback)
     {
         _override = null;
         if (_app is { } app)
-            Refresh(app);
+            Publish(app, ResolveRamp(app) ?? RampFromSeed(fallback));
     }
 
     /// <summary>The accent color currently published to the application resources.</summary>
@@ -123,17 +147,20 @@ public static class AccentService
             ? c
             : FallbackAccent;
 
-    private static void Refresh(Application app)
-    {
-        var ramp =
-            (_override is { } o ? RampFromSeed(o) : (Ramp?)null) ??
-            ReadWindowsPalette() ??
-            ReadMacOsAccent() ??
-            ReadLinuxAccent() ??
-            DeriveFromPlatform(app.PlatformSettings) ??
-            RampFromSeed(FallbackAccent);
+    // Resolves the active accent ramp — a manual override, else the live OS accent — or null when no
+    // system accent can be read (an unsupported platform / no accent set).
+    private static Ramp? ResolveRamp(Application app) =>
+        (_override is { } o ? RampFromSeed(o) : (Ramp?)null) ??
+        ReadWindowsPalette() ??
+        ReadMacOsAccent() ??
+        ReadLinuxAccent() ??
+        DeriveFromPlatform(app.PlatformSettings);
 
-        var r = ramp;
+    private static void Refresh(Application app) =>
+        Publish(app, ResolveRamp(app) ?? RampFromSeed(FallbackAccent));
+
+    private static void Publish(Application app, Ramp r)
+    {
         Set(app, AccentKey, r.Accent);
         Set(app, Light1Key, r.Light1);
         Set(app, Light2Key, r.Light2);
@@ -363,8 +390,15 @@ public static class AccentService
 
     private static Ramp? DeriveFromPlatform(IPlatformSettings? settings)
     {
-        var accent = settings?.GetColorValues().AccentColor1;
-        return accent is { } c ? RampFromSeed(c) : null;
+        try
+        {
+            var accent = settings?.GetColorValues().AccentColor1;
+            return accent is { } c ? RampFromSeed(c) : null;
+        }
+        catch
+        {
+            return null;
+        }
     }
 
     private static string? RunProcess(string fileName, string arguments)

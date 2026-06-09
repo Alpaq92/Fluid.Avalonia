@@ -104,6 +104,16 @@ public partial class MainView : UserControl
     /// <summary>Show/hide the title-bar page prev/next buttons. Driven by the Settings page.</summary>
     public bool ShowPageNav { get => PageNavButtons.IsVisible; set => PageNavButtons.IsVisible = value; }
 
+    /// <summary>Navigate the shell to a catalog page — used by the desktop tray menu. Settings routes
+    /// through the footer nav; every other page selects in the main nav list.</summary>
+    public void NavigateTo(GalleryItem item)
+    {
+        if (ReferenceEquals(item, GalleryCatalog.Settings))
+            FooterNav.SelectedIndex = 0;
+        else
+            NavList.SelectedItem = item;
+    }
+
     // Keep a comfortable left inset on whichever leading title-bar element is first visible: when the
     // hamburger (which normally provides that inset) is hidden, the icon — or the title — would
     // otherwise sit flush against the window edge.

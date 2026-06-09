@@ -43,7 +43,8 @@ foreach (var p in AccentService.Preset)
 var teal = AccentService.Preset.First(p => p.Name == "Teal");
 AccentService.SetAccent(teal.Color);
 
-// …or hand back to the live OS accent
+// …or hand back to the live OS accent. Overloads can throw PlatformNotSupportedException
+// on an unsupported platform, or take your own fallback color.
 AccentService.UseSystemAccent();
 ```
 
@@ -119,6 +120,8 @@ The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon)
 - **[Markdown.Avalonia](https://github.com/whistyun/Markdown.Avalonia)** — renders the Home page.
 - **[Material Design Icons](https://pictogrammers.com/library/mdi/)** (Apache-2.0) — the *code-array* glyph used in the app icon.
 - **[Open Color](https://yeun.github.io/open-color/)** (MIT) — the colors behind the 20 built-in accent presets.
+- **[WPF-UI](https://github.com/lepoco/wpfui)** (MIT) — the demo's `BreadcrumbBar` is reimplemented after its `BreadcrumbBar`, and its `NotifyIcon` inspired the Fluent-themed system-tray menu.
+- **[Dirkster99/bm](https://github.com/Dirkster99/bm)** (MIT) — the breadcrumb's per-crumb chevron-dropdown navigation.
 - **[Avalonia](https://github.com/AvaloniaUI/Avalonia)** — the `FluentTheme` we build on.
 
 ## Credits

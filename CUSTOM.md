@@ -42,7 +42,7 @@ A two-value segmented selector: both options show inside the track and an accent
 
 ### BreadcrumbBar
 
-A horizontal trail of crumbs joined by chevrons; the final crumb is the current location (emphasised, inert) while earlier crumbs are clickable and raise `ItemClicked` for back-navigation. Ported from WinUI / FluentAvalonia.
+A horizontal trail of crumbs joined by chevrons — reimplemented after **WPF-UI**'s `BreadcrumbBar` (a clickable trail where the final crumb is the emphasised current location and earlier crumbs raise `ItemClicked` — and run an optional `Command` — for back-navigation; crumbs may carry an `Icon`), and extended in the spirit of **Dirkster99**'s directory-picker breadcrumb: set a `ChildrenSelector` and each chevron *between* crumbs becomes a dropdown of that crumb's children, with the pick raising `ChildSelected`. When the trail is wider than the control it collapses WinUI-style — the leading crumbs fold behind a clickable `…` overflow chip that drops them down — and a leaf crumb (a file, or an empty folder) shows no chevron. The Navigation page shows both a width-limited string trail (demonstrating the overflow collapse plus back / forward navigation) and a directory picker seeded from the working directory (the real file system on desktop, an in-memory mock tree in the browser).
 
 ### GroupBox
 
@@ -52,11 +52,11 @@ A titled container — a header strip above a padded body, wrapped in a Fluent c
 
 ### Fluid.Avalonia theme
 
-A WinUI 3 / Fluent 2 look layered over `FluentTheme`: light/dark Fluent 2 colour tokens, lit-edge elevation borders, card surfaces, and a Fluent-tuned set of control themes (`NumericUpDown` / `ButtonSpinner`, `DataGrid`, `Calendar`, and more). The theme is **font-agnostic** — the host app supplies the typeface; the demo bundles **DejaVu Sans** for text (broad coverage: Latin plus `→ ● ▼ │`) and the **Codicons** font (VS Code, MIT) for symbol glyphs, so type and icons render identically on desktop and in the browser — no reliance on the Windows-only Segoe fonts.
+A WinUI 3 / Fluent 2 look layered over `FluentTheme`: light/dark Fluent 2 colour tokens, lit-edge elevation borders, card surfaces, and a Fluent-tuned set of control themes (`NumericUpDown` / `ButtonSpinner`, `DataGrid`, `Calendar`, and more). The theme is **font-agnostic** — the host app supplies the typeface; the demo bundles **DejaVu Sans** for text (broad coverage: Latin plus `→ ● ▼ │`) and the **Codicons** font (VS Code, CC-BY-4.0) for symbol glyphs, so type and icons render identically on desktop and in the browser — no reliance on the Windows-only Segoe fonts.
 
 ### OS accent integration
 
-An accent-colour service that reads the Windows accent from the registry (with cross-platform fallbacks), plus a curated palette of 20 Open Color presets and an API to apply a custom accent — wired into the Accents page and the colour picker.
+An accent-colour service that reads the Windows accent from the registry (with cross-platform fallbacks), plus a curated palette of 20 Open Color presets and an API to apply a custom accent — wired into the Accents page and the colour picker. `UseSystemAccent()` reverts to the live OS accent and never throws — it falls back to a neutral blue on an unsupported platform — while two overloads let you instead throw a `PlatformNotSupportedException` (`UseSystemAccent(throwIfUnsupported: true)`) or supply your own fallback colour (`UseSystemAccent(Color)`).
 
 ### Localization
 
@@ -69,6 +69,10 @@ A reusable `Window` subclass that packages the WinUI 3 window chrome — an exte
 ### Window shell
 
 A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a Mica backdrop and dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
+
+### System tray menu
+
+A desktop-only system-tray icon, wired up by the demo's `App` on the classic-desktop lifetime (so the WASM head is unaffected), whose context menu mirrors the shell navigation — Home / Custom / Playground, a **Controls** submenu of the gallery pages, then Settings / Show / Close. On **Windows**, Avalonia renders the tray's `NativeMenu` itself (the same `MenuFlyoutPresenter` as in-app menus), so it inherits the Fluid.Avalonia theme — a Fluent-styled tray menu in the spirit of WPF-UI's `NotifyIcon`; on macOS / Linux it falls back to the OS-native menu.
 
 ### Thin Fluent scrollbar
 

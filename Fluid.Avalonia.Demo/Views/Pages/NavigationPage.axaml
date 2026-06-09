@@ -30,14 +30,24 @@
             </TabStrip>
         </ctrls:ControlExample>
 
-        <ctrls:ControlExample Header="A BreadcrumbBar shows the trail to the current location — click an earlier crumb to navigate back."
+        <ctrls:ControlExample Header="A BreadcrumbBar trail — click a crumb to go back, a chevron to step forward. It's width-limited here, so the long path collapses its leading crumbs into a “…” overflow menu (click it to reach them)."
                               XamlSource="&lt;ctrls:BreadcrumbBar ItemsSource=&quot;{Binding Trail}&quot; ItemClicked=&quot;OnCrumbClicked&quot; /&gt;">
             <StackPanel Spacing="10" HorizontalAlignment="Left">
-                <ctrls:BreadcrumbBar x:Name="Crumbs" />
+                <ctrls:BreadcrumbBar x:Name="Crumbs" Width="460" HorizontalAlignment="Left" />
                 <TextBlock x:Name="CrumbReadout"
                            Classes="Caption"
                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                            Text="Click a crumb to see its index and value." />
+            </StackPanel>
+        </ctrls:ControlExample>
+
+        <ctrls:ControlExample Header="A directory-picker BreadcrumbBar — click a crumb to jump up the tree, or click a chevron to drop into that folder's subfolders. Seeded from the working directory.">
+            <StackPanel Spacing="10" HorizontalAlignment="Left" MaxWidth="660">
+                <ctrls:BreadcrumbBar x:Name="DirCrumbs" />
+                <TextBlock x:Name="DirReadout"
+                           Classes="Caption"
+                           TextWrapping="Wrap"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
             </StackPanel>
         </ctrls:ControlExample>
 
