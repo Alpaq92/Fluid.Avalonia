@@ -100,7 +100,7 @@ The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon)
 - **[Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia)** — reference for the roomy circular-day Calendar styling.
 - **[Markdown.Avalonia](https://github.com/whistyun/Markdown.Avalonia)** — renders the Home page.
 - **[Material Design Icons](https://pictogrammers.com/library/mdi/)** (Apache-2.0) — the *code-array* glyph used in the app icon.
-- **[Open Color](https://yeun.github.io/open-color/)** (MIT) — the 20 accent preset swatches.
+- **[Open Color](https://yeun.github.io/open-color/)** (MIT) — the colors behind the 20 built-in accent presets.
 - **[Avalonia](https://github.com/AvaloniaUI/Avalonia)** — the `FluentTheme` we build on.
 
 ## Credits
