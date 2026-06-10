@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.3.0...v1.4.0) (2026-06-10)
+
+
+### Features
+
+* InfoBar, ContentDialog (DialogHost.Avalonia), VisualRate, live AccentChanged event ([53fae62](https://github.com/Alpaq92/Fluid.Avalonia/commit/53fae622656a9ce0028cd1204c5aa9a38164bb85))
+
 ## [1.3.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.2.1...v1.3.0) (2026-06-09)
 
 
