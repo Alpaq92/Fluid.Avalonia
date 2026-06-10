@@ -11,15 +11,20 @@ namespace Fluid.Avalonia;
 /// <summary>
 /// A <see cref="Window"/> with Fluid.Avalonia's WinUI 3-style chrome: an extended client area with a
 /// custom title bar (app icon, title, a free content slot, and minimize / maximize / close caption
-/// buttons), a Mica backdrop with a solid fallback, and a frame that follows the app's light/dark
-/// theme. Windows-specific bits are guarded and degrade gracefully on macOS / Linux. Put your window
-/// content in <see cref="ContentControl.Content"/> as usual; drop title-bar widgets (search, menus…)
-/// into <see cref="TitleBarContent"/>.
+/// buttons), a translucent backdrop with a solid fallback, and a frame that follows the app's light/dark
+/// theme. The backdrop is cross-platform via <see cref="TransparencyService"/> (Mica on Windows,
+/// vibrancy on macOS, blur on Linux/KWin) and is gated by <see cref="TransparencyEnabled"/>, which is
+/// seeded from the OS "Transparency effects" setting at construction. Windows-specific bits are guarded
+/// and degrade gracefully on macOS / Linux. Put your window content in <see cref="ContentControl.Content"/>
+/// as usual; drop title-bar widgets (search, menus…) into <see cref="TitleBarContent"/>.
 /// </summary>
 public class FluidWindow : Window
 {
     public static readonly StyledProperty<object?> TitleBarContentProperty =
         AvaloniaProperty.Register<FluidWindow, object?>(nameof(TitleBarContent));
+
+    public static readonly StyledProperty<bool> TransparencyEnabledProperty =
+        AvaloniaProperty.Register<FluidWindow, bool>(nameof(TransparencyEnabled), defaultValue: true);
 
     public static readonly StyledProperty<bool> ShowIconProperty =
         AvaloniaProperty.Register<FluidWindow, bool>(nameof(ShowIcon), true);
@@ -68,6 +73,15 @@ public class FluidWindow : Window
         set => SetValue(IconSourceProperty, value);
     }
 
+    /// <summary>Whether to use the translucent backdrop (Mica / vibrancy / blur) versus a solid window.
+    /// Seeded from the OS "Transparency effects" setting at construction; set it to override at runtime.
+    /// Where the compositor can't render the backdrop, the window stays solid regardless.</summary>
+    public bool TransparencyEnabled
+    {
+        get => GetValue(TransparencyEnabledProperty);
+        set => SetValue(TransparencyEnabledProperty, value);
+    }
+
     private InputElement? _titleBar;
     private Button? _minimizeButton;
     private Button? _maximizeButton;
@@ -81,9 +95,10 @@ public class FluidWindow : Window
         ExtendClientAreaTitleBarHeightHint = TitleBarHeight;
         WindowDecorations = WindowDecorations.BorderOnly;
 
-        // Prefer a Mica backdrop on Windows; fall back to the solid base color where unavailable.
-        if (OperatingSystem.IsWindows())
-            TransparencyLevelHint = new[] { WindowTransparencyLevel.Mica, WindowTransparencyLevel.None };
+        // Follow the OS "Transparency effects" setting at startup (overridable via TransparencyEnabled);
+        // request the platform's translucent backdrop, reconciled to a solid surface where unavailable.
+        SetCurrentValue(TransparencyEnabledProperty, TransparencyService.IsOsTransparencyEnabled());
+        TransparencyService.Apply(this, TransparencyEnabled);
 
         ActualThemeVariantChanged += (_, _) => ApplyTitleBarTheme();
     }
@@ -122,7 +137,7 @@ public class FluidWindow : Window
     {
         base.OnOpened(e);
         ApplyTitleBarTheme();
-        ApplyMicaFallback();
+        TransparencyService.ReconcileBackground(this);
         UpdateMaximizedPseudoClass();
     }
 
@@ -133,6 +148,10 @@ public class FluidWindow : Window
             UpdateMaximizedPseudoClass();
         else if (change.Property == TitleBarHeightProperty)
             ExtendClientAreaTitleBarHeightHint = TitleBarHeight;
+        else if (change.Property == TransparencyEnabledProperty)
+            TransparencyService.Apply(this, TransparencyEnabled);
+        else if (change.Property == ActualTransparencyLevelProperty)
+            TransparencyService.ReconcileBackground(this);
     }
 
     private void OnTitleBarPressed(object? sender, PointerPressedEventArgs e)
@@ -160,16 +179,5 @@ public class FluidWindow : Window
     {
         var hwnd = TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
         Win11.SetTitleBarTheme(hwnd, ActualThemeVariant == ThemeVariant.Dark);
-    }
-
-    // If the OS can't render Mica, fall back to the solid base color so the window isn't see-through.
-    private void ApplyMicaFallback()
-    {
-        if (ActualTransparencyLevel == WindowTransparencyLevel.None &&
-            this.TryFindResource("SolidBackgroundFillColorBaseBrush", ActualThemeVariant, out var brush) &&
-            brush is IBrush b)
-        {
-            Background = b;
-        }
     }
 }

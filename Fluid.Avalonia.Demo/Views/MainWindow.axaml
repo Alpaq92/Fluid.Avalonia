@@ -13,8 +13,7 @@
     MinHeight="480"
     WindowStartupLocation="CenterScreen"
     Icon="avares://Fluid.Avalonia.Demo/Assets/logo.ico"
-    Background="Transparent"
-    TransparencyLevelHint="Mica">
+    Background="Transparent">
 
     <views:MainView x:Name="Shell" />
 </Window>

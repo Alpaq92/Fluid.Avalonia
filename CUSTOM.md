@@ -76,11 +76,11 @@ Runtime localization the **Semi.Avalonia / SukiUI** way, shipped **inside the `F
 
 ### FluidWindow
 
-A reusable `Window` subclass that packages the WinUI 3 window chrome — an extended client area with a custom title bar (app icon, title, a free `TitleBarContent` slot, and minimize / maximize / close caption buttons), a Mica backdrop with a solid fallback, and a frame that follows the light/dark theme (DWM). Window drag and double-tap-maximize are built in; caption glyphs are vector, so it needs no symbol font; and the Windows-specific bits are guarded so it degrades gracefully off-Windows. Put your content in `Content` and any title-bar widgets (search, menus…) in `TitleBarContent`.
+A reusable `Window` subclass that packages the WinUI 3 window chrome — an extended client area with a custom title bar (app icon, title, a free `TitleBarContent` slot, and minimize / maximize / close caption buttons), a cross-platform translucent backdrop with a solid fallback, and a frame that follows the light/dark theme (DWM). The backdrop is driven by the shared `TransparencyService` and gated by a `TransparencyEnabled` property (Mica on Windows, vibrancy on macOS, blur on Linux/KWin; seeded from the OS "Transparency effects" setting at construction and reconciled to a solid surface via `ActualTransparencyLevel` where the compositor can't render it). Window drag and double-tap-maximize are built in; caption glyphs are vector, so it needs no symbol font; and the Windows-specific bits are guarded so it degrades gracefully off-Windows. Put your content in `Content` and any title-bar widgets (search, menus…) in `TitleBarContent`.
 
 ### Window shell
 
-A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a Mica backdrop and dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
+A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a translucent backdrop (Mica / vibrancy / blur via `TransparencyService`, toggled from **Settings → Window** and following the OS transparency setting) and dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
 
 ### System tray menu
 

@@ -35,6 +35,18 @@ public partial class SettingsPage : UserControl
         ShowTitleSwitch.IsCheckedChanged += (_, _) => { if (Shell is { } m) m.ShowTitleText = ShowTitleSwitch.IsChecked == true; };
         ShowPageNavSwitch.IsCheckedChanged += (_, _) => { if (Shell is { } m) m.ShowPageNav = ShowPageNavSwitch.IsChecked == true; };
 
+        // Window transparency — the backdrop lives on the desktop Window; the browser head has none.
+        if (DesktopWindow is { } win)
+        {
+            TransparencySwitch.IsChecked = win.TransparencyEnabled;
+            TransparencySwitch.IsCheckedChanged += (_, _) => win.TransparencyEnabled = TransparencySwitch.IsChecked == true;
+        }
+        else
+        {
+            TransparencySwitch.IsEnabled = false;
+            ToolTip.SetTip(TransparencySwitch, "Desktop only — the browser head has no window backdrop.");
+        }
+
         // Language picker — one radio per bundled language (native name), styled like the theme picker
         // above; switches the app language live via the localizer. The initial checked state reflects
         // the current (system-default) language.
@@ -73,6 +85,12 @@ public partial class SettingsPage : UserControl
         ISingleViewApplicationLifetime s => s.MainView as MainView,
         _ => null,
     };
+
+    // The desktop window that owns the translucent backdrop (null in the browser single-view head).
+    private static MainWindow? DesktopWindow =>
+        Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime d
+            ? d.MainWindow as MainWindow
+            : null;
 
     private void OnThemeRadioChanged(object? sender, RoutedEventArgs e)
     {

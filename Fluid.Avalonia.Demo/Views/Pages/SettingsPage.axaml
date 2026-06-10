@@ -10,7 +10,7 @@
             <Border Classes="Card">
                 <StackPanel Spacing="6">
                     <TextBlock Classes="Body" Text="App theme" />
-                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    <TextBlock Classes="Caption" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                Text="Choose how the app looks. Accent color is taken from your OS (see the Accents page)." />
                     <StackPanel Margin="0,8,0,0" Spacing="2">
                         <RadioButton x:Name="LightRadio" GroupName="theme" Content="Light" />
@@ -26,7 +26,7 @@
             <Border Classes="Card">
                 <StackPanel Spacing="6">
                     <TextBlock Classes="Body" Text="App language" />
-                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    <TextBlock Classes="Caption" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                Text="Switches the language of the custom pickers at runtime. Defaults to your system language." />
                     <!-- One radio per bundled language (native name), styled like the theme picker above.
                          The radios are added in code-behind from the language list. -->
@@ -40,7 +40,7 @@
             <Border Classes="Card">
                 <StackPanel Spacing="6">
                     <TextBlock Classes="Body" Text="Title bar contents" />
-                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                    <TextBlock Classes="Caption" TextWrapping="Wrap" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                Text="Choose which elements show in the custom title bar." />
                     <StackPanel Margin="0,8,0,0" Spacing="4">
                         <ToggleSwitch x:Name="ShowMenuSwitch" Content="Menu button" IsChecked="True" />
@@ -48,6 +48,19 @@
                         <ToggleSwitch x:Name="ShowTitleSwitch" Content="Title" IsChecked="True" />
                         <ToggleSwitch x:Name="ShowPageNavSwitch" Content="Page navigation buttons" IsChecked="True" />
                     </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+        <StackPanel Spacing="8">
+            <TextBlock Classes="BodyStrong" Text="Window" />
+            <Border Classes="Card">
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Body" Text="Backdrop" />
+                    <TextBlock Classes="Caption" TextWrapping="Wrap"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Use the translucent backdrop (Mica on Windows, vibrancy on macOS, blur on Linux where supported) — seeded from the OS “Transparency effects” setting. Turn it off for a solid window." />
+                    <ToggleSwitch x:Name="TransparencySwitch" Margin="0,8,0,0" Content="Window transparency" IsChecked="True" />
                 </StackPanel>
             </Border>
         </StackPanel>

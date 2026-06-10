@@ -1,12 +1,13 @@
 using Avalonia.Controls;
 using Fluid.Avalonia.Demo.Interop;
-using Avalonia.Media;
 using Avalonia.Styling;
 
 namespace Fluid.Avalonia.Demo.Views;
 
 public partial class MainWindow : Window
 {
+    private bool _transparencyEnabled;
+
     public MainWindow()
     {
         InitializeComponent();
@@ -18,14 +19,31 @@ public partial class MainWindow : Window
         ExtendClientAreaTitleBarHeightHint = 48;
         WindowDecorations = WindowDecorations.BorderOnly;
 
+        // Translucent backdrop (Mica / vibrancy / blur), seeded from the OS "Transparency effects"
+        // setting; the Settings page exposes a switch that overrides this at runtime.
+        _transparencyEnabled = TransparencyService.IsOsTransparencyEnabled();
+        TransparencyService.Apply(this, _transparencyEnabled);
+
         ActualThemeVariantChanged += (_, _) => ApplyTitleBarTheme();
+    }
+
+    /// <summary>Whether the window uses the translucent backdrop (driven by the Settings switch).</summary>
+    public bool TransparencyEnabled
+    {
+        get => _transparencyEnabled;
+        set
+        {
+            _transparencyEnabled = value;
+            TransparencyService.Apply(this, value);
+            TransparencyService.ReconcileBackground(this);
+        }
     }
 
     protected override void OnOpened(EventArgs e)
     {
         base.OnOpened(e);
         ApplyTitleBarTheme();
-        ApplyMicaFallback();
+        TransparencyService.ReconcileBackground(this);
         ApplyOffScreenMargin();
         ApplyWin32TaskbarIcon();
     }
@@ -84,16 +102,5 @@ public partial class MainWindow : Window
     {
         var hwnd = TryGetPlatformHandle()?.Handle ?? IntPtr.Zero;
         Win11.SetTitleBarTheme(hwnd, ActualThemeVariant == ThemeVariant.Dark);
-    }
-
-    // If the OS can't render Mica, fall back to the solid base color so the window isn't see-through.
-    private void ApplyMicaFallback()
-    {
-        if (ActualTransparencyLevel == WindowTransparencyLevel.None &&
-            this.TryFindResource("SolidBackgroundFillColorBaseBrush", ActualThemeVariant, out var brush) &&
-            brush is IBrush b)
-        {
-            Background = b;
-        }
     }
 }
