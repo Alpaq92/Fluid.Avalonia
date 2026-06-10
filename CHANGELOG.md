@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.4.0...v1.5.0) (2026-06-10)
+
+
+### Features
+
+* cross-platform window transparency toggle (TransparencyService + FluidWindow.TransparencyEnabled) ([a90d2d8](https://github.com/Alpaq92/Fluid.Avalonia/commit/a90d2d83e3051465761d173d71fff4c3cca8da73))
+
 ## [1.4.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.3.0...v1.4.0) (2026-06-10)
 
 
