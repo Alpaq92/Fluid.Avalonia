@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 using Avalonia.Data;
@@ -76,7 +74,7 @@ public partial class AnalogDateTimePicker : UserControl
     // Seed the calendar + dial from the committed value (or a sensible default).
     private void SeedFlyout()
     {
-        var d = SelectedDateTime ?? DateTime.Today.AddHours(9);
+        var d = SelectedDateTime ?? DateTime.Today + DefaultTime;
         Cal.SelectedDate = d.Date;
         Cal.DisplayDate = d.Date;
         Clock.Time = d.TimeOfDay;
@@ -89,51 +87,17 @@ public partial class AnalogDateTimePicker : UserControl
         return date + Clock.Time;
     }
 
-    // 24-hour hides the field's AM/PM segment (collapsing its divider + column so the remaining five
-    // segments split the field evenly) and switches the dial; 12-hour restores them.
+    // Collapse/restore the field's AM/PM segment per clock mode (shared logic) and switch the dial.
     private void ApplyClockMode()
     {
-        AmPmText.IsVisible = !Is24;
-        AmPmDiv.IsVisible = !Is24;
-        FieldGrid.ColumnDefinitions[9].Width = Is24 ? new GridLength(0) : GridLength.Auto;
-        // AM/PM only ever holds a 2-letter designator, so size that column to its content (Auto) rather
-        // than giving it a full equal star share — otherwise it steals width and squishes the date segments.
-        FieldGrid.ColumnDefinitions[10].Width = Is24 ? new GridLength(0) : GridLength.Auto;
-        // 12-hour packs six segments, so widen the field enough that its five date/time segments get the
-        // same breathing room as the five-segment 24-hour layout (the AM/PM column is extra on top).
-        Trigger.MinWidth = Is24 ? 320 : 360;
+        SegmentedDateTimeField.ApplyClockMode(Is24, FieldGrid, AmPmText, AmPmDiv, Trigger);
         Clock.Is24Hour = Is24;
     }
 
     // Paint the segmented field from the committed value (placeholders when nothing is set yet).
-    private void UpdateLabel()
-    {
-        if (SelectedDateTime is { } dt)
-        {
-            SetSeg(MonthText, dt.ToString("MMM"), false);
-            SetSeg(DayText, dt.ToString("dd"), false);
-            SetSeg(YearText, dt.ToString("yyyy"), false);
-
-            var hour = Is24 ? dt.Hour : (dt.Hour % 12 == 0 ? 12 : dt.Hour % 12);
-            SetSeg(HourText, hour.ToString(Is24 ? "00" : "0"), false);
-            SetSeg(MinuteText, dt.ToString("mm"), false);
-            if (!Is24)
-                SetSeg(AmPmText, dt.ToString("tt"), false);
-        }
-        else
-        {
-            SetSeg(MonthText, L("STRING_MONTH"), true);
-            SetSeg(DayText, L("STRING_DAY"), true);
-            SetSeg(YearText, L("STRING_YEAR"), true);
-            SetSeg(HourText, L("STRING_HOUR"), true);
-            SetSeg(MinuteText, L("STRING_MINUTE"), true);
-            if (!Is24)
-                SetSeg(AmPmText, "AM", true);
-        }
-    }
-
-    // Resolve a localized string from the merged Locale dictionary (falls back to the key).
-    private string L(string key) => this.TryFindResource(key, out var v) && v is string s ? s : key;
+    private void UpdateLabel() =>
+        SegmentedDateTimeField.UpdateLabel(this, SelectedDateTime, Is24,
+            MonthText, DayText, YearText, HourText, MinuteText, AmPmText);
 
     // Re-localize the placeholders when the language changes (button captions use {DynamicResource}).
     protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
@@ -150,10 +114,4 @@ public partial class AnalogDateTimePicker : UserControl
     }
 
     private void OnLanguageChanged() => UpdateLabel();
-
-    private static void SetSeg(TextBlock tb, string text, bool placeholder)
-    {
-        tb.Text = text;
-        tb.Classes.Set("placeholder", placeholder);
-    }
 }

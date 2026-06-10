@@ -1,7 +1,5 @@
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
-using Fluid.Avalonia;
 using Avalonia.Input;
 using Avalonia.Layout;
 using Avalonia.Markup.Xaml.MarkupExtensions;
@@ -20,7 +18,6 @@ public partial class FluidColorPicker : UserControl
     public static readonly StyledProperty<Color> SelectedColorProperty =
         AvaloniaProperty.Register<FluidColorPicker, Color>(
             nameof(SelectedColor),
-            defaultValue: Color.FromRgb(0x21, 0x96, 0xF3),
             defaultBindingMode: BindingMode.TwoWay);
 
     /// <summary>The currently selected colour.</summary>
@@ -37,10 +34,8 @@ public partial class FluidColorPicker : UserControl
         InitializeComponent();
         BuildPresets();
 
-        // Start from the live accent, push it into every editor + the button, then listen.
-        SelectedColor = AccentService.CurrentAccent;
-        PushToEditors(SelectedColor);
-        UpdateButton(SelectedColor);
+        // Start from the live accent, mirrored into every editor + the button, then listen.
+        SetColor(AccentService.CurrentAccent, null);
 
         Spectrum.ColorChanged += OnEditorColorChanged;
         HueSlider.ColorChanged += OnEditorColorChanged;
@@ -68,16 +63,6 @@ public partial class FluidColorPicker : UserControl
         if (!ReferenceEquals(source, HueSlider)) HueSlider.Color = color;
         if (!ReferenceEquals(source, Components)) Components.Color = color;
         if (!ReferenceEquals(source, Preview)) Preview.HsvColor = color.ToHsv();
-        _syncing = false;
-    }
-
-    private void PushToEditors(Color color)
-    {
-        _syncing = true;
-        Spectrum.Color = color;
-        HueSlider.Color = color;
-        Components.Color = color;
-        Preview.HsvColor = color.ToHsv();
         _syncing = false;
     }
 

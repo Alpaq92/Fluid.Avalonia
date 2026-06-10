@@ -83,8 +83,6 @@
             </Style>
             <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource AccentFillColorSecondaryBrush}" />
-                <Setter Property="BorderBrush" Value="{DynamicResource AccentControlElevationBorderBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource TextOnAccentFillColorPrimaryBrush}" />
             </Style>
             <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
                 <Setter Property="Background" Value="{DynamicResource AccentFillColorTertiaryBrush}" />

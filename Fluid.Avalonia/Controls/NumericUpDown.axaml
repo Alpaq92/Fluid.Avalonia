@@ -13,7 +13,6 @@
     <!-- One spin button: a subtle, rounded chevron repeat button. -->
     <ControlTheme x:Key="FluidSpinnerButton" TargetType="RepeatButton">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Width" Value="30" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorSecondaryBrush}" />
@@ -49,11 +48,9 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        MinHeight="{TemplateBinding MinHeight}">
+                        CornerRadius="{TemplateBinding CornerRadius}">
                     <DockPanel>
-                        <StackPanel x:Name="PART_SpinnerPanel"
-                                    DockPanel.Dock="Right"
+                        <StackPanel DockPanel.Dock="Right"
                                     Orientation="Horizontal"
                                     Margin="2,1"
                                     IsVisible="{TemplateBinding ShowButtonSpinner}">
@@ -61,14 +58,12 @@
                                           Theme="{StaticResource FluidSpinnerButton}"
                                           VerticalAlignment="Stretch">
                                 <PathIcon Width="11" Height="11"
-                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                           Data="M 1,6.5 L 6,1.5 L 11,6.5 L 9.6,7.9 L 6,4.3 L 2.4,7.9 Z" />
                             </RepeatButton>
                             <RepeatButton x:Name="PART_DecreaseButton"
                                           Theme="{StaticResource FluidSpinnerButton}"
                                           VerticalAlignment="Stretch">
                                 <PathIcon Width="11" Height="11"
-                                          Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                                           Data="M 1,2.5 L 6,7.5 L 11,2.5 L 9.6,1.1 L 6,4.7 L 2.4,1.1 Z" />
                             </RepeatButton>
                         </StackPanel>

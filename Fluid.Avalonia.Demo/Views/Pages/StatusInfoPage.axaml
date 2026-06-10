@@ -31,18 +31,6 @@
                 </Animation>
             </Style.Animations>
         </Style>
-        <Style Selector="Border.infobar">
-            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
-            <Setter Property="Padding" Value="14,12" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-        </Style>
-        <Style Selector="Border.infobar TextBlock.icon">
-            <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
-            <Setter Property="FontSize" Value="16" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-        </Style>
     </UserControl.Styles>
 
     <StackPanel>
@@ -77,8 +65,7 @@
         <ctrls:ControlExample Header="A BusyArea overlays its content with a spinner while a task runs (toggle it)."
                               XamlSource="&lt;ctrls:BusyArea IsBusy=&quot;True&quot; BusyText=&quot;Loading…&quot;&gt;...&lt;/ctrls:BusyArea&gt;">
             <StackPanel Spacing="12">
-                <ctrls:BusyArea x:Name="Busy"
-                                Width="320" Height="150"
+                <ctrls:BusyArea Width="320" Height="150"
                                 HorizontalAlignment="Left"
                                 BusyText="Loading…"
                                 IsBusy="{Binding #BusyToggle.IsChecked}"
@@ -111,33 +98,19 @@
             </StackPanel>
         </ctrls:ControlExample>
 
-        <ctrls:ControlExample Header="InfoBars communicate status with color and an icon."
-                              XamlSource="&lt;Border Classes=&quot;infobar&quot; Background=&quot;{DynamicResource SystemFillColorAttentionBackgroundBrush}&quot;&gt;...&lt;/Border&gt;">
+        <ctrls:ControlExample Header="An InfoBar communicates status with colour and an icon — set Severity, Title and Message; IsClosable shows the dismiss button; the Content slot holds optional action content. Reimplemented after WPF-UI's InfoBar."
+                              XamlSource="&lt;ctrls:InfoBar IsOpen=&quot;True&quot; Severity=&quot;Warning&quot; Title=&quot;Heads up&quot; Message=&quot;Your session expires soon.&quot; /&gt;">
             <StackPanel Spacing="10" HorizontalAlignment="Stretch">
-                <Border Classes="infobar" Background="{DynamicResource SystemFillColorAttentionBackgroundBrush}">
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorAttentionBrush}" Text="&#xEA74;" />
-                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Informational — a new update is available." />
-                    </StackPanel>
-                </Border>
-                <Border Classes="infobar" Background="{DynamicResource SystemFillColorSuccessBackgroundBrush}">
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorSuccessBrush}" Text="&#xEAB2;" />
-                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Success — your changes were saved." />
-                    </StackPanel>
-                </Border>
-                <Border Classes="infobar" Background="{DynamicResource SystemFillColorCautionBackgroundBrush}">
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorCautionBrush}" Text="&#xEA6C;" />
-                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Warning — your session expires soon." />
-                    </StackPanel>
-                </Border>
-                <Border Classes="infobar" Background="{DynamicResource SystemFillColorCriticalBackgroundBrush}">
-                    <StackPanel Orientation="Horizontal" Spacing="12">
-                        <TextBlock Classes="icon" Foreground="{DynamicResource SystemFillColorCriticalBrush}" Text="&#xEA87;" />
-                        <TextBlock Classes="Body" VerticalAlignment="Center" Text="Error — couldn’t reach the server." />
-                    </StackPanel>
-                </Border>
+                <ctrls:InfoBar IsOpen="True" Severity="Informational" IsClosable="False"
+                               Title="Information" Message="A new update is available." />
+                <ctrls:InfoBar IsOpen="True" Severity="Success" IsClosable="False"
+                               Title="Saved" Message="Your changes were saved." />
+                <ctrls:InfoBar IsOpen="True" Severity="Warning"
+                               Title="Heads up" Message="Your session expires soon." />
+                <ctrls:InfoBar IsOpen="True" Severity="Error"
+                               Title="Error" Message="Couldn’t reach the server.">
+                    <Button Content="Retry" />
+                </ctrls:InfoBar>
             </StackPanel>
         </ctrls:ControlExample>
 

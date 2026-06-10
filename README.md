@@ -46,6 +46,10 @@ AccentService.SetAccent(teal.Color);
 // …or hand back to the live OS accent. Overloads can throw PlatformNotSupportedException
 // on an unsupported platform, or take your own fallback color.
 AccentService.UseSystemAccent();
+
+// observe accent changes — fires after every (re)publish, including live OS accent
+// changes, with CurrentAccent already holding the fresh color.
+AccentService.AccentChanged += (_, _) => Console.WriteLine(AccentService.CurrentAccent);
 ```
 
 The repository also contains **Fluid.Avalonia.Demo**, a demo app that mirrors the structure of Microsoft's **WinUI 3 Gallery** (data-driven navigation, per-item pages, a Settings page) so you can compare the result side by side.
@@ -93,17 +97,17 @@ Rather than hand-porting ~70 control templates (and fighting Avalonia 12 templat
 
 ## Custom controls
 
-The demo isn't only re-themed stock controls. A number of **composite controls and shell features were built specifically for this project**, with no direct equivalent in vanilla Avalonia — the `RadialTimePicker` and its reusable `RadialClock` dial, the segmented `DateTimePicker` / `DateTimeSpinners` and `AnalogDateTimePicker`, `RadialSlider`, `ProgressCircle`, `BinarySelector`, `FluidColorPicker`, `BreadcrumbBar`, `GroupBox`, the reusable `FluidWindow` shell, and more.
+The demo isn't only re-themed stock controls. A number of **composite controls and shell features were built specifically for this project**, with no direct equivalent in vanilla Avalonia — the `RadialTimePicker` and its reusable `RadialClock` dial, the segmented `DateTimePicker` / `DateTimeSpinners` and `AnalogDateTimePicker`, `RadialSlider`, `ProgressCircle`, `BinarySelector`, `FluidColorPicker`, `BreadcrumbBar`, `GroupBox`, `InfoBar`, `VisualRate`, a Fluent-themed `ContentDialog`, the reusable `FluidWindow` shell, and more.
 
 Each one is catalogued — with what it is and a live example — in **[CUSTOM.md](CUSTOM.md)**, a detailed reference for every custom control and feature authored for Fluid.Avalonia (also rendered live on the demo's **Custom** page).
 
 ## Building & running
 
-Requires the **.NET 8 SDK** (pinned via `global.json`).
+Requires the **.NET 10 SDK** (pinned via `global.json`; the library and desktop demo still target `net8.0` — the SDK 10 requirement comes from the `net10.0-browser` WASM head).
 
 ```
 dotnet build
-dotnet run --project Fluid.Avalonia.Demo
+dotnet run --project Fluid.Avalonia.Demo.Desktop
 ```
 
 The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon), falling back to Avalonia's platform accent elsewhere — and can always be overridden with a preset or a picked color. Mica and the dark title bar are Windows-only; other platforms use a solid base background.
@@ -120,8 +124,10 @@ The accent is read natively on Windows, macOS and Linux (GNOME / KDE / Cinnamon)
 - **[Markdown.Avalonia](https://github.com/whistyun/Markdown.Avalonia)** — renders the Home page.
 - **[Material Design Icons](https://pictogrammers.com/library/mdi/)** (Apache-2.0) — the *code-array* glyph used in the app icon.
 - **[Open Color](https://yeun.github.io/open-color/)** (MIT) — the colors behind the 20 built-in accent presets.
-- **[WPF-UI](https://github.com/lepoco/wpfui)** (MIT) — the demo's `BreadcrumbBar` is reimplemented after its `BreadcrumbBar`, and its `NotifyIcon` inspired the Fluent-themed system-tray menu.
+- **[WPF-UI](https://github.com/lepoco/wpfui)** (MIT) — the demo's `BreadcrumbBar` and `InfoBar` are reimplemented after its controls of the same name, and its `NotifyIcon` inspired the Fluent-themed system-tray menu.
 - **[Dirkster99/bm](https://github.com/Dirkster99/bm)** (MIT) — the breadcrumb's per-crumb chevron-dropdown navigation.
+- **[DialogHost.Avalonia](https://github.com/AvaloniaUtils/DialogHost.Avalonia)** (MIT) — the Fluent-themed `ContentDialog` host (an in-window overlay, so it works on the browser head too).
+- **[Avalonia.Samples](https://github.com/AvaloniaUI/Avalonia.Samples)** (MIT) — the `VisualRate` is generalised from its `RatingControlSample` port.
 - **[Avalonia](https://github.com/AvaloniaUI/Avalonia)** — the `FluentTheme` we build on.
 
 ## Credits

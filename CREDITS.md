@@ -13,13 +13,14 @@ Every third-party project Fluid.Avalonia bundles, depends on, or references, wit
 | [Avalonia.Labs](https://github.com/AvaloniaUI/Avalonia.Labs) | `InfoBadge` control on the Status & info page | MIT |
 | [Avalonia.Controls.DataGrid](https://github.com/AvaloniaUI/Avalonia) / [.ColorPicker](https://github.com/AvaloniaUI/Avalonia) | DataGrid and ColorView / ColorSpectrum | MIT |
 | [Avalonia.Markup.Xaml.Loader](https://github.com/AvaloniaUI/Avalonia) | Compiles the **Playground** page's live XAML at runtime | MIT |
-| [Microsoft.Win32.Registry](https://www.nuget.org/packages/Microsoft.Win32.Registry) | Reading the Windows accent colour from the registry | MIT |
 | [Material Design Icons](https://pictogrammers.com/library/mdi/) | The *code-array* glyph in the app icon | Apache 2.0 |
 | [List-of-US-States](https://github.com/jasonong/List-of-US-States) | Sample data for the Collections `ListBox` | Public data |
 | [ohana-api](https://github.com/codeforamerica/ohana-api) sample addresses | Sample data for the Collections `DataGrid` | BSD-3-Clause (© 2013 Code for America) |
 | [Open Color](https://yeun.github.io/open-color/) | The 20 built-in accent preset colors | MIT |
-| [WPF-UI](https://github.com/lepoco/wpfui) | The `BreadcrumbBar` reimplementation (trail + `ItemClicked` / `Command` / `Icon`) and the Fluent-themed system-tray (`NotifyIcon`-style) menu | MIT |
+| [WPF-UI](https://github.com/lepoco/wpfui) | The `BreadcrumbBar` reimplementation (trail + `ItemClicked` / `Command` / `Icon`), the `InfoBar` reimplementation (severity banner — `Title` / `Message` / `Severity` / `IsOpen` / `IsClosable`), and the Fluent-themed system-tray (`NotifyIcon`-style) menu | MIT |
 | [Dirkster99/bm](https://github.com/Dirkster99/bm) | The per-crumb chevron-dropdown navigation in the directory-picker `BreadcrumbBar` | MIT |
+| [DialogHost.Avalonia](https://github.com/AvaloniaUtils/DialogHost.Avalonia) | The Fluent-themed `ContentDialog` (modal dialog host) on the Dialogs & flyouts page | MIT (© 2021 SKProCH) |
+| [Avalonia.Samples](https://github.com/AvaloniaUI/Avalonia.Samples) | The `VisualRate` (generalised from the `RatingControlSample` port) on the Basic input page | MIT (© AvaloniaUI OÜ) |
 | [SukiUI](https://github.com/kikipoulet/SukiUI) | Reference for the custom window / title-bar technique, the thin overlay scrollbar, the Playground concept, `BusyArea` and `GroupBox` | MIT |
 | [Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia) | Reference for the roomy circular-day Calendar styling and the in-library localization pattern | MIT |
 | [FluentAvalonia](https://github.com/amwx/FluentAvalonia) | Cross-checked the theming approach | MIT |

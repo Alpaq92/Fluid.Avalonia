@@ -1,4 +1,3 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Interactivity;
@@ -46,7 +45,7 @@ public partial class BasicInputPage : UserControl
     }
 
     // Opens a plain Avalonia Window (OS-drawn title bar) so it can be compared with the demo's
-    // FluidWindow chrome. Desktop-only — guarded for the browser head, which has no Window.
+    // custom Mica-titlebar chrome. Desktop-only — guarded for the browser head, which has no Window.
     private void OnOpenStandardWindow(object? sender, RoutedEventArgs e)
     {
         if (TopLevel.GetTopLevel(this) is not Window owner)
@@ -91,8 +90,9 @@ public partial class BasicInputPage : UserControl
                 {
                     TextWrapping = TextWrapping.Wrap,
                     Text = "This is a standard Avalonia Window. The Fluid.Avalonia demo itself runs "
-                         + "in a FluidWindow — Fluid's custom Mica title bar — while this window "
-                         + "keeps the platform's default title bar. Same theme, different chrome.",
+                         + "in Fluid's custom Mica-titlebar chrome (the same look FluidWindow "
+                         + "packages), while this window keeps the platform's default title bar. "
+                         + "Same theme, different chrome.",
                 },
                 acknowledge,
             },

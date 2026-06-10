@@ -12,8 +12,6 @@
     xmlns:shapes="using:Avalonia.Controls.Shapes">
 
     <ControlTheme x:Key="{x:Type ctrls:BusyArea}" TargetType="ctrls:BusyArea">
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="VerticalContentAlignment" Value="Stretch" />
         <Setter Property="Template">
             <ControlTemplate>
                 <Panel>

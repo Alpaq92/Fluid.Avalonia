@@ -5,7 +5,6 @@
     xmlns:local="using:Fluid.Avalonia.Demo.Controls">
 
     <ControlTheme x:Key="{x:Type local:ControlExample}" TargetType="local:ControlExample">
-        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Left" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Margin" Value="0,0,0,16" />
@@ -105,10 +104,7 @@
             </ControlTemplate>
         </Setter>
 
-        <Style Selector="^:pointerover /template/ Border#Root">
-            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
-        </Style>
-        <Style Selector="^:selected /template/ Border#Root">
+        <Style Selector="^:pointerover /template/ Border#Root, ^:selected /template/ Border#Root">
             <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
         </Style>
         <Style Selector="^:selected /template/ Border#Indicator">

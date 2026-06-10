@@ -1,7 +1,5 @@
 using Avalonia.Controls;
-using Fluid.Avalonia;
 using Avalonia.Layout;
-using Avalonia.Markup.Xaml;
 using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
 using Avalonia.Threading;
@@ -42,6 +40,31 @@ public partial class AccentsPage : UserControl
             HueSlider.ColorChanged += OnPickerColorChanged;
             ComponentsPicker.ColorChanged += OnPickerColorChanged;
         }, DispatcherPriority.Background);
+    }
+
+    // Subscribe while attached so the readout follows a LIVE OS accent change (the swatch + hex are
+    // snapshots of CurrentAccent, not DynamicResource-bound, so they need re-running on republish).
+    // Unsubscribe on detach — AccentChanged is a static event and would otherwise root this page.
+    protected override void OnAttachedToVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnAttachedToVisualTree(e);
+        AccentService.AccentChanged += OnAccentChanged;
+    }
+
+    protected override void OnDetachedFromVisualTree(VisualTreeAttachmentEventArgs e)
+    {
+        base.OnDetachedFromVisualTree(e);
+        AccentService.AccentChanged -= OnAccentChanged;
+    }
+
+    // The accent was (re)published — e.g. the OS accent changed while in System mode. Refresh the
+    // readout so the preview tile + hex track the live accent (in System mode also re-sync the editors).
+    private void OnAccentChanged(object? sender, EventArgs e)
+    {
+        if (_mode == Mode.System)
+            SyncFromCurrent();
+        else
+            UpdateReadout();
     }
 
     private void OnPickerColorChanged(object? sender, ColorChangedEventArgs e)

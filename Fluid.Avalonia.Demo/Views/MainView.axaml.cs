@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data;
 using Fluid.Avalonia.Demo.Models;

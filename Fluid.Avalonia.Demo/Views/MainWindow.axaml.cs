@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Fluid.Avalonia.Demo.Interop;
 using Avalonia.Media;

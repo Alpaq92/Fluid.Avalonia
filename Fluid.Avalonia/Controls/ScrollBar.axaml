@@ -21,7 +21,6 @@
     <!-- ===== Empty page/line button (hit area only) ===== -->
     <ControlTheme x:Key="FluidScrollBarButton" TargetType="RepeatButton">
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Focusable" Value="False" />
         <Setter Property="Template">
             <ControlTemplate>
@@ -67,8 +66,7 @@
         <Style Selector="^:vertical">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border x:Name="TrackRoot"
-                            Background="{TemplateBinding Background}"
+                    <Border Background="{TemplateBinding Background}"
                             CornerRadius="6">
                         <Track Orientation="Vertical"
                                IsDirectionReversed="True"
@@ -79,13 +77,11 @@
                                DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}">
                             <Track.DecreaseButton>
                                 <RepeatButton Name="PART_PageUpButton"
-                                              Theme="{StaticResource FluidScrollBarButton}"
-                                              Focusable="False" />
+                                              Theme="{StaticResource FluidScrollBarButton}" />
                             </Track.DecreaseButton>
                             <Track.IncreaseButton>
                                 <RepeatButton Name="PART_PageDownButton"
-                                              Theme="{StaticResource FluidScrollBarButton}"
-                                              Focusable="False" />
+                                              Theme="{StaticResource FluidScrollBarButton}" />
                             </Track.IncreaseButton>
                             <Thumb Name="thumb"
                                    Theme="{StaticResource FluidScrollBarThumb}"
@@ -104,8 +100,7 @@
         <Style Selector="^:horizontal">
             <Setter Property="Template">
                 <ControlTemplate>
-                    <Border x:Name="TrackRoot"
-                            Background="{TemplateBinding Background}"
+                    <Border Background="{TemplateBinding Background}"
                             CornerRadius="6">
                         <Track Orientation="Horizontal"
                                Minimum="{TemplateBinding Minimum}"
@@ -115,13 +110,11 @@
                                DeferThumbDrag="{TemplateBinding ScrollViewer.IsDeferredScrollingEnabled}">
                             <Track.DecreaseButton>
                                 <RepeatButton Name="PART_PageLeftButton"
-                                              Theme="{StaticResource FluidScrollBarButton}"
-                                              Focusable="False" />
+                                              Theme="{StaticResource FluidScrollBarButton}" />
                             </Track.DecreaseButton>
                             <Track.IncreaseButton>
                                 <RepeatButton Name="PART_PageRightButton"
-                                              Theme="{StaticResource FluidScrollBarButton}"
-                                              Focusable="False" />
+                                              Theme="{StaticResource FluidScrollBarButton}" />
                             </Track.IncreaseButton>
                             <Thumb Name="thumb"
                                    Theme="{StaticResource FluidScrollBarThumb}"

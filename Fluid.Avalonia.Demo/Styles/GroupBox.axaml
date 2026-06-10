@@ -8,7 +8,6 @@
     xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
 
     <ControlTheme x:Key="{x:Type ctrls:GroupBox}" TargetType="ctrls:GroupBox">
-        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Top" />
         <Setter Property="Template">
             <ControlTemplate>

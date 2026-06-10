@@ -1,14 +1,9 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Windows.Input;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Primitives;
 using Avalonia.Input;
-using Avalonia.Interactivity;
 using Avalonia.VisualTree;
 
 namespace Fluid.Avalonia.Demo.Controls;
@@ -237,10 +232,6 @@ public class BreadcrumbBar : ItemsControl
 [TemplatePart("PART_Chevron", typeof(Border))]
 public class BreadcrumbBarItem : ContentControl
 {
-    public static readonly DirectProperty<BreadcrumbBarItem, bool> IsLastProperty =
-        AvaloniaProperty.RegisterDirect<BreadcrumbBarItem, bool>(
-            nameof(IsLast), o => o.IsLast, (o, v) => o.IsLast = v);
-
     /// <summary>Optional content shown before the crumb text (WPF-UI parity).</summary>
     public static readonly StyledProperty<object?> IconProperty =
         AvaloniaProperty.Register<BreadcrumbBarItem, object?>(nameof(Icon));
@@ -259,14 +250,16 @@ public class BreadcrumbBarItem : ContentControl
 
     internal int Index { get; set; }
 
-    /// <summary>True for the final crumb — the current location, shown emphasised.</summary>
+    /// <summary>True for the final crumb — the current location, shown emphasised (styled via :last).</summary>
     public bool IsLast
     {
         get => _isLast;
         set
         {
-            if (SetAndRaise(IsLastProperty, ref _isLast, value))
-                PseudoClasses.Set(":last", value);
+            if (_isLast == value)
+                return;
+            _isLast = value;
+            PseudoClasses.Set(":last", value);
         }
     }
 
@@ -368,7 +361,7 @@ public class BreadcrumbBarItem : ContentControl
 public class BreadcrumbOverflowPanel : Panel
 {
     /// <summary>Width reserved at the left for the "…" overflow chip when crumbs are collapsed.</summary>
-    public double EllipsisReserve { get; set; } = 54;
+    private const double EllipsisReserve = 54;
 
     protected override Size MeasureOverride(Size availableSize)
     {

@@ -16,11 +16,10 @@
          single-section ColorView via its ColorView.Resources — NOT done here, so the standalone
          ColorPicker on Basic input keeps its spectrum/components tab strip.) -->
 
-    <!-- The ColorView's component header / label chips use legacy (SimpleTheme-era) brushes that
-         render as a flat grey slab next to our Fluent inputs. Make them transparent so the model
+    <!-- The ColorView's component header / label chips use the legacy SystemControlBackgroundBaseLowBrush,
+         which renders as a flat grey slab next to our Fluent inputs. Make it transparent so the model
          selector, hex field and R/G/B labels read as part of the Fluent surface. -->
     <SolidColorBrush x:Key="SystemControlBackgroundBaseLowBrush" Color="Transparent" />
-    <SolidColorBrush x:Key="ThemeControlMidBrush" Color="Transparent" />
 
     <!-- Thin, slider-like channel tracks; the thumb stays full-size so it overhangs the rail. -->
     <x:Double x:Key="ColorSliderSize">22</x:Double>

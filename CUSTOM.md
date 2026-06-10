@@ -30,7 +30,7 @@ A determinate radial progress indicator sharing that same ring rendering: a trac
 
 ### BusyArea
 
-A SukiUI-style busy overlay: wrap any content and toggle `IsBusy` to dim it behind a scrim with a progress indicator (ring or bar), an optional label, and an adjustable scrim opacity.
+A SukiUI-style busy overlay: wrap any content and toggle `IsBusy` to dim it behind a scrim with a progress indicator (ring, bar or circular), an optional label, and an adjustable scrim opacity.
 
 ### LabeledTextInput
 
@@ -47,6 +47,18 @@ A horizontal trail of crumbs joined by chevrons — reimplemented after **WPF-UI
 ### GroupBox
 
 A titled container — a header strip above a padded body, wrapped in a Fluent card border. Inspired by SukiUI's `GroupBox` (and the classic WPF `GroupBox` that Avalonia lacks).
+
+### InfoBar
+
+A status banner — a severity icon, a SemiBold `Title` over a wrapping `Message`, optional action content (the inherited `Content` slot), and a dismiss button. Reimplemented after **WPF-UI**'s `InfoBar`: five properties (`Title`, `Message`, `Severity`, `IsOpen`, `IsClosable`) where `Severity` (Informational / Success / Warning / Error) selects the Codicon glyph, the icon colour and a gentle `SystemFillColor*Background` surface tint — while the border stays one neutral hairline for every severity, exactly like WinUI 3's `InfoBarBorderBrush` (colour lives only in the tint and the icon, never a saturated perimeter). Dismissal is purely `IsOpen`-driven (the close button sets `IsOpen=false`, after raising a bubbling `CloseButtonClick` event — a Fluid addition WPF-UI doesn't have). The Status & info page shows one bar per severity, a non-closable pair, and an error bar carrying a "Retry" action button in its content slot.
+
+### VisualRate
+
+A row of clickable glyphs setting a 0..`Count` value. Generalised from a port of Avalonia's official **Avalonia.Samples** `RatingControlSample`: a `TemplatedControl` whose `PART_ItemsPresenter` `ItemsControl` renders one Codicon glyph (a `TextBlock` in the symbol font) per ordinal, each lit when its ordinal is `<= Value`; clicking one sets the two-way `Value`, and clicking the topmost lit glyph again unselects it (so clicking the only lit glyph clears the value to 0). Where the sample hard-coded a star `Path`, a single `Glyph` string picks which Codicon icon to use (default the filled `star-full`). Re-themed to Fluent — because one filled glyph is only recoloured between states, an unlit glyph reads as a solid neutral `ControlStrongStrokeColorDefaultBrush` shape (interior matching its edge), a lit one is an accent shade, and hover shows the next-lighter accent shade. Shown on the Basic input page with a live value readout, an adjustable count and a glyph picker.
+
+### ContentDialog (DialogHost)
+
+A modal dialog shown over a dimmed surface, using the **DialogHost.Avalonia** package re-themed to Fluent 2. One root `DialogHost` (`Identifier="RootDialog"`) wraps the shell; `await DialogHost.Show(content, "RootDialog")` opens it and resolves to the result the dialog's buttons pass back. The Fluent look is a local restyle (`Styles/DialogHost.axaml`): an opaque `SolidBackgroundFillColorBaseBrush` surface (the translucent card fills are meant to sit over Mica and would let the page bleed through a modal), an 8 px overlay corner radius, a soft elevation shadow, a `SurfaceStrokeColorDefaultBrush` hairline, and a smoke overlay. The dialog is an in-window overlay (no native popup), so the same code runs on desktop and in the browser. Shown on the Dialogs & flyouts page alongside the existing faux-surface example.
 
 ## Theme & shell
 

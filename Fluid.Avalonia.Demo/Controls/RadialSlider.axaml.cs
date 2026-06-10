@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Data;
@@ -61,15 +59,6 @@ public partial class RadialSlider : UserControl
         Render();   // resolve theme-variant brushes now that we're in the tree
     }
 
-    private double Fraction()
-    {
-        var range = Maximum - Minimum;
-        if (range <= 0)
-            return 0;
-        var f = (Value - Minimum) / range;
-        return f < 0 ? 0 : f > 1 ? 1 : f;
-    }
-
     private void OnDown(object? s, PointerPressedEventArgs e)
     {
         _pressed = true;
@@ -116,7 +105,7 @@ public partial class RadialSlider : UserControl
 
         var track = this.Resource("ControlStrongFillColorDefaultBrush", Brushes.Gray);
         var brush = this.RingBrush(_pressed, _hover);
-        var angle = Fraction() * 360.0;
+        var angle = RadialDial.Fraction(Value, Minimum, Maximum) * 360.0;
 
         RadialDial.DrawRing(Face, C, R, angle, brush, track, RadialDial.TrackThickness);
 

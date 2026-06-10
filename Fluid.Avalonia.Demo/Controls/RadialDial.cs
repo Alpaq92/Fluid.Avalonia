@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.Shapes;
 using Avalonia.Media;
@@ -33,6 +31,17 @@ internal static class RadialDial
     /// <summary>Distance of <paramref name="p"/> from the centre (used for ring hit-testing / hover).</summary>
     public static double DistanceFromCenter(double center, Point p) =>
         Math.Sqrt((p.X - center) * (p.X - center) + (p.Y - center) * (p.Y - center));
+
+    /// <summary>How far <paramref name="value"/> sits in [<paramref name="min"/>, <paramref name="max"/>],
+    /// clamped to [0, 1] (0 when the range is empty) — the fill fraction of a ring.</summary>
+    public static double Fraction(double value, double min, double max)
+    {
+        var range = max - min;
+        if (range <= 0)
+            return 0;
+        var f = (value - min) / range;
+        return f < 0 ? 0 : f > 1 ? 1 : f;
+    }
 
     /// <summary>Pointer position → angle in degrees [0, 360), clockwise from 12 o'clock.</summary>
     public static double AngleAt(double center, Point p)

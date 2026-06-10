@@ -44,6 +44,8 @@
         <Setter Property="FontSize" Value="14" />
     </Style>
     <Style Selector="DataGridCell TextBlock">
+        <!-- Like the ListBox: keep the primary text colour (white in dark, black in light) on the
+             translucent accent selection, rather than always-white on-accent text. -->
         <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
         <Setter Property="VerticalAlignment" Value="Center" />
     </Style>
@@ -51,7 +53,6 @@
     <!-- Full-width, square hover / accent selection (rounding removed). -->
     <Style Selector="DataGridRow:pointerover /template/ Rectangle#BackgroundRectangle">
         <Setter Property="Fill" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
-        <Setter Property="Opacity" Value="1" />
     </Style>
     <Style Selector="DataGridRow:selected /template/ Rectangle#BackgroundRectangle">
         <!-- Exactly the Fluent ListBox item selection: base SystemAccentColor at 0.6 opacity, so the
@@ -67,11 +68,6 @@
             <SolidColorBrush Color="{DynamicResource SystemAccentColor}" Opacity="0.7" />
         </Setter>
         <Setter Property="Opacity" Value="1" />
-    </Style>
-    <Style Selector="DataGridRow:selected DataGridCell TextBlock">
-        <!-- Like the ListBox: keep the primary text colour (white in dark, black in light) on the
-             translucent accent selection, rather than always-white on-accent text. -->
-        <Setter Property="Foreground" Value="{DynamicResource TextFillColorPrimaryBrush}" />
     </Style>
 
     <!-- The current-cell focus frame is two stacked rectangles (a white 2px one and a 1px black one

@@ -1,0 +1,121 @@
+<!--
+    InfoBar theme — a status banner reimplemented after WPF-UI's InfoBar: a severity icon, a SemiBold
+    Title + wrapping Message, optional action content (the inherited Content slot), and a close button.
+    Severity selects the Codicon glyph + icon colour + surface fill via :severity-* pseudo-classes
+    (set from C#); dismissal is purely IsOpen-driven. Glyph codes match the ones StatusInfoPage used.
+
+    Fidelity note (Fluent 2 / WinUI 3): the border is a single NEUTRAL hairline
+    (CardStrokeColorDefault) for every severity — exactly like Microsoft's InfoBarBorderBrush.
+    Severity colour appears only in (a) a gentle background tint and (b) the coloured glyph.
+    There is deliberately NO saturated coloured perimeter and NO left accent bar.
+
+    The Informational / default background uses SolidBackgroundFillColorSecondary (a neutral surface
+    that is opaque and visible in BOTH themes); the theme's CardBackgroundFillColorSecondary /
+    SystemFillColorAttentionBackground values are near-invisible in dark mode, so they are NOT used here.
+    Success / Warning / Error keep the canonical WinUI *Background severity tints.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <ControlTheme x:Key="{x:Type ctrls:InfoBar}" TargetType="ctrls:InfoBar">
+        <Setter Property="MinHeight" Value="48" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Border Name="PART_ContentBorder"
+                        Background="{DynamicResource SolidBackgroundFillColorSecondaryBrush}"
+                        BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource ControlCornerRadius}"
+                        Padding="16,12,8,12">
+                    <Grid ColumnDefinitions="Auto,*,Auto">
+                        <!-- Severity icon (the only place saturated severity colour lives) -->
+                        <TextBlock Name="PART_Icon" Grid.Column="0"
+                                   FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                   FontSize="20" VerticalAlignment="Center" Margin="0,0,14,0"
+                                   Foreground="{DynamicResource SystemFillColorAttentionBrush}"
+                                   Text="&#xEA74;" />
+                        <!-- Title (SemiBold) stacked above Message (wrap) — clean multiline -->
+                        <StackPanel Grid.Column="1" VerticalAlignment="Center" Spacing="2">
+                            <TextBlock Name="PART_Title" Classes="BodyStrong"
+                                       TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                                       Text="{TemplateBinding Title}" />
+                            <TextBlock Classes="Body" TextWrapping="Wrap"
+                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       Text="{TemplateBinding Message}" />
+                        </StackPanel>
+                        <!-- Action content (inherited Content) + close button -->
+                        <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="8"
+                                    VerticalAlignment="Center" Margin="12,0,0,0">
+                            <ContentPresenter Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              VerticalAlignment="Center" />
+                            <Button Name="PART_CloseButton"
+                                    Width="32" Height="32"
+                                    Background="Transparent" BorderThickness="0" Padding="0"
+                                    VerticalAlignment="Top">
+                                <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                                           FontSize="16" Text="&#xEA76;"
+                                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                            </Button>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Setter>
+
+        <!-- Hidden until opened (parity with WPF-UI's IsOpen=false default) -->
+        <Style Selector="^:not(:open)">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <!-- Collapse Title when empty -->
+        <Style Selector="^:no-title /template/ TextBlock#PART_Title">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+        <!-- Hide close button when not closable -->
+        <Style Selector="^:not(:closable) /template/ Button#PART_CloseButton">
+            <Setter Property="IsVisible" Value="False" />
+        </Style>
+
+        <!--
+            Severity → background tint + icon colour + glyph.
+            The border stays the neutral CardStrokeColorDefault for EVERY severity
+            (set once on PART_ContentBorder above) — no per-severity BorderBrush, so
+            there is never a saturated coloured box. Informational reads as a clean
+            neutral banner and needs no style here: its neutral tint, attention-blue
+            icon and glyph ARE the template defaults above (the control reverts to
+            them when another :severity-* class deactivates).
+            Success/Warning/Error use the canonical WinUI tints.
+        -->
+        <Style Selector="^:severity-success /template/ Border#PART_ContentBorder">
+            <Setter Property="Background" Value="{DynamicResource SystemFillColorSuccessBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:severity-success /template/ TextBlock#PART_Icon">
+            <Setter Property="Foreground" Value="{DynamicResource SystemFillColorSuccessBrush}" />
+            <Setter Property="Text" Value="&#xEAB2;" />
+        </Style>
+
+        <Style Selector="^:severity-warning /template/ Border#PART_ContentBorder">
+            <Setter Property="Background" Value="{DynamicResource SystemFillColorCautionBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:severity-warning /template/ TextBlock#PART_Icon">
+            <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCautionBrush}" />
+            <Setter Property="Text" Value="&#xEA6C;" />
+        </Style>
+
+        <Style Selector="^:severity-error /template/ Border#PART_ContentBorder">
+            <Setter Property="Background" Value="{DynamicResource SystemFillColorCriticalBackgroundBrush}" />
+        </Style>
+        <Style Selector="^:severity-error /template/ TextBlock#PART_Icon">
+            <Setter Property="Foreground" Value="{DynamicResource SystemFillColorCriticalBrush}" />
+            <Setter Property="Text" Value="&#xEA87;" />
+        </Style>
+
+        <!-- Close button hover (subtle backplate, WinUI behaviour) -->
+        <Style Selector="^ /template/ Button#PART_CloseButton:pointerover">
+            <Setter Property="Background" Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+        </Style>
+    </ControlTheme>
+</ResourceDictionary>

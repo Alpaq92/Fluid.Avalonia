@@ -8,7 +8,8 @@
     x:Class="Fluid.Avalonia.Demo.Views.MainView"
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:m="using:Fluid.Avalonia.Demo.Models">
+    xmlns:m="using:Fluid.Avalonia.Demo.Models"
+    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
 
     <UserControl.Styles>
         <Style Selector="Button.caption">
@@ -39,6 +40,10 @@
         </Style>
     </UserControl.Styles>
 
+    <!-- One app-wide ContentDialog host: any page opens it by id via DialogHost.Show(content,
+         "RootDialog"). It sits outside the page ScrollViewer, so the dim overlay + dialog centre on
+         the window viewport rather than the (scrollable) page content. -->
+    <dialogHostAvalonia:DialogHost Identifier="RootDialog">
     <Grid RowDefinitions="48,*">
 
         <!--======================= CUSTOM TITLE BAR =======================-->
@@ -150,4 +155,5 @@
             </Border>
         </SplitView>
     </Grid>
+    </dialogHostAvalonia:DialogHost>
 </UserControl>

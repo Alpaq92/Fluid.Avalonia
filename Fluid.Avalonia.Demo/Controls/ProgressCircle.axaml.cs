@@ -1,5 +1,3 @@
-using System;
-using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 
@@ -23,17 +21,11 @@ public partial class ProgressCircle : UserControl
     public static readonly StyledProperty<double> ValueProperty =
         AvaloniaProperty.Register<ProgressCircle, double>(nameof(Value));
 
-    public static readonly StyledProperty<bool> IsTextVisibleProperty =
-        AvaloniaProperty.Register<ProgressCircle, bool>(nameof(IsTextVisible), true);
-
     public double Minimum { get => GetValue(MinimumProperty); set => SetValue(MinimumProperty, value); }
     public double Maximum { get => GetValue(MaximumProperty); set => SetValue(MaximumProperty, value); }
 
     /// <summary>How far along progress is, between <see cref="Minimum"/> and <see cref="Maximum"/>.</summary>
     public double Value { get => GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
-
-    /// <summary>Whether the centre shows the percentage label.</summary>
-    public bool IsTextVisible { get => GetValue(IsTextVisibleProperty); set => SetValue(IsTextVisibleProperty, value); }
 
     private const double C = 70, R = 60, Thickness = 6;
 
@@ -47,8 +39,7 @@ public partial class ProgressCircle : UserControl
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs c)
     {
         base.OnPropertyChanged(c);
-        if (c.Property == ValueProperty || c.Property == MinimumProperty
-            || c.Property == MaximumProperty || c.Property == IsTextVisibleProperty)
+        if (c.Property == ValueProperty || c.Property == MinimumProperty || c.Property == MaximumProperty)
             Render();
     }
 
@@ -56,15 +47,6 @@ public partial class ProgressCircle : UserControl
     {
         base.OnAttachedToVisualTree(e);
         Render();   // resolve theme-variant brushes now that we're in the tree
-    }
-
-    private double Fraction()
-    {
-        var range = Maximum - Minimum;
-        if (range <= 0)
-            return 0;
-        var f = (Value - Minimum) / range;
-        return f < 0 ? 0 : f > 1 ? 1 : f;
     }
 
     private void Render()
@@ -77,9 +59,9 @@ public partial class ProgressCircle : UserControl
         var track = this.Resource("ControlStrongFillColorDefaultBrush", Brushes.Gray);
         var fill = this.Resource("AccentFillColorDefaultBrush", Brushes.DodgerBlue);
 
-        RadialDial.DrawRing(Face, C, R, Fraction() * 360.0, fill, track, Thickness);
+        var fraction = RadialDial.Fraction(Value, Minimum, Maximum);
+        RadialDial.DrawRing(Face, C, R, fraction * 360.0, fill, track, Thickness);
 
-        ValueText.IsVisible = IsTextVisible;
-        ValueText.Text = $"{(int)Math.Round(Fraction() * 100)}%";
+        ValueText.Text = $"{(int)Math.Round(fraction * 100)}%";
     }
 }

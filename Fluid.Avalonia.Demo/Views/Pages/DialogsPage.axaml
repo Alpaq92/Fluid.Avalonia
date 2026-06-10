@@ -59,5 +59,16 @@
             </Border>
         </ctrls:ControlExample>
 
+        <ctrls:ControlExample Header="A live ContentDialog — DialogHost.Avalonia, re-themed to Fluent 2. Click to open a modal dialog over a dimmed surface; the button you pick is returned to the awaiting caller. As an in-window overlay it runs the same on desktop and in the browser."
+                              XamlSource="&lt;!-- one host wraps the shell --&gt;&#10;&lt;dialogHostAvalonia:DialogHost Identifier=&quot;RootDialog&quot;&gt; ... &lt;/dialogHostAvalonia:DialogHost&gt;&#10;&#10;// open it, await the chosen result&#10;var result = await DialogHost.Show(content, &quot;RootDialog&quot;);">
+            <StackPanel Spacing="10" HorizontalAlignment="Left">
+                <Button Content="Show dialog" Click="OnShowDialog" />
+                <TextBlock x:Name="DialogReadout"
+                           Classes="Caption"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="No choice yet." />
+            </StackPanel>
+        </ctrls:ControlExample>
+
     </StackPanel>
 </UserControl>

@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
 using Fluid.Avalonia.Demo.Controls;

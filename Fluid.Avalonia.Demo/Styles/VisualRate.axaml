@@ -1,0 +1,75 @@
+<!--
+    VisualRate theme — generalised from a port of Avalonia.Samples' RatingControlSample and
+    re-themed to Fluent. PART_ItemsPresenter is an ItemsControl rendering one Codicon glyph (a TextBlock
+    in SymbolThemeFontFamily) per ordinal; each item carries an IsSelected flag (lit when its ordinal
+    <= Value), bound to the .selected class, and a copy of the control's Glyph. Because a single FILLED
+    glyph is only recoloured between states, an unlit glyph's interior matches its edge — a solid neutral
+    ControlStrongStrokeColorDefaultBrush (so "inside == outline"); a lit glyph is the accent; hover gives
+    a subtle accent tint. There is no Stroke/Fill on a TextBlock, so both states are just Foreground.
+
+    NOTE: the glyph TextBlocks come from the ItemsControl's ItemTemplate, so they live in the item data
+    scope — NOT the control-template scope. A ControlTheme "^ /template/ TextBlock.glyph" selector
+    therefore can't reach them (it only matches template parts). Styling them via <ItemsControl.Styles>
+    works, because those styles apply to the ItemsControl and its whole visual subtree, item content
+    included.
+-->
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <!-- Selected + hover use two ADJACENT saturated accent-ramp shades so hover reads clearly lighter
+         than selected without (a) hitting the near-white SystemAccentColorLight3 ("too bright") or
+         (b) desaturating to grey via opacity. In dark, selected = Light1 / hover = Light2 (the pleasant
+         medium accent); in light, selected = Dark1 (the standard accent fill) / hover = the base accent. -->
+    <ResourceDictionary.ThemeDictionaries>
+        <ResourceDictionary x:Key="Light">
+            <SolidColorBrush x:Key="VisualRateSelectedBrush" Color="{DynamicResource SystemAccentColorDark1}" />
+            <SolidColorBrush x:Key="VisualRateHoverBrush" Color="{DynamicResource SystemAccentColor}" />
+        </ResourceDictionary>
+        <ResourceDictionary x:Key="Dark">
+            <SolidColorBrush x:Key="VisualRateSelectedBrush" Color="{DynamicResource SystemAccentColorLight1}" />
+            <SolidColorBrush x:Key="VisualRateHoverBrush" Color="{DynamicResource SystemAccentColorLight2}" />
+        </ResourceDictionary>
+    </ResourceDictionary.ThemeDictionaries>
+
+    <ControlTheme x:Key="{x:Type ctrls:VisualRate}" TargetType="ctrls:VisualRate">
+        <Setter Property="Template">
+            <ControlTemplate>
+                <DataValidationErrors>
+                    <ItemsControl Name="PART_ItemsPresenter" ItemsSource="{TemplateBinding Items}">
+                        <ItemsControl.Styles>
+                            <!-- Unselected glyph: solid neutral (interior == edge, one filled shape) -->
+                            <Style Selector="TextBlock.glyph">
+                                <Setter Property="FontFamily" Value="{DynamicResource SymbolThemeFontFamily}" />
+                                <Setter Property="FontSize" Value="24" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Foreground" Value="{DynamicResource ControlStrongStrokeColorDefaultBrush}" />
+                            </Style>
+                            <!-- Selected glyph: accent (same filled shape, recoloured) -->
+                            <Style Selector="TextBlock.glyph.selected">
+                                <Setter Property="Foreground" Value="{DynamicResource VisualRateSelectedBrush}" />
+                            </Style>
+                            <!-- Hover (cosmetic only — does not preview Value): a lighter accent shade. -->
+                            <Style Selector="TextBlock.glyph:pointerover">
+                                <Setter Property="Foreground" Value="{DynamicResource VisualRateHoverBrush}" />
+                            </Style>
+                        </ItemsControl.Styles>
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Horizontal" Spacing="5" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="ctrls:VisualRateItem">
+                                <TextBlock Classes="glyph"
+                                           Classes.selected="{Binding IsSelected}"
+                                           Text="{Binding Glyph}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </DataValidationErrors>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+</ResourceDictionary>

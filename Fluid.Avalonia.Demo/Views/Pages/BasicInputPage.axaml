@@ -137,6 +137,43 @@
             </StackPanel>
         </ctrls:ControlExample>
 
+        <ctrls:ControlExample Header="A VisualRate sets a 0..N value — click a glyph; clicking the topmost lit glyph unselects it again. Value is two-way; Count sets how many show; Glyph picks which Codicon icon to use. Generalised from an Avalonia.Samples port and re-themed to Fluent (accent for selected, neutral for the rest)."
+                              XamlSource="&lt;ctrls:VisualRate Value=&quot;3&quot; Count=&quot;5&quot; Glyph=&quot;&amp;#xEB59;&quot; /&gt;">
+            <ctrls:VisualRate x:Name="Selector" Value="3"
+                              Count="{Binding #ItemCount.Value, FallbackValue=5}"
+                              Glyph="{Binding #GlyphPicker.SelectedItem, Converter={x:Static ctrls:GlyphTagConverter.Instance}}" />
+            <ctrls:ControlExample.Options>
+                <StackPanel Spacing="8">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Glyph" VerticalAlignment="Center" />
+                        <!-- Each item's Tag holds the Codicon character; GlyphTagConverter feeds it to
+                             Glyph. The item content previews the glyph itself in the symbol font.
+                             HorizontalContentAlignment=Left makes the inline selected glyph sit at the
+                             same left edge as the dropdown items. -->
+                        <ComboBox x:Name="GlyphPicker" Width="120" SelectedIndex="0"
+                                  HorizontalContentAlignment="Left">
+                            <ComboBoxItem Tag="&#xEB59;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEB59;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEC04;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEC04;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEBB4;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEBB4;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEAF2;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEAF2;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEC10;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEC10;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEC14;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEC14;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEAA5;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEAA5;" /></ComboBoxItem>
+                            <ComboBoxItem Tag="&#xEBE9;"><TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" Text="&#xEBE9;" /></ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <TextBlock Text="Count" VerticalAlignment="Center" />
+                        <NumericUpDown x:Name="ItemCount" Width="120" Minimum="1" Maximum="10" Value="5"
+                                       FormatString="0" />
+                    </StackPanel>
+                    <TextBlock Classes="Caption"
+                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="{Binding #Selector.Value, StringFormat='Value: {0}'}" />
+                </StackPanel>
+            </ctrls:ControlExample.Options>
+        </ctrls:ControlExample>
+
         <ctrls:ControlExample Header="A ComboBox lets a user choose from a list."
                               XamlSource="&lt;ComboBox SelectedIndex=&quot;0&quot; /&gt;">
             <ComboBox Width="200" SelectedIndex="0">

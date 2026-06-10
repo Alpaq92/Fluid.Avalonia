@@ -1,6 +1,5 @@
 using Avalonia.Controls;
 using Fluid.Avalonia.Demo.Models;
-using Avalonia.Markup.Xaml;
 
 namespace Fluid.Avalonia.Demo.Views;
 

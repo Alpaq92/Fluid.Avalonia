@@ -2,9 +2,6 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
-    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
-    <RootNamespace>Fluid.Avalonia</RootNamespace>
-    <AssemblyName>Fluid.Avalonia</AssemblyName>
   </PropertyGroup>
 
   <!-- NuGet package metadata. Version is a placeholder; the release workflow
@@ -33,7 +30,6 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Themes.Fluent" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,4 @@
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
-using Avalonia;
 using Avalonia.Media;
 using Avalonia.Platform;
 using Avalonia.Threading;
@@ -147,6 +144,13 @@ public static class AccentService
             ? c
             : FallbackAccent;
 
+    /// <summary>Raised after the accent ramp is (re)published — covering a manual <see cref="SetAccent"/> /
+    /// <see cref="UseSystemAccent(bool)"/> change AND a live OS accent change. Fires on the same thread as
+    /// the publish (the OS-driven path is marshalled to the UI thread by <see cref="Apply"/>). Consumers that
+    /// read <see cref="CurrentAccent"/> directly — rather than binding the DynamicResource accent brushes,
+    /// which already update on their own — can subscribe to refresh themselves.</summary>
+    public static event EventHandler? AccentChanged;
+
     // Resolves the active accent ramp — a manual override, else the live OS accent — or null when no
     // system accent can be read (an unsupported platform / no accent set).
     private static Ramp? ResolveRamp(Application app) =>
@@ -168,6 +172,10 @@ public static class AccentService
         Set(app, Dark1Key, r.Dark1);
         Set(app, Dark2Key, r.Dark2);
         Set(app, Dark3Key, r.Dark3);
+
+        // Raised AFTER the SystemAccentColor* resources are written, so subscribers reading
+        // CurrentAccent (e.g. the demo's Accents readout) see the fresh value.
+        AccentChanged?.Invoke(null, EventArgs.Empty);
     }
 
     private static void Set(Application app, string key, Color value)
@@ -185,7 +193,7 @@ public static class AccentService
         var hsl = accent.ToHsl();
 
         Color Shade(double deltaL) =>
-            new HslColor(1, hsl.H, hsl.S, System.Math.Clamp(hsl.L + deltaL, 0, 1)).ToRgb();
+            new HslColor(1, hsl.H, hsl.S, Math.Clamp(hsl.L + deltaL, 0, 1)).ToRgb();
 
         return new Ramp(
             Light3: Shade(103 / 255d),

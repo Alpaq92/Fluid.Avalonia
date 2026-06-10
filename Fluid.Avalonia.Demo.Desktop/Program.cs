@@ -1,7 +1,3 @@
-using System;
-using Avalonia;
-using Fluid.Avalonia.Demo;
-
 namespace Fluid.Avalonia.Demo.Desktop;
 
 internal static class Program

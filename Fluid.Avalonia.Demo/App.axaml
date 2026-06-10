@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:winui="clr-namespace:Fluid.Avalonia;assembly=Fluid.Avalonia"
     xmlns:labs="using:Avalonia.Labs.Controls"
+    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia"
     RequestedThemeVariant="Default">
 
     <Application.Resources>
@@ -18,6 +19,9 @@
                 <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/BreadcrumbBar.axaml" />
                 <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/GroupBox.axaml" />
                 <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/BinarySelector.axaml" />
+                <!-- InfoBar (reimplemented after WPF-UI) and VisualRate (generalised from an Avalonia.Samples port). -->
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/InfoBar.axaml" />
+                <ResourceInclude Source="avares://Fluid.Avalonia.Demo/Styles/VisualRate.axaml" />
             </ResourceDictionary.MergedDictionaries>
             <!-- Fonts bundled in the app and exposed to the Fluid.Avalonia theme, so text + glyphs render
                  on every platform — including the browser, which has no system-font fallback. -->
@@ -38,11 +42,40 @@
         <Style Selector="labs|InfoBadge.Attention">
             <Setter Property="Background" Value="{DynamicResource AccentFillColorDefaultBrush}" />
         </Style>
+        <!-- Numeric InfoBadge as a height-fixed capsule that grows in width for multi-digit values
+             (the WinUI pill), instead of Labs' fixed-radius circle that crops "99". The Dot / Icon
+             variants are excluded, so they keep Labs' default circle geometry. Background still comes
+             from the per-severity classes via {TemplateBinding Background}. -->
+        <Style Selector="labs|InfoBadge:not(.Dot):not(.Icon)">
+            <Setter Property="MinWidth" Value="16" />
+            <Setter Property="Height" Value="16" />
+            <Setter Property="FontSize" Value="11" />
+            <Setter Property="Padding" Value="5,0" />
+            <Setter Property="Template">
+                <ControlTemplate>
+                    <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            CornerRadius="8">
+                        <ContentPresenter x:Name="PART_ContentPresenter"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Padding="{TemplateBinding Padding}"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                    </Border>
+                </ControlTemplate>
+            </Setter>
+        </Style>
         <!-- The BreadcrumbBar chevron-dropdown flyout: trim the presenter padding so the scroll bar
              sits at the right edge and item highlights run edge-to-edge. -->
         <Style Selector="FlyoutPresenter.bc-children">
             <Setter Property="Padding" Value="0,6" />
         </Style>
+        <!-- DialogHost.Avalonia (ContentDialog): the package styles, then our Fluent 2 restyle on top
+             (must follow DialogHostStyles so it wins, and FluidTheme so the token brushes resolve). -->
+        <dialogHostAvalonia:DialogHostStyles />
+        <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/DialogHost.axaml" />
         <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Fluent.xaml" />
         <!-- ListBox-aligned DataGrid refinements (after the DataGrid Fluent theme so they win). -->
         <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/DataGrid.axaml" />

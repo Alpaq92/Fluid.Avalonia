@@ -1,0 +1,28 @@
+<!--
+    DialogHost.Avalonia (MIT, © 2021 SKProCH) re-themed to Fluent 2. The package's defaults are
+    Material-ish; these setters override them so the dialog reads as a WinUI ContentDialog: a card
+    surface, an 8px overlay corner radius, a soft elevation shadow, a hairline edge, and a smoke
+    overlay. Included in Application.Styles AFTER <DialogHostStyles/> so it wins, and after FluidTheme
+    so the token brushes resolve.
+-->
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogHostAvalonia="clr-namespace:DialogHostAvalonia;assembly=DialogHost.Avalonia">
+
+    <Style Selector="dialogHostAvalonia|DialogHost">
+        <!-- Dialog surface = Fluent ContentDialog surface. MUST be an opaque token: the "Card" fills
+             are deliberately translucent (CardBackgroundFillColorDefault is #B3FFFFFF light / #0DFFFFFF
+             dark — meant to sit over Mica), which makes a modal dialog see-through. SolidBackgroundFill
+             is opaque (#FFF3F3F3 / #FF2B2B2B) and matches the page's faux-dialog example. -->
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+        <!-- Dim smoke layer -->
+        <Setter Property="OverlayBackground" Value="#99000000" />
+        <!-- Corner / elevation / hairline (attached props) -->
+        <Setter Property="(dialogHostAvalonia:DialogHostStyle.CornerRadius)" Value="8" />
+        <Setter Property="(dialogHostAvalonia:DialogHostStyle.BoxShadow)" Value="0 8 16 0 #40000000" />
+        <Setter Property="(dialogHostAvalonia:DialogHostStyle.BorderBrush)" Value="{DynamicResource SurfaceStrokeColorDefaultBrush}" />
+        <Setter Property="(dialogHostAvalonia:DialogHostStyle.BorderThickness)" Value="1" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+</Styles>

@@ -1,4 +1,3 @@
-using System.Linq;
 using Avalonia.Controls;
 using Fluid.Avalonia.Demo.Views.Pages;
 

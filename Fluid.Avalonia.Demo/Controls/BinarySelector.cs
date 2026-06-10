@@ -1,4 +1,3 @@
-using Avalonia;
 using Avalonia.Controls.Metadata;
 using Avalonia.Controls.Presenters;
 using Avalonia.Controls.Primitives;

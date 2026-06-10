@@ -15,7 +15,7 @@
                     <StackPanel Margin="0,8,0,0" Spacing="2">
                         <RadioButton x:Name="LightRadio" GroupName="theme" Content="Light" />
                         <RadioButton x:Name="DarkRadio" GroupName="theme" Content="Dark" />
-                        <RadioButton x:Name="SystemRadio" GroupName="theme" Content="Use system setting" IsChecked="True" />
+                        <RadioButton x:Name="SystemRadio" GroupName="theme" Content="Use system setting" />
                     </StackPanel>
                 </StackPanel>
             </Border>

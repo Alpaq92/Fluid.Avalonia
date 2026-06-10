@@ -18,11 +18,8 @@
         <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorSecondary}" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="CircleElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
-        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />
-        <GradientStop Offset="0.5" Color="{DynamicResource ControlStrokeColorDefault}" />
-        <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorSecondary}" />
-    </LinearGradientBrush>
+    <!-- Same gradient as the control edge — kept as own keys (consumer-facing) but aliased. -->
+    <StaticResource x:Key="CircleElevationBorderBrush" ResourceKey="ControlElevationBorderBrush" />
 
     <LinearGradientBrush x:Key="AccentControlElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
         <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorOnAccentDefault}" />
@@ -30,11 +27,7 @@
         <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorOnAccentSecondary}" />
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="TextControlElevationBorderBrush" StartPoint="0%,0%" EndPoint="0%,100%">
-        <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />
-        <GradientStop Offset="0.5" Color="{DynamicResource ControlStrokeColorDefault}" />
-        <GradientStop Offset="1" Color="{DynamicResource ControlStrokeColorSecondary}" />
-    </LinearGradientBrush>
+    <StaticResource x:Key="TextControlElevationBorderBrush" ResourceKey="ControlElevationBorderBrush" />
 
     <LinearGradientBrush x:Key="TextControlElevationBorderFocusedBrush" StartPoint="0%,0%" EndPoint="0%,100%">
         <GradientStop Offset="0" Color="{DynamicResource ControlStrokeColorDefault}" />

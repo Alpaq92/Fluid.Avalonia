@@ -1,4 +1,3 @@
-using Avalonia.Controls;
 using Avalonia.Controls.Primitives;
 
 namespace Fluid.Avalonia.Demo.Controls;
