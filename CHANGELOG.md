@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.5.0...v1.5.1) (2026-06-11)
+
+
+### Bug Fixes
+
+* keep the WASM live demo from getting stuck on the splash after a redeploy ([4da462f](https://github.com/Alpaq92/Fluid.Avalonia/commit/4da462f204979e7d0a4d39fc8a817449d31d55df))
+
 ## [1.5.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.4.0...v1.5.0) (2026-06-10)
 
 
