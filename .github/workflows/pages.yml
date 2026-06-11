@@ -27,7 +27,9 @@ jobs:
       - name: Set up .NET 10
         uses: actions/setup-dotnet@v5
         with:
-          dotnet-version: '10.0.x'
+          # Use the SDK pinned in global.json so the WASM build is reproducible — a floating
+          # 10.0.x would let runner-image bumps churn every fingerprint+hash on unrelated re-runs.
+          global-json-file: global.json
 
       - name: Install WASM tools
         run: dotnet workload install wasm-tools
