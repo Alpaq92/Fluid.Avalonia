@@ -6,6 +6,11 @@
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#202020" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#f3f3f3" />
     <title>Fluid.Avalonia.Demo</title>
+    <!-- Relative hrefs on purpose: the site is served under /Fluid.Avalonia/, and the browser's
+         implicit /favicon.ico request hits the origin root (404). Modern browsers prefer the SVG;
+         the .ico is the fallback for those that don't render SVG favicons. -->
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
     <style>
         html, body { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; }
         body { background: #202020; }
