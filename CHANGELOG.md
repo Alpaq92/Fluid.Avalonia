@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.5.1...v1.5.2) (2026-06-11)
+
+
+### Bug Fixes
+
+* **demo:** add a favicon to the WASM live demo ([f294de8](https://github.com/Alpaq92/Fluid.Avalonia/commit/f294de847afe22677fdacc8e211b31d360055b13))
+
 ## [1.5.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.5.0...v1.5.1) (2026-06-11)
 
 
