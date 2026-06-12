@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.6.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.5.2...v1.6.0) (2026-06-12)
+
+
+### Features
+
+* **demo:** SignaturePad control with a Fluid custom-ink picker ([af9b144](https://github.com/Alpaq92/Fluid.Avalonia/commit/af9b1445f2dca79273497b158f62d44f20e19cca))
+
+
+### Bug Fixes
+
+* keep non-KWin Linux and pre-API-31 Android windows opaque - TransparencyService ([af9b144](https://github.com/Alpaq92/Fluid.Avalonia/commit/af9b1445f2dca79273497b158f62d44f20e19cca))
+
 ## [1.5.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.5.1...v1.5.2) (2026-06-11)
 
 
