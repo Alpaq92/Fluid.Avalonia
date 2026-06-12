@@ -6,6 +6,7 @@
     <x:String x:Key="STRING_OK">OK</x:String>
     <x:String x:Key="STRING_CANCEL">Anuluj</x:String>
     <x:String x:Key="STRING_RESET">Resetuj</x:String>
+    <x:String x:Key="STRING_ADD">Dodaj</x:String>
     <x:String x:Key="STRING_MONTH">miesiąc</x:String>
     <x:String x:Key="STRING_DAY">dzień</x:String>
     <x:String x:Key="STRING_YEAR">rok</x:String>

@@ -59,7 +59,7 @@
                     <TextBlock Classes="Body" Text="Backdrop" />
                     <TextBlock Classes="Caption" TextWrapping="Wrap"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                               Text="Use the translucent backdrop (Mica on Windows, vibrancy on macOS, blur on Linux where supported) — seeded from the OS “Transparency effects” setting. Turn it off for a solid window." />
+                               Text="Use the translucent backdrop (Mica on Windows, vibrancy on macOS, a KWin blur on KDE) — on Windows it follows the “Transparency effects” setting. Turn it off for a solid window." />
                     <ToggleSwitch x:Name="TransparencySwitch" Margin="0,8,0,0" Content="Window transparency" IsChecked="True" />
                 </StackPanel>
             </Border>

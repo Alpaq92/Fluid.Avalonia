@@ -1,17 +1,13 @@
 using Avalonia.Controls;
 using Avalonia.Data;
-using Avalonia.Input;
-using Avalonia.Layout;
-using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
 
 namespace Fluid.Avalonia.Demo.Controls;
 
 /// <summary>
 /// A Fluid color dropdown: a labelled <see cref="DropDownButton"/> (swatch + hex) whose flyout
-/// hosts the same three editors used on the Accents page — a spectrum + hue slider, a preset
-/// palette, and a components slider view. Colour state is mirrored across all editors and the
-/// button in code, the same way <c>AccentsPage</c> keeps its pickers in sync.
+/// hosts the shared <see cref="FluidColorEditor"/> surface — the same editors the Accents page
+/// uses. Selection is live through the two-way <see cref="SelectedColor"/>.
 /// </summary>
 public partial class FluidColorPicker : UserControl
 {
@@ -27,42 +23,38 @@ public partial class FluidColorPicker : UserControl
         set => SetValue(SelectedColorProperty, value);
     }
 
-    private bool _syncing;   // guards programmatic editor writes from looping back as user edits
+    private bool _syncing;   // guards the two-way SelectedColor <-> Editor.Color mirror
 
     public FluidColorPicker()
     {
         InitializeComponent();
-        BuildPresets();
 
-        // Start from the live accent, mirrored into every editor + the button, then listen.
-        SetColor(AccentService.CurrentAccent, null);
+        // The editor seeds itself from the live accent; adopt that as the initial selection.
+        SelectedColor = Editor.Color;
+        UpdateButton(Editor.Color);   // explicit: OnPropertyChanged won't fire if the value matched
 
-        Spectrum.ColorChanged += OnEditorColorChanged;
-        HueSlider.ColorChanged += OnEditorColorChanged;
-        Components.ColorChanged += OnEditorColorChanged;
-        // Clicking an accent shade in the bottom previewer picks that shade.
-        Preview.ColorChanged += OnEditorColorChanged;
+        Editor.PropertyChanged += (_, e) =>
+        {
+            if (e.Property != FluidColorEditor.ColorProperty || _syncing)
+                return;
+            _syncing = true;
+            SelectedColor = Editor.Color;
+            _syncing = false;
+        };
     }
 
-    // A user edit on any editor becomes the selected colour and is mirrored onto the others.
-    private void OnEditorColorChanged(object? sender, ColorChangedEventArgs e)
+    protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-        if (_syncing || e.NewColor == SelectedColor)
+        base.OnPropertyChanged(change);
+        if (change.Property != SelectedColorProperty)
             return;
 
-        SetColor(e.NewColor, sender);
-    }
-
-    private void SetColor(Color color, object? source)
-    {
-        SelectedColor = color;
+        var color = change.GetNewValue<Color>();
         UpdateButton(color);
-
+        if (_syncing || Editor is null)
+            return;
         _syncing = true;
-        if (!ReferenceEquals(source, Spectrum)) Spectrum.Color = color;
-        if (!ReferenceEquals(source, HueSlider)) HueSlider.Color = color;
-        if (!ReferenceEquals(source, Components)) Components.Color = color;
-        if (!ReferenceEquals(source, Preview)) Preview.HsvColor = color.ToHsv();
+        Editor.Color = color;
         _syncing = false;
     }
 
@@ -70,40 +62,5 @@ public partial class FluidColorPicker : UserControl
     {
         Swatch.Background = new SolidColorBrush(c);
         HexText.Text = $"#{c.R:X2}{c.G:X2}{c.B:X2}";
-    }
-
-    // The same Material-inspired preset swatches the Accents page offers.
-    private void BuildPresets()
-    {
-        foreach (var preset in AccentService.Preset)
-        {
-            var color = preset.Color;
-            var swatch = new Border
-            {
-                Background = new SolidColorBrush(color),
-                CornerRadius = new CornerRadius(10),
-                BorderThickness = new Thickness(1),
-                // Subtle but visible stroke (theme-aware), not a hard white line.
-                [!Border.BorderBrushProperty] = new DynamicResourceExtension("ControlStrongStrokeColorDefaultBrush"),
-            };
-
-            var button = new Button
-            {
-                Height = 40,
-                Padding = new Thickness(3),
-                Margin = new Thickness(3),
-                Background = Brushes.Transparent,
-                BorderThickness = new Thickness(0),
-                Content = swatch,
-                Cursor = new Cursor(StandardCursorType.Hand),
-                HorizontalAlignment = HorizontalAlignment.Stretch,
-                HorizontalContentAlignment = HorizontalAlignment.Stretch,
-                VerticalContentAlignment = VerticalAlignment.Stretch,
-            };
-            ToolTip.SetTip(button, preset.Name);
-            button.Click += (_, _) => SetColor(color, null);
-
-            PresetPanel.Children.Add(button);
-        }
     }
 }

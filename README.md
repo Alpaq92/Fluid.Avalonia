@@ -9,7 +9,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
 </p>
 
-A **Fluent 2-inspired** Avalonia theme with its own identity, adapting to your system accent color — read from Windows, with macOS and Linux fallbacks. Built on [Avalonia](https://avaloniaui.net/) **12** (.NET 8) and its `FluentTheme` with ported Fluent 2 design tokens, it brings authentic WinUI tokens and metrics.
+A **Fluent 2-inspired** Avalonia theme with its own identity, adapting to your system accent color — read from Windows, with macOS and Linux fallbacks. Built on [Avalonia](https://avaloniaui.net/) **12** (.NET 8) and its `FluentTheme` with ported Fluent 2 design tokens, it brings authentic WinUI tokens and metrics — plus the translucent **WinUI backdrop**: Mica on Windows 11 and a vibrancy blend on macOS (and a KWin blur on KDE; a solid window on other Linux desktops).
 
 ![Fluid.Avalonia — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Fluid.Avalonia/main/screenshot.png)
 
@@ -81,7 +81,7 @@ dotnet publish Fluid.Avalonia.Demo.Browser -c Release
 
 ## What it is?
 
-- **A WinUI 3 look for Avalonia.** Fluent 2 color tokens, a WinUI type ramp (rendered in the bundled, cross-platform **DejaVu Sans** font), 4 px / 8 px corner radii, the "lit-edge" control border, drop-shadow elevation, and a translucent window backdrop (Mica on Windows, vibrancy on macOS, blur on Linux/KWin — toggleable, and following the OS transparency setting on Windows). Symbol glyphs come from the bundled **Codicons** icon font, so both text and icons render identically on desktop and in the browser.
+- **A WinUI 3 look for Avalonia.** Fluent 2 color tokens, a WinUI type ramp (rendered in the bundled, cross-platform **DejaVu Sans** font), 4 px / 8 px corner radii, the "lit-edge" control border, drop-shadow elevation, and a translucent window backdrop (Mica on Windows, vibrancy on macOS, a KWin blur on KDE — solid elsewhere on Linux — toggleable, and following the OS transparency setting on Windows). Symbol glyphs come from the bundled **Codicons** icon font, so both text and icons render identically on desktop and in the browser.
 - **Live accent integration, on every OS.** The accent is read from the host where possible — the full seven-shade **Windows** `AccentPalette`, the **macOS** `AppleAccentColor`, and the **Linux** GNOME (`accent-color`) / KDE (`kdeglobals`) / Cinnamon (Mint theme name) accent — and flows into every accented control, updating instantly when the user changes it. Where no OS accent is available, apps can pick from the **Open Color preset palette** (20 swatches) or set any color manually (e.g. with a `ColorPicker`) via `AccentService.SetAccent` / `UseSystemAccent`.
 - **Cross-platform & self-contained.** One library (`Fluid.Avalonia`) targeting `net8.0` with no third-party theme dependencies — it layers on Avalonia's built-in `FluentTheme`. Platform specifics (registry / `defaults` / `gsettings` accent readers, Mica, dark title bar) are guarded and degrade gracefully everywhere.
 
@@ -130,6 +130,7 @@ The translucent window backdrop is cross-platform via `FluidWindow.TransparencyE
 - **[Dirkster99/bm](https://github.com/Dirkster99/bm)** (MIT) — the breadcrumb's per-crumb chevron-dropdown navigation.
 - **[DialogHost.Avalonia](https://github.com/AvaloniaUtils/DialogHost.Avalonia)** (MIT) — the Fluent-themed `ContentDialog` host (an in-window overlay, so it works on the browser head too).
 - **[Avalonia.Samples](https://github.com/AvaloniaUI/Avalonia.Samples)** (MIT) — the `VisualRate` is generalised from its `RatingControlSample` port.
+- **[android-signaturepad](https://github.com/warting/android-signaturepad)** (MIT; based on [gcacace/android-signaturepad](https://github.com/gcacace/android-signaturepad), Apache-2.0) — the `SignaturePad`'s velocity-driven variable-width Bézier ink algorithm is ported from here.
 - **[Avalonia](https://github.com/AvaloniaUI/Avalonia)** — the `FluentTheme` we build on.
 
 ## Credits
@@ -138,4 +139,4 @@ The full list of third-party projects this solution bundles, depends on, or refe
 
 ## License
 
-[MIT](LICENSE). Ported color values and resource structures originate from the MIT-licensed [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml) and [WinUI 3 Gallery](https://github.com/microsoft/WinUI-Gallery) projects, © Microsoft Corporation.
+[MIT](LICENSE). The Fluent 2 design-token *values* and WinUI resource *structures* are ported from the MIT-licensed [microsoft-ui-xaml](https://github.com/microsoft/microsoft-ui-xaml) and [WinUI 3 Gallery](https://github.com/microsoft/WinUI-Gallery) projects (© Microsoft Corporation); the built-in accent preset palette comes from the MIT-licensed [Open Color](https://yeun.github.io/open-color/). See **[CREDITS.md](CREDITS.md)** for the full attribution list.

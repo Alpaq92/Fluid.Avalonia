@@ -7,9 +7,10 @@ namespace Fluid.Avalonia;
 
 /// <summary>
 /// Drives a window's translucent backdrop and its solid fallback, cross-platform: a Mica-style blur on
-/// Windows, vibrancy (<c>AcrylicBlur</c>) on macOS, and blur / transparency on Linux where the compositor
-/// supports it (real blur only on KDE&#160;Plasma / KWin) — degrading to an opaque base surface everywhere
-/// it can't be rendered. The Windows "Transparency effects" user setting is exposed via
+/// Windows, vibrancy (<c>AcrylicBlur</c>) on macOS, a KWin blur on KDE&#160;Plasma (Linux) and the API-31+
+/// window blur on Android — degrading to an opaque base surface everywhere a real backdrop can't be
+/// rendered (a bare blur-less transparent level is painted solid, so non-KWin Linux stays opaque). The
+/// Windows "Transparency effects" user setting is exposed via
 /// <see cref="IsOsTransparencyEnabled"/> so callers can seed their default from it (there is no equivalent
 /// global switch on macOS / Linux — the compositor decides per window). <see cref="FluidWindow"/> uses this
 /// for its <see cref="FluidWindow.TransparencyEnabled"/> property; it works on any <see cref="Window"/>.
@@ -47,24 +48,35 @@ public static class TransparencyService
         window.TransparencyLevelHint = enabled ? PreferredLevels() : SolidOnly;
 
     /// <summary>Sets the window background to match the level the platform actually granted: transparent
-    /// (so the backdrop shows through) when a translucent level is active, else the solid base surface.
-    /// This is the graceful fallback for compositors that couldn't honor the request (e.g. GNOME, an
-    /// un-composited X11 session, or down-level Windows).</summary>
-    public static void ReconcileBackground(Window window) =>
-        window.Background = window.ActualTransparencyLevel == WindowTransparencyLevel.None
-            ? SolidBase(window)
-            : Brushes.Transparent;
+    /// (so the backdrop shows through) ONLY when a real blur backdrop is active — Mica, macOS vibrancy
+    /// (<c>AcrylicBlur</c>) or KWin <c>Blur</c> — and the solid base surface otherwise. Crucially, a bare
+    /// blur-less <see cref="WindowTransparencyLevel.Transparent"/> is painted solid too: Avalonia's X11
+    /// backend falls back to it on any compositing desktop that can't do the real effect (e.g. GNOME) —
+    /// and a see-through window without blur isn't wanted — so those stay opaque. Call this from the
+    /// window's <c>OnOpened</c> and whenever its <see cref="TopLevel.ActualTransparencyLevel"/> changes.</summary>
+    public static void ReconcileBackground(Window window)
+    {
+        var level = window.ActualTransparencyLevel;
+        var hasBackdrop = level == WindowTransparencyLevel.Mica
+            || level == WindowTransparencyLevel.AcrylicBlur
+            || level == WindowTransparencyLevel.Blur;
+        window.Background = hasBackdrop ? Brushes.Transparent : SolidBase(window);
+    }
 
     // Best-first translucency request per OS. macOS maps AcrylicBlur → NSVisualEffectView vibrancy
-    // (Mica/Blur fall through to opaque there); Linux honors Blur only on KWin and otherwise degrades
-    // to plain Transparent, then None. The trailing None is the explicit opaque fallback.
+    // (Mica/Blur fall through to opaque there). Linux and Android both use Blur → on Linux that's the
+    // KWin (KDE) blur, on Android the API-31+ window blur (BlurBehindRadius); each falls to opaque None
+    // otherwise. On non-KWin Linux Avalonia's X11 backend resolves the hint to a bare Transparent level
+    // regardless, but ReconcileBackground paints that solid (no blur-less see-through), so it stays
+    // opaque; on Android < 31 the None entry is granted directly (a solid window). The trailing None is
+    // the explicit opaque fallback.
     private static WindowTransparencyLevel[] PreferredLevels() =>
         OperatingSystem.IsWindows()
             ? new[] { WindowTransparencyLevel.Mica, WindowTransparencyLevel.None }
             : OperatingSystem.IsMacOS()
                 ? new[] { WindowTransparencyLevel.AcrylicBlur, WindowTransparencyLevel.None }
-                : OperatingSystem.IsLinux()
-                    ? new[] { WindowTransparencyLevel.Blur, WindowTransparencyLevel.Transparent, WindowTransparencyLevel.None }
+                : OperatingSystem.IsLinux() || OperatingSystem.IsAndroid()
+                    ? new[] { WindowTransparencyLevel.Blur, WindowTransparencyLevel.None }
                     : SolidOnly;
 
     private static IBrush SolidBase(Window window) =>

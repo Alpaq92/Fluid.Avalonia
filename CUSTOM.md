@@ -6,7 +6,7 @@ Everything below is built on top of stock Avalonia and its `FluentTheme` — com
 
 ### FluidColorPicker
 
-A Fluid-styled colour dropdown — a swatch + hex button opening a flyout with glyph tabs (Color space · Preset · Sliders), Open Color preset swatches and a shared previewer. The stock `ColorPicker` is not re-templatable to this look.
+A Fluid-styled colour dropdown — a swatch + hex button opening a flyout with glyph tabs (Color space · Preset · Sliders), Open Color preset swatches and a shared previewer. The stock `ColorPicker` is not re-templatable to this look. The flyout body is the reusable **`FluidColorEditor`** surface — any flyout can host the exact same editors (the SignaturePad's "+ add ink" flyout does), with live colour via its two-way `Color` or commit semantics via the host's own OK/Add button.
 
 ### RadialTimePicker
 
@@ -60,6 +60,10 @@ A row of clickable glyphs setting a 0..`Count` value. Generalised from a port of
 
 A modal dialog shown over a dimmed surface, using the **DialogHost.Avalonia** package re-themed to Fluent 2. One root `DialogHost` (`Identifier="RootDialog"`) wraps the shell; `await DialogHost.Show(content, "RootDialog")` opens it and resolves to the result the dialog's buttons pass back. The Fluent look is a local restyle (`Styles/DialogHost.axaml`): an opaque `SolidBackgroundFillColorBaseBrush` surface (the translucent card fills are meant to sit over Mica and would let the page bleed through a modal), an 8 px overlay corner radius, a soft elevation shadow, a `SurfaceStrokeColorDefaultBrush` hairline, and a smoke overlay. The dialog is an in-window overlay (no native popup), so the same code runs on desktop and in the browser. Shown on the Dialogs & flyouts page alongside the existing faux-surface example.
 
+### SignaturePad
+
+A freehand signature pad with a natural, velocity-driven variable-width pen — ported from **[warting/android-signaturepad](https://github.com/warting/android-signaturepad)** (MIT), itself based on gcacace/android-signaturepad (Apache-2.0). As you draw, each stroke is smoothed into cubic Béziers and the nib width follows pointer velocity — faster → thinner, slower → thicker (`strokeWidth = max(MaxStrokeWidth / (velocity + 1), MinStrokeWidth)`, with the upstream `0.9` velocity-filter smoothing) — stamping round dabs along the curve so the ink reads calligraphic rather than a constant-width line; a tap leaves a single dot. It exposes `StrokeColor`, `MinStrokeWidth` / `MaxStrokeWidth` and `VelocityFilterWeight`; `Clear()` wipes it and `IsEmpty` reports whether anything is drawn (each stroke keeps the colour it was drawn with). It derives from a plain `Control` and paints the surface, hairline and ink straight onto the `DrawingContext` in `Render` — rather than the demo's usual Canvas-of-Shapes — so a long signature (thousands of dabs) stays cheap, and the drawn fill is what makes the surface hit-testable. The Basic input page wraps it with a clear `×`, a row of ink swatches (named entries from `AccentService.Preset`, drawn in the house rounded-square swatch style with an accent selection ring) plus a `+` chip whose flyout hosts the shared `FluidColorEditor` behind a Cancel / Add footer — Add appends the picked colour to the row as a new selectable swatch — and a 0–6 nib-size slider.
+
 ## Theme & shell
 
 ### Fluid.Avalonia theme
@@ -76,11 +80,11 @@ Runtime localization the **Semi.Avalonia / SukiUI** way, shipped **inside the `F
 
 ### FluidWindow
 
-A reusable `Window` subclass that packages the WinUI 3 window chrome — an extended client area with a custom title bar (app icon, title, a free `TitleBarContent` slot, and minimize / maximize / close caption buttons), a cross-platform translucent backdrop with a solid fallback, and a frame that follows the light/dark theme (DWM). The backdrop is driven by the shared `TransparencyService` and gated by a `TransparencyEnabled` property (Mica on Windows, vibrancy on macOS, blur on Linux/KWin; seeded from the OS "Transparency effects" setting at construction and reconciled to a solid surface via `ActualTransparencyLevel` where the compositor can't render it). Window drag and double-tap-maximize are built in; caption glyphs are vector, so it needs no symbol font; and the Windows-specific bits are guarded so it degrades gracefully off-Windows. Put your content in `Content` and any title-bar widgets (search, menus…) in `TitleBarContent`.
+A reusable `Window` subclass that packages the WinUI 3 window chrome — an extended client area with a custom title bar (app icon, title, a free `TitleBarContent` slot, and minimize / maximize / close caption buttons), a cross-platform translucent backdrop with a solid fallback, and a frame that follows the light/dark theme (DWM). The backdrop is driven by the shared `TransparencyService` and gated by a `TransparencyEnabled` property (Mica on Windows, vibrancy on macOS, a KWin blur on KDE/Linux; seeded from the Windows "Transparency effects" setting at construction and reconciled to a solid surface via `ActualTransparencyLevel` wherever the backdrop can't be rendered — non-KWin Linux desktops get the solid surface rather than a blur-less transparent window). Window drag and double-tap-maximize are built in; caption glyphs are vector, so it needs no symbol font; and the Windows-specific bits are guarded so it degrades gracefully off-Windows. Put your content in `Content` and any title-bar widgets (search, menus…) in `TitleBarContent`.
 
 ### Window shell
 
-A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a translucent backdrop (Mica / vibrancy / blur via `TransparencyService`, toggled from **Settings → Window** and following the OS transparency setting) and dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
+A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a translucent backdrop (Mica on Windows / vibrancy on macOS / KWin blur on KDE via `TransparencyService`, toggled from **Settings → Window** and following the Windows transparency setting) and dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
 
 ### System tray menu
 

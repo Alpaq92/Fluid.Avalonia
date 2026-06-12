@@ -19,7 +19,7 @@ public partial class MainWindow : Window
         ExtendClientAreaTitleBarHeightHint = 48;
         WindowDecorations = WindowDecorations.BorderOnly;
 
-        // Translucent backdrop (Mica / vibrancy / blur), seeded from the OS "Transparency effects"
+        // Translucent backdrop (Mica / vibrancy / blur), seeded from the Windows "Transparency effects"
         // setting; the Settings page exposes a switch that overrides this at runtime.
         _transparencyEnabled = TransparencyService.IsOsTransparencyEnabled();
         TransparencyService.Apply(this, _transparencyEnabled);

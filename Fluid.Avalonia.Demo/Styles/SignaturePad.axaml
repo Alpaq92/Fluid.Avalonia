@@ -1,0 +1,18 @@
+<Styles
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
+
+    <!-- SignaturePad derives from Border (so the surface, hairline and rounded corners are themed for
+         free and the filled background makes it hit-testable). A ControlTheme wouldn't auto-apply to a
+         non-templated Border subclass, so the Fluent defaults live in a plain Style. -->
+    <Style Selector="ctrls|SignaturePad">
+        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorSecondaryBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
+        <Setter Property="MinHeight" Value="140" />
+        <Setter Property="ClipToBounds" Value="True" />
+    </Style>
+
+</Styles>

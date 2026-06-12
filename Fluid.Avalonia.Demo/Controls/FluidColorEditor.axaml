@@ -1,0 +1,94 @@
+<!--
+    FluidColorEditor — the Fluid colour-picking surface (formerly the body of FluidColorPicker's
+    flyout), extracted so any flyout can host the exact same editors: a ColorSpectrum + hue
+    slider, the Open Color preset palette, and a components-only ColorView, with a shared
+    ColorPreviewer underneath. Colour state is mirrored across all editors in code-behind.
+    Selection is live via the two-way Color property; hosts that need commit semantics (e.g. the
+    SignaturePad "+ add ink" flyout) read Color from their own OK/Add button instead of binding.
+-->
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Controls.FluidColorEditor"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:primitives="using:Avalonia.Controls.Primitives">
+
+    <StackPanel Width="300">
+        <!-- Fixed height so the flyout doesn't resize (jump up/down) when switching tabs. -->
+        <TabControl Height="330" Padding="0,8,0,0">
+            <TabControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="4" />
+                </ItemsPanelTemplate>
+            </TabControl.ItemsPanel>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                               FontSize="18" Text="&#xEB5C;"
+                               ToolTip.Tip="Color Space" />
+                </TabItem.Header>
+                <Grid Margin="0,12,0,4" Height="270"
+                      ColumnDefinitions="*,Auto">
+                    <ColorSpectrum x:Name="Spectrum"
+                                   Components="SaturationValue"
+                                   Shape="Box"
+                                   Margin="0,0,8,0"
+                                   HorizontalAlignment="Stretch"
+                                   VerticalAlignment="Stretch" />
+                    <ColorSlider x:Name="HueSlider"
+                                 Grid.Column="1"
+                                 Orientation="Vertical"
+                                 Width="20"
+                                 ColorModel="Hsva"
+                                 ColorComponent="Component1" />
+                </Grid>
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                               FontSize="18" Text="&#xEBB7;"
+                               ToolTip.Tip="Preset" />
+                </TabItem.Header>
+                <UniformGrid x:Name="PresetPanel" Columns="5"
+                             VerticalAlignment="Top" Margin="0,12,0,4" />
+            </TabItem>
+
+            <TabItem>
+                <TabItem.Header>
+                    <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}"
+                               FontSize="18" Text="&#xEB52;"
+                               ToolTip.Tip="Sliders" />
+                </TabItem.Header>
+                <!-- The ColorView lays its components out at a fixed 350px, too wide for
+                     this 300px surface, so scale it down to fit (keeps the flyout narrow). -->
+                <LayoutTransformControl HorizontalAlignment="Center" Margin="0,8,0,0">
+                    <LayoutTransformControl.LayoutTransform>
+                        <ScaleTransform ScaleX="0.82" ScaleY="0.82" />
+                    </LayoutTransformControl.LayoutTransform>
+                    <ColorView x:Name="Components"
+                               IsAlphaEnabled="False"
+                               IsAlphaVisible="False"
+                               IsColorPaletteVisible="False"
+                               IsColorComponentsVisible="True"
+                               IsColorPreviewVisible="False"
+                               IsColorSpectrumVisible="False">
+                        <!-- Same scoping as the Accents page: collapse the redundant single-tab
+                             strip and the grey label/# chips so it reads as a Fluent surface. -->
+                        <ColorView.Resources>
+                            <x:Double x:Key="ColorViewTabStripHeight">0</x:Double>
+                            <SolidColorBrush x:Key="TabItemHeaderSelectedPipeFill" Color="Transparent" />
+                            <SolidColorBrush x:Key="TextControlBackgroundDisabled" Color="Transparent" />
+                        </ColorView.Resources>
+                    </ColorView>
+                </LayoutTransformControl>
+            </TabItem>
+
+        </TabControl>
+
+        <!-- Shared colour preview: lives outside the tabs so it shows on every tab. -->
+        <primitives:ColorPreviewer x:Name="Preview"
+                                   IsAccentColorsVisible="True"
+                                   Margin="12,4,12,12" />
+    </StackPanel>
+</UserControl>

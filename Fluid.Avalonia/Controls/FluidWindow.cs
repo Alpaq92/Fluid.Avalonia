@@ -13,8 +13,8 @@ namespace Fluid.Avalonia;
 /// custom title bar (app icon, title, a free content slot, and minimize / maximize / close caption
 /// buttons), a translucent backdrop with a solid fallback, and a frame that follows the app's light/dark
 /// theme. The backdrop is cross-platform via <see cref="TransparencyService"/> (Mica on Windows,
-/// vibrancy on macOS, blur on Linux/KWin) and is gated by <see cref="TransparencyEnabled"/>, which is
-/// seeded from the OS "Transparency effects" setting at construction. Windows-specific bits are guarded
+/// vibrancy on macOS, a KWin blur on KDE/Linux) and is gated by <see cref="TransparencyEnabled"/>, which
+/// is seeded from the Windows "Transparency effects" setting at construction. Windows-specific bits are guarded
 /// and degrade gracefully on macOS / Linux. Put your window content in <see cref="ContentControl.Content"/>
 /// as usual; drop title-bar widgets (search, menus…) into <see cref="TitleBarContent"/>.
 /// </summary>
@@ -74,7 +74,7 @@ public class FluidWindow : Window
     }
 
     /// <summary>Whether to use the translucent backdrop (Mica / vibrancy / blur) versus a solid window.
-    /// Seeded from the OS "Transparency effects" setting at construction; set it to override at runtime.
+    /// Seeded from the Windows "Transparency effects" setting at construction; set it to override at runtime.
     /// Where the compositor can't render the backdrop, the window stays solid regardless.</summary>
     public bool TransparencyEnabled
     {
@@ -95,7 +95,7 @@ public class FluidWindow : Window
         ExtendClientAreaTitleBarHeightHint = TitleBarHeight;
         WindowDecorations = WindowDecorations.BorderOnly;
 
-        // Follow the OS "Transparency effects" setting at startup (overridable via TransparencyEnabled);
+        // Follow the Windows "Transparency effects" setting at startup (overridable via TransparencyEnabled);
         // request the platform's translucent backdrop, reconciled to a solid surface where unavailable.
         SetCurrentValue(TransparencyEnabledProperty, TransparencyService.IsOsTransparencyEnabled());
         TransparencyService.Apply(this, TransparencyEnabled);

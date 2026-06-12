@@ -81,6 +81,9 @@
         <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/DataGrid.axaml" />
         <!-- ColorView / ColorPicker control themes (not pulled in by FluentTheme). -->
         <StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Fluent/Fluent.xaml" />
+        <!-- SignaturePad (ported from warting/android-signaturepad) — Border-subclass surface, so its
+             Fluent defaults are a plain Style rather than a ControlTheme. -->
+        <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/SignaturePad.axaml" />
         <StyleInclude Source="avares://Fluid.Avalonia.Demo/Styles/GalleryStyles.axaml" />
     </Application.Styles>
 

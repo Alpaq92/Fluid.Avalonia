@@ -224,6 +224,61 @@
             </StackPanel>
         </ctrls:ControlExample>
 
+        <ctrls:ControlExample Header="A SignaturePad — draw a freehand signature with a natural, velocity-driven variable-width pen (faster strokes draw thinner). Ported from warting/android-signaturepad. Pick the ink colour from the presets — or add your own with the + swatch — and the nib size with the slider; the × clears it."
+                              XamlSource="&lt;ctrls:SignaturePad StrokeColor=&quot;#339AF0&quot; MaxStrokeWidth=&quot;4&quot; /&gt;">
+            <StackPanel Spacing="14" MaxWidth="420" HorizontalAlignment="Left">
+                <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Text="Draw your signature below" />
+                <Panel>
+                    <!-- Default ink = the palette's canonical Blue (AccentService.Preset), so the same
+                         name means the same colour app-wide. -->
+                    <ctrls:SignaturePad x:Name="SigPad" Height="180" StrokeColor="#339AF0" />
+                    <Button x:Name="SigClearButton"
+                            HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
+                            Width="30" Height="30" Padding="0"
+                            Background="Transparent" BorderThickness="0"
+                            IsVisible="False" ToolTip.Tip="Clear signature">
+                        <TextBlock FontFamily="{DynamicResource SymbolThemeFontFamily}" FontSize="16"
+                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                   Text="&#xEA76;" />
+                    </Button>
+                </Panel>
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Signature colour" />
+                    <!-- WrapPanel (not a StackPanel) so a growing custom-ink collection wraps inside
+                         the card; the swatch buttons carry the Accents-page 0,0,8,8 margins. -->
+                    <WrapPanel x:Name="SignatureColorPanel" />
+                </StackPanel>
+                <StackPanel Spacing="6">
+                    <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="Signature stroke" />
+                    <!-- The 0 / 6 end labels are vector outlines (Path data built in code-behind), not
+                         TextBlocks: font hinting snaps text to whole device pixels, defeating the
+                         sub-pixel placement needed to sit both digits' ink on the track line — and the
+                         '6' glyph is bottom-heavy, so its ink mass reads lower than the symmetric '0'
+                         even when their boxes align. Geometry renders unhinted, so these fractional
+                         nudges land exactly; the values are ink-centroid-vs-track-centroid offsets
+                         measured from a headless render and verified at 100% / 125% / 150% scaling. -->
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <Path x:Name="SigMinLabel" VerticalAlignment="Center"
+                              Fill="{DynamicResource TextFillColorTertiaryBrush}">
+                            <Path.RenderTransform>
+                                <TranslateTransform Y="-0.29" />
+                            </Path.RenderTransform>
+                        </Path>
+                        <Slider x:Name="SignatureStrokeSlider" Width="280" Minimum="0" Maximum="6" Value="4" />
+                        <Path x:Name="SigMaxLabel" VerticalAlignment="Center"
+                              Fill="{DynamicResource TextFillColorTertiaryBrush}">
+                            <Path.RenderTransform>
+                                <TranslateTransform Y="-0.48" />
+                            </Path.RenderTransform>
+                        </Path>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </ctrls:ControlExample>
+
         <ctrls:ControlExample Header="A modal Window — open one to check a native Avalonia Window (available only on Desktops, blocked in Browser view).">
             <Button x:Name="OpenWindowButton" Content="Open a modal Window" />
         </ctrls:ControlExample>
