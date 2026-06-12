@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.1...v1.6.2) (2026-06-12)
+
+
+### Bug Fixes
+
+* **demo:** give the SignaturePad a distinct Open Color signing-surface tone ([8dfdf35](https://github.com/Alpaq92/Fluid.Avalonia/commit/8dfdf358991edd8631885ff3799e9bed89eb80ba))
+
 ## [1.6.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.0...v1.6.1) (2026-06-12)
 
 
