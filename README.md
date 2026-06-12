@@ -13,6 +13,14 @@ A **Fluent 2-inspired** Avalonia theme with its own identity, adapting to your s
 
 ![Fluid.Avalonia — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Fluid.Avalonia/main/screenshot.png)
 
+## Live demo
+
+Try it right now in your browser — the demo runs on Avalonia's **WebAssembly** head, deployed to **GitHub Pages**:
+
+> **Live demo →** **<https://alpaq92.github.io/Fluid.Avalonia/>** *(redeployed from the WASM head on every push to `main`)*
+
+## Get started
+
 Install from NuGet:
 
 ```
@@ -56,11 +64,7 @@ The repository also contains **Fluid.Avalonia.Demo**, a demo app that mirrors th
 
 > **Deep dive:** the architecture and how the resource layering works, the demo-app internals, and the full coverage / roadmap matrix all live in **[OVERVIEW.md](OVERVIEW.md)**.
 
-## Live demo
-
-The demo runs in the browser via Avalonia's **WebAssembly** head, deployed to **GitHub Pages**:
-
-> **Live demo →** **<https://alpaq92.github.io/Fluid.Avalonia/>** *(deployed from the WASM head on every push to `main`)*
+## How the demo is built
 
 The solution is split into a shared library plus per-platform heads:
 
