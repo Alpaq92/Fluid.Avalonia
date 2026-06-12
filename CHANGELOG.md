@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.0...v1.6.1) (2026-06-12)
+
+
+### Bug Fixes
+
+* **demo:** address deep-review findings on the SignaturePad batch ([6260dab](https://github.com/Alpaq92/Fluid.Avalonia/commit/6260dab289ab480a37edc8938e1f0c9c1c5cdc72))
+
 ## [1.6.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.5.2...v1.6.0) (2026-06-12)
 
 
