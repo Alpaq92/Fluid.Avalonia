@@ -3,12 +3,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:ctrls="using:Fluid.Avalonia.Demo.Controls">
 
+    <Styles.Resources>
+        <ResourceDictionary>
+            <!-- A dedicated, distinctive "signing surface" tone from the project's Open Color palette
+                 (the same source as the accent presets) — deliberately NOT a near-base SolidBackgroundFill
+                 step, which sits a hair off the page/card so the pad vanishes into it. A recessed well in
+                 both themes, clearly set apart from the ControlExample card it sits on: Open Color gray 2
+                 in light, gray 9 in dark. -->
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Default">
+                    <SolidColorBrush x:Key="SignaturePadSurfaceBrush" Color="#FFE9ECEF" />
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <SolidColorBrush x:Key="SignaturePadSurfaceBrush" Color="#FF212529" />
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+
     <!-- SignaturePad derives from Control and hand-paints its surface, hairline, rounded corners and
          ink in Render (Border seals Render, so it can't host custom drawing). The drawn background also
          makes it hit-testable. A ControlTheme wouldn't auto-apply to a non-templated Control, so these
          Fluent defaults live in a plain Style. -->
     <Style Selector="ctrls|SignaturePad">
-        <Setter Property="Background" Value="{DynamicResource SolidBackgroundFillColorSecondaryBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SignaturePadSurfaceBrush}" />
         <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="1" />
         <Setter Property="CornerRadius" Value="{DynamicResource OverlayCornerRadius}" />
