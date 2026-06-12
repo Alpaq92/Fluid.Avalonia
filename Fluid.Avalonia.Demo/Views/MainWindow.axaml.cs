@@ -34,8 +34,11 @@ public partial class MainWindow : Window
         set
         {
             _transparencyEnabled = value;
+            // Apply only sets the hint; the granted level resolves asynchronously, so the background
+            // reconcile happens in OnPropertyChanged when ActualTransparencyLevel changes (mirroring
+            // the library's FluidWindow). An eager reconcile here would read a stale level and leave
+            // the window see-through after toggling off (or solid after toggling on).
             TransparencyService.Apply(this, value);
-            TransparencyService.ReconcileBackground(this);
         }
     }
 
@@ -96,6 +99,8 @@ public partial class MainWindow : Window
         base.OnPropertyChanged(change);
         if (change.Property == WindowStateProperty || change.Property == OffScreenMarginProperty)
             ApplyOffScreenMargin();
+        else if (change.Property == ActualTransparencyLevelProperty)
+            TransparencyService.ReconcileBackground(this);   // the deferred reconcile for the toggle
     }
 
     private void ApplyTitleBarTheme()

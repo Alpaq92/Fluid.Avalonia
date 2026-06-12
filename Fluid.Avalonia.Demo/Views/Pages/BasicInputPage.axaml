@@ -230,9 +230,9 @@
                 <TextBlock Classes="Caption" Foreground="{DynamicResource TextFillColorSecondaryBrush}"
                            Text="Draw your signature below" />
                 <Panel>
-                    <!-- Default ink = the palette's canonical Blue (AccentService.Preset), so the same
-                         name means the same colour app-wide. -->
-                    <ctrls:SignaturePad x:Name="SigPad" Height="180" StrokeColor="#339AF0" />
+                    <!-- Default ink is set in code from SignatureInks[0] (the palette's canonical Blue),
+                         so the pad's starting colour and the lit swatch share one source. -->
+                    <ctrls:SignaturePad x:Name="SigPad" Height="180" />
                     <Button x:Name="SigClearButton"
                             HorizontalAlignment="Right" VerticalAlignment="Top" Margin="6"
                             Width="30" Height="30" Padding="0"

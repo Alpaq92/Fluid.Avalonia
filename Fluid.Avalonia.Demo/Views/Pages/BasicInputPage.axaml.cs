@@ -96,8 +96,12 @@ public partial class BasicInputPage : UserControl
     // fraction of it so fast strokes still taper thinner (kept above 0 so a dot is always visible).
     private void ApplySignatureStroke(double value)
     {
-        SigPad.MaxStrokeWidth = value;
-        SigPad.MinStrokeWidth = Math.Max(0.5, value * 0.4);
+        // Min is a fraction of the value but floored so a tap always leaves a visible dot; Max is then
+        // clamped to never fall below Min (at slider 0 that keeps a thin, valid hairline rather than an
+        // inverted Max < Min that would flatten the velocity taper).
+        var min = Math.Max(0.5, value * 0.4);
+        SigPad.MinStrokeWidth = min;
+        SigPad.MaxStrokeWidth = Math.Max(value, min);
     }
 
     // Builds the ink-colour swatches (a coloured rounded-square inside a ring that lights up with
@@ -111,7 +115,9 @@ public partial class BasicInputPage : UserControl
 
         SignatureColorPanel.Children.Add(CreateCustomInkButton());
 
-        // Default to the first preset (matches the pad's initial StrokeColor in XAML — Open Color Blue).
+        // Default to the first preset (Open Color Blue) — set both the pad ink and the lit ring from
+        // the same palette entry, so there's one source of truth for the starting colour.
+        SigPad.StrokeColor = SignatureInks[0].Color;
         SelectSignatureInk(_signatureRings[0]);
     }
 

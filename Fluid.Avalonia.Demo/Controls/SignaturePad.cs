@@ -80,6 +80,7 @@ public class SignaturePad : Control
     private readonly List<TimedPoint> _points = new();   // sliding window for the Bézier smoothing
     private readonly Stopwatch _clock = Stopwatch.StartNew();
     private Stroke? _current;
+    private IPointer? _activePointer;   // the pointer that owns the in-progress stroke (multi-touch guard)
     private double _lastWidth;
     private double _lastVelocity;
 
@@ -88,6 +89,7 @@ public class SignaturePad : Control
     {
         _strokes.Clear();
         _current = null;
+        _activePointer = null;
         _points.Clear();
         _lastVelocity = 0;
         _lastWidth = (MinStrokeWidth + MaxStrokeWidth) / 2;
@@ -99,11 +101,17 @@ public class SignaturePad : Control
     {
         base.OnPointerPressed(e);
 
+        // One stroke at a time: ignore a second finger / pointer while one is already drawing
+        // (otherwise it would overwrite the in-progress stroke and corrupt both).
+        if (_current is not null)
+            return;
+
         // Mouse: only the left button draws. Touch / pen always draw.
         if (e.Pointer.Type == PointerType.Mouse && !e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
             return;
 
         e.Pointer.Capture(this);
+        _activePointer = e.Pointer;
         _current = new Stroke(new ImmutableSolidColorBrush(StrokeColor));
         _points.Clear();
         _lastVelocity = 0;
@@ -117,8 +125,8 @@ public class SignaturePad : Control
     protected override void OnPointerMoved(PointerEventArgs e)
     {
         base.OnPointerMoved(e);
-        if (_current is null)
-            return;   // not drawing — ignore plain hover moves
+        if (_current is null || e.Pointer != _activePointer)
+            return;   // not drawing, or a different pointer (hover / second finger)
         AddPoint(NewPoint(e.GetPosition(this)));
         InvalidateVisual();
         e.Handled = true;
@@ -127,21 +135,44 @@ public class SignaturePad : Control
     protected override void OnPointerReleased(PointerReleasedEventArgs e)
     {
         base.OnPointerReleased(e);
-        if (_current is null)
+        if (_current is null || e.Pointer != _activePointer)
             return;
 
         AddPoint(NewPoint(e.GetPosition(this)));
-
-        // A tap (no movement, so the Bézier window never produced a curve) leaves a single round dot.
-        if (_current.Dabs.Count == 0)
-        {
-            var p = e.GetPosition(this);
-            _current.Dabs.Add(new Dab(p.X, p.Y, (MinStrokeWidth + MaxStrokeWidth) / 4));
-        }
-
-        _strokes.Add(_current);
-        _current = null;
+        // Finalize before releasing capture (Capture(null) re-enters OnPointerCaptureLost, which the
+        // null _activePointer then makes a no-op).
+        FinalizeStroke(e.GetPosition(this));
         e.Pointer.Capture(null);
+    }
+
+    // Capture can be revoked mid-stroke without a release — a popup/menu opening, another control
+    // grabbing the pointer, or a touch cancel. Finalize what's drawn so we don't leave a dangling
+    // _current that would append phantom ink on the next hover move (and stick IsEmpty at false).
+    protected override void OnPointerCaptureLost(PointerCaptureLostEventArgs e)
+    {
+        base.OnPointerCaptureLost(e);
+        if (_current is null || e.Pointer != _activePointer)
+            return;
+        FinalizeStroke(null);   // capture is already gone — don't release it again
+    }
+
+    // Commits the in-progress stroke. A tap (no curve produced) leaves a single round dot, but only
+    // on a real release (tap != null) — an interrupted empty stroke is dropped. IsEmpty is recomputed
+    // so an interrupted blank stroke doesn't leave the pad stuck "not empty".
+    private void FinalizeStroke(Point? tap)
+    {
+        if (_current is null)
+            return;
+
+        if (_current.Dabs.Count == 0 && tap is { } p)
+            _current.Dabs.Add(new Dab(p.X, p.Y, (MinStrokeWidth + MaxStrokeWidth) / 4));
+
+        if (_current.Dabs.Count > 0)
+            _strokes.Add(_current);
+
+        _current = null;
+        _activePointer = null;
+        IsEmpty = _strokes.Count == 0;
         InvalidateVisual();
     }
 
