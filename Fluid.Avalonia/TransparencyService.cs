@@ -73,12 +73,7 @@ public static class TransparencyService
             SolidBackgroundBindings.Remove(window);
         }
 
-        var level = window.ActualTransparencyLevel;
-        var hasBackdrop = level == WindowTransparencyLevel.Mica
-            || level == WindowTransparencyLevel.AcrylicBlur
-            || level == WindowTransparencyLevel.Blur;
-
-        if (hasBackdrop)
+        if (IsRealBackdrop(window.ActualTransparencyLevel))
         {
             window.Background = Brushes.Transparent;
             return;
@@ -90,6 +85,22 @@ public static class TransparencyService
             TemplatedControl.BackgroundProperty,
             new DynamicResourceExtension("SolidBackgroundFillColorBaseBrush")));
     }
+
+    /// <summary>Whether a real translucent backdrop is achievable for <paramref name="window"/> in this
+    /// environment — so a "use the backdrop" toggle is meaningful. Returns <see langword="false"/> when a
+    /// backdrop was requested but the platform could only grant a bare blur-less
+    /// <see cref="WindowTransparencyLevel.Transparent"/> (e.g. a non-KWin Linux desktop, where the window
+    /// just stays solid) — letting callers disable that toggle. <see cref="WindowTransparencyLevel.None"/>
+    /// is left as "available" (it's the state when the backdrop is simply switched off, or a Windows 11
+    /// window with the OS "Transparency effects" setting off but Mica still capable). The window must be
+    /// open so its granted <see cref="TopLevel.ActualTransparencyLevel"/> has resolved.</summary>
+    public static bool IsBackdropSupported(Window window) =>
+        window.ActualTransparencyLevel != WindowTransparencyLevel.Transparent;
+
+    private static bool IsRealBackdrop(WindowTransparencyLevel level) =>
+        level == WindowTransparencyLevel.Mica
+        || level == WindowTransparencyLevel.AcrylicBlur
+        || level == WindowTransparencyLevel.Blur;
 
     // Best-first translucency request per OS. macOS maps AcrylicBlur → NSVisualEffectView vibrancy
     // (Mica/Blur fall through to opaque there). Linux and Android both use Blur → on Linux that's the

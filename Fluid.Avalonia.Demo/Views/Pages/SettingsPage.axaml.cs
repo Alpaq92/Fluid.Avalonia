@@ -35,16 +35,25 @@ public partial class SettingsPage : UserControl
         ShowTitleSwitch.IsCheckedChanged += (_, _) => { if (Shell is { } m) m.ShowTitleText = ShowTitleSwitch.IsChecked == true; };
         ShowPageNavSwitch.IsCheckedChanged += (_, _) => { if (Shell is { } m) m.ShowPageNav = ShowPageNavSwitch.IsChecked == true; };
 
-        // Window transparency — the backdrop lives on the desktop Window; the browser head has none.
-        if (DesktopWindow is { } win)
-        {
-            TransparencySwitch.IsChecked = win.TransparencyEnabled;
-            TransparencySwitch.IsCheckedChanged += (_, _) => win.TransparencyEnabled = TransparencySwitch.IsChecked == true;
-        }
-        else
+        // Window transparency — the backdrop lives on the desktop Window. It's blocked where it can't
+        // do anything: the browser head (no window), and a desktop whose compositor can't render a
+        // backdrop (e.g. a non-KWin Linux session, where the window only ever stays solid).
+        if (DesktopWindow is not { } win)
         {
             TransparencySwitch.IsEnabled = false;
             ToolTip.SetTip(TransparencySwitch, "Desktop only — the browser head has no window backdrop.");
+        }
+        else if (!TransparencyService.IsBackdropSupported(win))
+        {
+            TransparencySwitch.IsChecked = false;
+            TransparencySwitch.IsEnabled = false;
+            ToolTip.SetTip(TransparencySwitch,
+                "Unavailable — this desktop environment can't render a window backdrop (no compositor blur), so the window stays solid.");
+        }
+        else
+        {
+            TransparencySwitch.IsChecked = win.TransparencyEnabled;
+            TransparencySwitch.IsCheckedChanged += (_, _) => win.TransparencyEnabled = TransparencySwitch.IsChecked == true;
         }
 
         // Language picker — one radio per bundled language (native name), styled like the theme picker
