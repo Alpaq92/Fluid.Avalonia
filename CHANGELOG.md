@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.4...v1.7.0) (2026-06-16)
+
+
+### Features
+
+* block the transparency toggle where no backdrop is possible ([bb17d70](https://github.com/Alpaq92/Fluid.Avalonia/commit/bb17d70e1d5187de5d8e3a07e13268a6e7dc21e0))
+
 ## [1.6.4](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.3...v1.6.4) (2026-06-16)
 
 
