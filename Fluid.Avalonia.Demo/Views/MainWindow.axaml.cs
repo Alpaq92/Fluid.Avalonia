@@ -24,7 +24,15 @@ public partial class MainWindow : Window
         _transparencyEnabled = TransparencyService.IsOsTransparencyEnabled();
         TransparencyService.Apply(this, _transparencyEnabled);
 
-        ActualThemeVariantChanged += (_, _) => ApplyTitleBarTheme();
+        ActualThemeVariantChanged += (_, _) =>
+        {
+            ApplyTitleBarTheme();
+            // Re-resolve the (concrete, theme-derived) window background when the variant flips —
+            // e.g. Linux detecting the OS dark scheme after the window opened, or the Settings theme
+            // switch. Without this the window keeps the stale base while text + content flip, giving
+            // a light surface under light text (the unreadable look on Linux Mint dark).
+            TransparencyService.ReconcileBackground(this);
+        };
     }
 
     /// <summary>Whether the window uses the translucent backdrop (driven by the Settings switch).</summary>

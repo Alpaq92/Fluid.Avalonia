@@ -100,7 +100,15 @@ public class FluidWindow : Window
         SetCurrentValue(TransparencyEnabledProperty, TransparencyService.IsOsTransparencyEnabled());
         TransparencyService.Apply(this, TransparencyEnabled);
 
-        ActualThemeVariantChanged += (_, _) => ApplyTitleBarTheme();
+        ActualThemeVariantChanged += (_, _) =>
+        {
+            ApplyTitleBarTheme();
+            // The solid background is a concrete, theme-resolved brush (the backdrop case is the only
+            // one that's Transparent), so re-resolve it when the variant flips — e.g. Linux detecting
+            // the OS dark scheme after the window opened. Otherwise the window keeps the stale base
+            // under the now-reversed text/content tokens (light text on a light surface, unreadable).
+            TransparencyService.ReconcileBackground(this);
+        };
     }
 
     protected override Type StyleKeyOverride => typeof(FluidWindow);
