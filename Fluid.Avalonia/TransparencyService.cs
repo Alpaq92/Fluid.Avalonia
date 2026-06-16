@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Avalonia.Controls;
+using Avalonia.Controls.Primitives;
+using Avalonia.Markup.Xaml.MarkupExtensions;
 using Avalonia.Media;
 using Microsoft.Win32;
 
@@ -47,20 +50,45 @@ public static class TransparencyService
     public static void Apply(Window window, bool enabled) =>
         window.TransparencyLevelHint = enabled ? PreferredLevels() : SolidOnly;
 
-    /// <summary>Sets the window background to match the level the platform actually granted: transparent
-    /// (so the backdrop shows through) ONLY when a real blur backdrop is active — Mica, macOS vibrancy
-    /// (<c>AcrylicBlur</c>) or KWin <c>Blur</c> — and the solid base surface otherwise. Crucially, a bare
-    /// blur-less <see cref="WindowTransparencyLevel.Transparent"/> is painted solid too: Avalonia's X11
-    /// backend falls back to it on any compositing desktop that can't do the real effect (e.g. GNOME) —
-    /// and a see-through window without blur isn't wanted — so those stay opaque. Call this from the
-    /// window's <c>OnOpened</c> and whenever its <see cref="TopLevel.ActualTransparencyLevel"/> changes.</summary>
+    // The per-window DynamicResource subscription on Background for the solid case. Tracked so it can
+    // be torn down when a real backdrop takes over (then the window must be Transparent, not the base).
+    private static readonly ConditionalWeakTable<Window, IDisposable> SolidBackgroundBindings = new();
+
+    /// <summary>Reconciles the window background to the granted transparency level: transparent (so a
+    /// REAL backdrop shows through) ONLY when one is active — Mica, macOS vibrancy (<c>AcrylicBlur</c>)
+    /// or KWin <c>Blur</c> — otherwise the solid base surface. The solid case is BOUND to the theme
+    /// resource (not assigned a one-shot brush) so it tracks the active theme variant exactly like the
+    /// content/text do; a concrete brush snapshots a single variant and goes stale, which on Linux —
+    /// where Avalonia may settle the OS dark scheme only after the window is up, with no later event —
+    /// left a light base under dark-variant (light) text: unreadable. A bare blur-less
+    /// <see cref="WindowTransparencyLevel.Transparent"/> (Avalonia's X11 fallback on non-KWin compositing
+    /// desktops) is treated as no-backdrop, so it's painted solid too. Call from the window's
+    /// <c>OnOpened</c> and whenever its <see cref="TopLevel.ActualTransparencyLevel"/> changes.</summary>
     public static void ReconcileBackground(Window window)
     {
+        // Drop any prior solid-background binding before re-deciding.
+        if (SolidBackgroundBindings.TryGetValue(window, out var existing))
+        {
+            existing.Dispose();
+            SolidBackgroundBindings.Remove(window);
+        }
+
         var level = window.ActualTransparencyLevel;
         var hasBackdrop = level == WindowTransparencyLevel.Mica
             || level == WindowTransparencyLevel.AcrylicBlur
             || level == WindowTransparencyLevel.Blur;
-        window.Background = hasBackdrop ? Brushes.Transparent : SolidBase(window);
+
+        if (hasBackdrop)
+        {
+            window.Background = Brushes.Transparent;
+            return;
+        }
+
+        // Bind, don't assign: DynamicResource re-resolves on every theme-variant change, so the
+        // surface always matches the live variant (no stale snapshot, no dependence on a flip event).
+        SolidBackgroundBindings.Add(window, window.Bind(
+            TemplatedControl.BackgroundProperty,
+            new DynamicResourceExtension("SolidBackgroundFillColorBaseBrush")));
     }
 
     // Best-first translucency request per OS. macOS maps AcrylicBlur → NSVisualEffectView vibrancy
@@ -78,9 +106,4 @@ public static class TransparencyService
                 : OperatingSystem.IsLinux() || OperatingSystem.IsAndroid()
                     ? new[] { WindowTransparencyLevel.Blur, WindowTransparencyLevel.None }
                     : SolidOnly;
-
-    private static IBrush SolidBase(Window window) =>
-        window.TryFindResource("SolidBackgroundFillColorBaseBrush", window.ActualThemeVariant, out var b) && b is IBrush brush
-            ? brush
-            : Brushes.Transparent;
 }
