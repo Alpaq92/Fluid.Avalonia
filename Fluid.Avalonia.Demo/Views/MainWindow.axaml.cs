@@ -10,6 +10,12 @@ public partial class MainWindow : Window
 
     public MainWindow()
     {
+        // Kill the Linux "flash of light theme": Avalonia resolves the OS dark scheme asynchronously on
+        // X11, so a follow-OS window paints light for one frame then flips to dark. Seed the right variant
+        // synchronously here, before this window first paints (no-op on Windows/macOS, which resolve it
+        // synchronously). The Settings "System" option still hands back to follow-OS when picked.
+        SystemTheme.SeedStartupVariant();
+
         InitializeComponent();
 
         // Extend content into the title-bar area and draw our own chrome. BorderOnly keeps the

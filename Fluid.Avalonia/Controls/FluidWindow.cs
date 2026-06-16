@@ -89,6 +89,12 @@ public class FluidWindow : Window
 
     public FluidWindow()
     {
+        // Prevent the Linux "flash of light theme": Avalonia resolves the OS dark scheme asynchronously
+        // on X11, so a follow-OS window paints light for one frame then flips to dark. Seed the correct
+        // variant synchronously before this window first paints (no-op on Windows/macOS, which resolve it
+        // synchronously, and on apps that set an explicit theme).
+        SystemTheme.SeedStartupVariant();
+
         // Draw our own chrome inside an extended client area. BorderOnly keeps the resize border and
         // shadow but drops Avalonia's drawn title + caption buttons, so only the templated bar shows.
         ExtendClientAreaToDecorationsHint = true;
