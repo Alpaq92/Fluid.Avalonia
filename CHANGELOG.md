@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.4](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.3...v1.6.4) (2026-06-16)
+
+
+### Bug Fixes
+
+* bind the window background to the theme resource so it can't go stale ([08d985c](https://github.com/Alpaq92/Fluid.Avalonia/commit/08d985cc429ae58f0aa45caede7a2e29eb26cad8))
+
 ## [1.6.3](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.2...v1.6.3) (2026-06-16)
 
 
