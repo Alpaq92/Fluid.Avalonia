@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.7.0...v1.8.0) (2026-06-16)
+
+
+### Features
+
+* seed the OS theme synchronously at startup to kill the Linux light-theme flash ([5e5bdb4](https://github.com/Alpaq92/Fluid.Avalonia/commit/5e5bdb4ee1dfb09380919cebdf0031a090832a62))
+
 ## [1.7.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.4...v1.7.0) (2026-06-16)
 
 
