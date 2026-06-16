@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.3](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.2...v1.6.3) (2026-06-16)
+
+
+### Bug Fixes
+
+* re-resolve the window background when the theme variant changes ([f9d3a0b](https://github.com/Alpaq92/Fluid.Avalonia/commit/f9d3a0b382f3f1c7a57772219735def4bbe70f9c))
+
 ## [1.6.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.6.1...v1.6.2) (2026-06-12)
 
 
