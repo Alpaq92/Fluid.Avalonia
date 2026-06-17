@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.8.0...v1.8.1) (2026-06-17)
+
+
+### Bug Fixes
+
+* refresh demo nav icons and add live-demo social link previews ([#29](https://github.com/Alpaq92/Fluid.Avalonia/issues/29)) ([f89d607](https://github.com/Alpaq92/Fluid.Avalonia/commit/f89d60727d56b6bd9ca4ccc842d723b55836de57))
+
 ## [1.8.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.7.0...v1.8.0) (2026-06-16)
 
 
