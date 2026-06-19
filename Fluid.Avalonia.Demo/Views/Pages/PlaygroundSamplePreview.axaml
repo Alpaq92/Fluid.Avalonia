@@ -8,7 +8,7 @@
         <TextBlock
             Classes="Body"
             TextWrapping="Wrap"
-            Text="Edit the XAML on the left - it renders live, themed by Fluid.Avalonia." />
+            Text="Edit the XAML on the left — it renders live, themed by Fluid.Avalonia." />
         <Button Classes="accent" Content="Accent button" />
         <CheckBox Content="A checkbox" IsChecked="True" />
         <ToggleSwitch IsChecked="True" />
