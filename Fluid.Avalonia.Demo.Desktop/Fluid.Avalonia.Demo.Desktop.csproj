@@ -11,12 +11,19 @@
     <RootNamespace>Fluid.Avalonia.Demo</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)' == 'Release' And '$(RuntimeIdentifier)' != ''">
+    <PublishAot>true</PublishAot>
+    <SelfContained>true</SelfContained>
+    <FluidAvaloniaNativeAotDemo>true</FluidAvaloniaNativeAotDemo>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Avalonia.Desktop" Version="$(AvaloniaVersion)" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Fluid.Avalonia.Demo\Fluid.Avalonia.Demo.csproj" />
+    <ProjectReference Include="..\Fluid.Avalonia.Demo\Fluid.Avalonia.Demo.csproj"
+                      AdditionalProperties="FluidAvaloniaNativeAotDemo=$(FluidAvaloniaNativeAotDemo)" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,4 @@
 using Avalonia.Controls;
-using Avalonia.Data;
 using Fluid.Avalonia.Demo.Models;
 using Avalonia.Input;
 using Avalonia.Styling;
@@ -40,7 +39,12 @@ public partial class MainView : UserControl
 
         // Functional search over the catalog (real pages only — no separators).
         SearchBox.ItemsSource = GalleryCatalog.Pages;
-        SearchBox.ValueMemberBinding = new Binding(nameof(GalleryItem.Title));
+        SearchBox.ItemFilter = (search, item) =>
+            item is GalleryItem galleryItem &&
+            (string.IsNullOrWhiteSpace(search) ||
+             galleryItem.Title.Contains(search, StringComparison.CurrentCultureIgnoreCase));
+        SearchBox.ItemSelector = (_, item) =>
+            item is GalleryItem galleryItem ? galleryItem.Title : string.Empty;
         SearchBox.SelectionChanged += OnSearchSelected;
 
         NavList.SelectedIndex = 0;

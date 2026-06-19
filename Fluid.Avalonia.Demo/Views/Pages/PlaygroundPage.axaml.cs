@@ -1,5 +1,7 @@
 using Avalonia.Controls;
+#if !NATIVE_AOT
 using Avalonia.Markup.Xaml;
+#endif
 using Avalonia.Media;
 
 namespace Fluid.Avalonia.Demo.Views.Pages;
@@ -33,6 +35,11 @@ public partial class PlaygroundPage : UserControl
         if (string.IsNullOrWhiteSpace(xaml))
             return Hint("Type Avalonia XAML on the left to see it rendered here.");
 
+#if NATIVE_AOT
+        return string.Equals(xaml, Sample, StringComparison.Ordinal)
+            ? new PlaygroundSamplePreview()
+            : Hint("Runtime XAML preview is unavailable in NativeAOT builds.");
+#else
         // Provide the Avalonia namespaces if the snippet doesn't declare its own.
         var markup = xaml.Contains("xmlns")
             ? xaml
@@ -47,6 +54,7 @@ public partial class PlaygroundPage : UserControl
         {
             return ErrorBox(ex.Message);
         }
+#endif
     }
 
     private static Control Hint(string text) => new TextBlock

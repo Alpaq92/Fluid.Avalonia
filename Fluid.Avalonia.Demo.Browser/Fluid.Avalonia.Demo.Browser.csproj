@@ -5,8 +5,8 @@
     <TargetFramework>net10.0-browser</TargetFramework>
     <!-- Do NOT trim: Avalonia resolves controls / converters / bindings via reflection (XAML),
          which the IL trimmer can't see, so a trimmed Release build boots to a blank page. The
-         Release publish emits IL2026/IL2104 trim warnings for exactly these (ReflectionBinding,
-         XamlIl, DataGrid, Markdown.Avalonia, Markup.Xaml.Loader). Larger download, but it runs. -->
+         Release publish can emit trim warnings from XamlIl, DataGrid, Markdown.Avalonia, and
+         Markup.Xaml.Loader. Larger download, but it runs. -->
     <PublishTrimmed>false</PublishTrimmed>
   </PropertyGroup>
 

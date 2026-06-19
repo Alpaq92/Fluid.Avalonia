@@ -7,7 +7,8 @@
 -->
 <ResourceDictionary
     xmlns="https://github.com/avaloniaui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=System.Runtime">
 
     <!-- ===== Chevron nav buttons (previous / next) ===== -->
     <ControlTheme x:Key="FluidCalendarNavButton" TargetType="Button">
@@ -172,8 +173,8 @@
     <!-- ===== CalendarItem: header + month/year grids ===== -->
     <ControlTheme x:Key="{x:Type CalendarItem}" TargetType="CalendarItem">
         <Setter Property="DayTitleTemplate">
-            <Template>
-                <TextBlock Text="{ReflectionBinding}"
+            <Template x:DataType="sys:String">
+                <TextBlock Text="{Binding}"
                            FontSize="12"
                            FontWeight="SemiBold"
                            Foreground="{DynamicResource TextFillColorTertiaryBrush}"

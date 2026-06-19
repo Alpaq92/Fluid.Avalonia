@@ -12,6 +12,8 @@ public sealed record GalleryItem(string Title, string Description, string Glyph,
     /// <summary>A non-selectable divider row in the nav rail (not a real page).</summary>
     public bool IsSeparator { get; init; }
 
+    public override string ToString() => Title;
+
     /// <summary>A shared separator sentinel for the nav list.</summary>
     public static GalleryItem Separator { get; } =
         new("", "", "", () => new Control()) { IsSeparator = true };
