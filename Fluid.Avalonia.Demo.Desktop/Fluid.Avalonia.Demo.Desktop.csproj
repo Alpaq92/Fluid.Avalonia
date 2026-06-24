@@ -22,8 +22,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <!-- Flow the NativeAOT flag into the shared Demo project ONLY when this head is actually
+         published AOT (Release + RuntimeIdentifier). In a plain solution build the flag is unset,
+         so Demo must be referenced with the SAME (empty) global properties here as from the Browser
+         head and the solution itself — otherwise MSBuild builds Demo twice into the same obj/ and
+         the two builds race on its output (AVLN9999 / "being used by another process"). -->
     <ProjectReference Include="..\Fluid.Avalonia.Demo\Fluid.Avalonia.Demo.csproj"
-                      AdditionalProperties="FluidAvaloniaNativeAotDemo=$(FluidAvaloniaNativeAotDemo)" />
+                      Condition="'$(FluidAvaloniaNativeAotDemo)' == 'true'"
+                      AdditionalProperties="FluidAvaloniaNativeAotDemo=true" />
+    <ProjectReference Include="..\Fluid.Avalonia.Demo\Fluid.Avalonia.Demo.csproj"
+                      Condition="'$(FluidAvaloniaNativeAotDemo)' != 'true'" />
   </ItemGroup>
 
 </Project>
