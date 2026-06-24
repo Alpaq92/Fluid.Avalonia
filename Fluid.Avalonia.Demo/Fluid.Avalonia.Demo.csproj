@@ -8,6 +8,10 @@
     <AssemblyName>Fluid.Avalonia.Demo</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(FluidAvaloniaNativeAotDemo)' == 'true' Or '$(PublishAot)' == 'true'">
+    <DefineConstants>$(DefineConstants);NATIVE_AOT</DefineConstants>
+  </PropertyGroup>
+
   <ItemGroup>
     <AvaloniaResource Include="Assets\**" />
     <!-- README is rendered live on the Home page; CUSTOM.md on the Custom page. -->
@@ -20,15 +24,19 @@
     <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
     <PackageReference Include="Avalonia.Labs.Controls" Version="12.0.2" />
-    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="$(AvaloniaVersion)" />
     <!-- Fluent-themed ContentDialog. 0.12.2 declares Avalonia >= 12.0.0 (net8.0) and renders the dialog
          as an in-window overlay (no native popup), so it works on the Desktop and Browser (WASM) heads. -->
     <PackageReference Include="DialogHost.Avalonia" Version="0.12.2" />
     <PackageReference Include="Markdown.Avalonia" Version="12.0.0-a3" />
   </ItemGroup>
 
+  <ItemGroup Condition="'$(FluidAvaloniaNativeAotDemo)' != 'true' And '$(PublishAot)' != 'true'">
+    <PackageReference Include="Avalonia.Markup.Xaml.Loader" Version="$(AvaloniaVersion)" />
+  </ItemGroup>
+
   <ItemGroup>
-    <ProjectReference Include="..\Fluid.Avalonia\Fluid.Avalonia.csproj" />
+    <ProjectReference Include="..\Fluid.Avalonia\Fluid.Avalonia.csproj"
+                      GlobalPropertiesToRemove="FluidAvaloniaNativeAotDemo" />
   </ItemGroup>
 
 </Project>

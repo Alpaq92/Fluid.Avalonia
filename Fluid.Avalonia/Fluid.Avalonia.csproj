@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <IsAotCompatible>true</IsAotCompatible>
   </PropertyGroup>
 
   <!-- NuGet package metadata. Version is a placeholder; the release workflow

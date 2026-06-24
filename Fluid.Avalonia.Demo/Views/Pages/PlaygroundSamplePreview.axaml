@@ -1,0 +1,18 @@
+<UserControl
+    x:Class="Fluid.Avalonia.Demo.Views.Pages.PlaygroundSamplePreview"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel Spacing="14" Width="300">
+        <TextBlock Classes="Subtitle" Text="Hello, Fluid.Avalonia!" />
+        <TextBlock
+            Classes="Body"
+            TextWrapping="Wrap"
+            Text="Edit the XAML on the left — it renders live, themed by Fluid.Avalonia." />
+        <Button Classes="accent" Content="Accent button" />
+        <CheckBox Content="A checkbox" IsChecked="True" />
+        <ToggleSwitch IsChecked="True" />
+        <Slider Minimum="0" Maximum="100" Value="40" />
+        <ProgressBar Value="60" />
+    </StackPanel>
+</UserControl>
