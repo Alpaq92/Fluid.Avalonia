@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.8.1...v1.9.0) (2026-06-24)
+
+
+### Features
+
+* NativeAOT compatibility ([#31](https://github.com/Alpaq92/Fluid.Avalonia/issues/31)) ([6959ca6](https://github.com/Alpaq92/Fluid.Avalonia/commit/6959ca67cf86ce39d3ffcd6e05606dda3b522718))
+
 ## [1.8.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.8.0...v1.8.1) (2026-06-17)
 
 
