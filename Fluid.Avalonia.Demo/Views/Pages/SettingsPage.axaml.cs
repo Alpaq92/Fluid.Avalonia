@@ -35,25 +35,36 @@ public partial class SettingsPage : UserControl
         ShowTitleSwitch.IsCheckedChanged += (_, _) => { if (Shell is { } m) m.ShowTitleText = ShowTitleSwitch.IsChecked == true; };
         ShowPageNavSwitch.IsCheckedChanged += (_, _) => { if (Shell is { } m) m.ShowPageNav = ShowPageNavSwitch.IsChecked == true; };
 
-        // Window transparency — the backdrop lives on the desktop Window. It's blocked where it can't
-        // do anything: the browser head (no window), and a desktop whose compositor can't render a
-        // backdrop (e.g. a non-KWin Linux session, where the window only ever stays solid).
+        // Window backdrop — lives on the desktop Window (the browser head has no window, so it's blocked
+        // there). System glass needs OS compositor support, so it's disabled where unavailable (e.g. a
+        // non-KWin Linux session) — but Liquid glass is software-rendered and stays available there, which
+        // is exactly why it's offered.
         if (DesktopWindow is not { } win)
         {
-            TransparencySwitch.IsEnabled = false;
-            ToolTip.SetTip(TransparencySwitch, "Desktop only — the browser head has no window backdrop.");
-        }
-        else if (!TransparencyService.IsBackdropSupported(win))
-        {
-            TransparencySwitch.IsChecked = false;
-            TransparencySwitch.IsEnabled = false;
-            ToolTip.SetTip(TransparencySwitch,
-                "Unavailable — this desktop environment can't render a window backdrop (no compositor blur), so the window stays solid.");
+            SystemGlassRadio.IsEnabled = LiquidGlassRadio.IsEnabled = SolidBackdropRadio.IsEnabled = false;
+            ToolTip.SetTip(SystemGlassRadio, "Desktop only — the browser head has no window backdrop.");
         }
         else
         {
-            TransparencySwitch.IsChecked = win.TransparencyEnabled;
-            TransparencySwitch.IsCheckedChanged += (_, _) => win.TransparencyEnabled = TransparencySwitch.IsChecked == true;
+            if (!TransparencyService.IsBackdropSupported(win))
+            {
+                SystemGlassRadio.IsEnabled = false;
+                ToolTip.SetTip(SystemGlassRadio,
+                    "Unavailable — this desktop environment can't render a system backdrop (no compositor blur). Use Liquid glass instead.");
+                if (win.Backdrop == DemoBackdrop.SystemGlass)
+                    win.Backdrop = DemoBackdrop.Solid;
+            }
+
+            (win.Backdrop switch
+            {
+                DemoBackdrop.SystemGlass => SystemGlassRadio,
+                DemoBackdrop.LiquidGlass => LiquidGlassRadio,
+                _ => SolidBackdropRadio,
+            }).IsChecked = true;
+
+            SystemGlassRadio.IsCheckedChanged += (_, _) => { if (SystemGlassRadio.IsChecked == true) win.Backdrop = DemoBackdrop.SystemGlass; };
+            LiquidGlassRadio.IsCheckedChanged += (_, _) => { if (LiquidGlassRadio.IsChecked == true) win.Backdrop = DemoBackdrop.LiquidGlass; };
+            SolidBackdropRadio.IsCheckedChanged += (_, _) => { if (SolidBackdropRadio.IsChecked == true) win.Backdrop = DemoBackdrop.Solid; };
         }
 
         // Language picker — one radio per bundled language (native name), styled like the theme picker

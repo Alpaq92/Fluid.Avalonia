@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia.Demo", "Flui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fluid.Avalonia.Demo.Browser", "Fluid.Avalonia.Demo.Browser\Fluid.Avalonia.Demo.Browser.csproj", "{9ACBD085-C6DB-4CE6-91D7-6C8D7BCEECDD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LiquidGlassAvaloniaUI", "LiquidGlassAvaloniaUI\LiquidGlassAvaloniaUI.csproj", "{B1AC7EDC-AA41-4629-9081-C53DE38537FA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{D1CE7258-3965-4EAA-AAE9-BD1AA59F8255}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1CE7258-3965-4EAA-AAE9-BD1AA59F8255}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1CE7258-3965-4EAA-AAE9-BD1AA59F8255}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B1AC7EDC-AA41-4629-9081-C53DE38537FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1AC7EDC-AA41-4629-9081-C53DE38537FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1AC7EDC-AA41-4629-9081-C53DE38537FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1AC7EDC-AA41-4629-9081-C53DE38537FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

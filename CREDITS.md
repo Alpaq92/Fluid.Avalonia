@@ -22,6 +22,7 @@ Every third-party project Fluid.Avalonia bundles, depends on, or references, wit
 | [DialogHost.Avalonia](https://github.com/AvaloniaUtils/DialogHost.Avalonia) | The Fluent-themed `ContentDialog` (modal dialog host) on the Dialogs & flyouts page | MIT (© 2021 SKProCH) |
 | [Avalonia.Samples](https://github.com/AvaloniaUI/Avalonia.Samples) | The `VisualRate` (generalised from the `RatingControlSample` port) on the Basic input page | MIT (© AvaloniaUI OÜ) |
 | [android-signaturepad](https://github.com/warting/android-signaturepad) | The `SignaturePad` port — velocity-driven variable-width Bézier ink — on the Basic input page | MIT (© 2021 Stefan Wärting); based on [gcacace/android-signaturepad](https://github.com/gcacace/android-signaturepad), Apache-2.0 (© 2014–2016 Gianluca Cacace) |
+| [LiquidGlassAvaloniaUI](https://github.com/KaranocaVe/LiquidGlassAvaloniaUI) | Vendored (source) for the demo's cross-platform **"Liquid glass"** window backdrop — a SkiaSharp `SKRuntimeEffect` frosted surface (Settings → Window) | MIT (© KaranocaVe) |
 | [SukiUI](https://github.com/kikipoulet/SukiUI) | Reference for the custom window / title-bar technique, the thin overlay scrollbar, the Playground concept, `BusyArea` and `GroupBox` | MIT |
 | [Semi.Avalonia](https://github.com/irihitech/Semi.Avalonia) | Reference for the roomy circular-day Calendar styling and the in-library localization pattern | MIT |
 | [FluentAvalonia](https://github.com/amwx/FluentAvalonia) | Cross-checked the theming approach | MIT |

@@ -37,6 +37,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Fluid.Avalonia\Fluid.Avalonia.csproj"
                       GlobalPropertiesToRemove="FluidAvaloniaNativeAotDemo" />
+    <!-- Vendored MIT library (KaranocaVe/LiquidGlassAvaloniaUI): SkiaSharp-shader "liquid glass" surfaces,
+         used for the cross-platform glass backdrop option. Strip the AOT flag like the Fluid.Avalonia ref. -->
+    <ProjectReference Include="..\LiquidGlassAvaloniaUI\LiquidGlassAvaloniaUI.csproj"
+                      GlobalPropertiesToRemove="FluidAvaloniaNativeAotDemo" />
   </ItemGroup>
 
 </Project>

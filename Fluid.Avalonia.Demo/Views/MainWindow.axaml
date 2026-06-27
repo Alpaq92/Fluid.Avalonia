@@ -7,6 +7,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:views="using:Fluid.Avalonia.Demo.Views"
+    xmlns:lg="using:LiquidGlassAvaloniaUI"
     Width="1100"
     Height="720"
     MinWidth="720"
@@ -15,5 +16,34 @@
     Icon="avares://Fluid.Avalonia.Demo/Assets/logo.ico"
     Background="Transparent">
 
-    <views:MainView x:Name="Shell" />
+    <Panel>
+        <!-- Liquid glass backdrop: a base surface with soft accent glows, frosted by a LiquidGlassSurface.
+             Shown only in the Liquid glass mode — an opaque, software-rendered alternative to the OS
+             Mica / vibrancy / KWin blur, so a glassy window is available on ANY platform (and tracks the
+             accent via the DynamicResource glows). The opaque MainView shell renders on top. -->
+        <Panel x:Name="GlassBase"
+               IsVisible="False"
+               Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
+            <!-- A uniform accent wash so the frost tints evenly across the whole window — no corner pooling. -->
+            <Rectangle Opacity="0.16">
+                <Rectangle.Fill>
+                    <SolidColorBrush Color="{DynamicResource SystemAccentColor}" />
+                </Rectangle.Fill>
+            </Rectangle>
+        </Panel>
+
+        <lg:LiquidGlassSurface x:Name="GlassLayer"
+                               IsHitTestVisible="False"
+                               IsVisible="False"
+                               CornerRadius="0"
+                               BlurRadius="18"
+                               Vibrancy="1.25"
+                               Brightness="0.08"
+                               RefractionHeight="0"
+                               RefractionAmount="0"
+                               HighlightEnabled="False"
+                               ShadowEnabled="False" />
+
+        <views:MainView x:Name="Shell" />
+    </Panel>
 </Window>
