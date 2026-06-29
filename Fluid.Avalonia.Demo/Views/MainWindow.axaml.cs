@@ -4,9 +4,23 @@ using Avalonia.Styling;
 
 namespace Fluid.Avalonia.Demo.Views;
 
+/// <summary>How the window paints its backdrop.</summary>
+public enum DemoBackdrop
+{
+    /// <summary>The OS's own backdrop — Mica (Windows), vibrancy (macOS), a KWin blur (KDE).</summary>
+    SystemGlass,
+
+    /// <summary>A cross-platform frosted glass rendered in software (LiquidGlass) — works on any
+    /// platform, even where the OS offers no Mica / blur.</summary>
+    LiquidGlass,
+
+    /// <summary>An opaque, solid window.</summary>
+    Solid,
+}
+
 public partial class MainWindow : Window
 {
-    private bool _transparencyEnabled;
+    private DemoBackdrop _backdrop;
 
     public MainWindow()
     {
@@ -25,10 +39,11 @@ public partial class MainWindow : Window
         ExtendClientAreaTitleBarHeightHint = 48;
         WindowDecorations = WindowDecorations.BorderOnly;
 
-        // Translucent backdrop (Mica / vibrancy / blur), seeded from the Windows "Transparency effects"
-        // setting; the Settings page exposes a switch that overrides this at runtime.
-        _transparencyEnabled = TransparencyService.IsOsTransparencyEnabled();
-        TransparencyService.Apply(this, _transparencyEnabled);
+        // Backdrop, seeded from the Windows "Transparency effects" setting: system glass (Mica / vibrancy /
+        // KWin blur) when on, else solid. The Settings page also offers Liquid glass — a cross-platform,
+        // software-rendered alternative. The choice can change at runtime.
+        _backdrop = TransparencyService.IsOsTransparencyEnabled() ? DemoBackdrop.SystemGlass : DemoBackdrop.Solid;
+        ApplyBackdrop();
 
         ActualThemeVariantChanged += (_, _) =>
         {
@@ -41,19 +56,28 @@ public partial class MainWindow : Window
         };
     }
 
-    /// <summary>Whether the window uses the translucent backdrop (driven by the Settings switch).</summary>
-    public bool TransparencyEnabled
+    /// <summary>How the window paints its backdrop (driven by the Settings page's backdrop radios).</summary>
+    public DemoBackdrop Backdrop
     {
-        get => _transparencyEnabled;
+        get => _backdrop;
         set
         {
-            _transparencyEnabled = value;
-            // Apply only sets the hint; the granted level resolves asynchronously, so the background
-            // reconcile happens in OnPropertyChanged when ActualTransparencyLevel changes (mirroring
-            // the library's FluidWindow). An eager reconcile here would read a stale level and leave
-            // the window see-through after toggling off (or solid after toggling on).
-            TransparencyService.Apply(this, value);
+            _backdrop = value;
+            ApplyBackdrop();
         }
+    }
+
+    // System glass requests the OS backdrop (Mica / vibrancy / KWin blur); the granted level resolves
+    // asynchronously, so the background reconcile happens in OnPropertyChanged when ActualTransparencyLevel
+    // changes (an eager reconcile here would read a stale level). Liquid glass and Solid use an opaque
+    // window — Liquid glass then shows its own SkiaSharp frosted layer (GlassBase + GlassLayer) over it,
+    // which needs no OS support, so it works on every platform.
+    private void ApplyBackdrop()
+    {
+        var glass = _backdrop == DemoBackdrop.LiquidGlass;
+        GlassBase.IsVisible = glass;
+        GlassLayer.IsVisible = glass;
+        TransparencyService.Apply(this, _backdrop == DemoBackdrop.SystemGlass);
     }
 
     protected override void OnOpened(EventArgs e)
