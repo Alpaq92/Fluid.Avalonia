@@ -9,7 +9,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT" /></a>
 </p>
 
-A **Fluent 2-inspired** Avalonia theme with its own identity, adapting to your system accent color — read from Windows, with macOS and Linux fallbacks. Built on [Avalonia](https://avaloniaui.net/) **12** (.NET 8) and its `FluentTheme` with ported Fluent 2 design tokens, it brings authentic WinUI tokens and metrics — plus the translucent **WinUI backdrop**: Mica on Windows 11 and a vibrancy blend on macOS (and a KWin blur on KDE; a solid window on other Linux desktops).
+A **Fluent 2-inspired** Avalonia theme with its own identity, adapting to your system accent color — read from Windows, with macOS and Linux fallbacks. Built on [Avalonia](https://avaloniaui.net/) **12** (.NET 8) and its `FluentTheme` with ported Fluent 2 design tokens, it brings authentic WinUI tokens and metrics — plus the translucent **WinUI backdrop** — Mica on Windows 11, a vibrancy blend on macOS, a KWin blur on KDE — and a cross-platform, software-rendered **acrylic** backdrop (via the companion **[Fluid.Avalonia.Acrylic](https://www.nuget.org/packages/Fluid.Avalonia.Acrylic)** package) that works anywhere, even where the OS has none.
 
 ![Fluid.Avalonia — the demo's Accents page, split diagonally between the light and dark themes](https://raw.githubusercontent.com/Alpaq92/Fluid.Avalonia/main/screenshot.png)
 

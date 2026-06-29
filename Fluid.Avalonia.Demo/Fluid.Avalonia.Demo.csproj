@@ -28,7 +28,7 @@
          as an in-window overlay (no native popup), so it works on the Desktop and Browser (WASM) heads. -->
     <PackageReference Include="DialogHost.Avalonia" Version="0.12.2" />
     <PackageReference Include="Markdown.Avalonia" Version="12.0.0-a3" />
-    <!-- The demo's cross-platform "Liquid glass" window backdrop (Settings -> Window): a SkiaSharp
+    <!-- The demo's cross-platform Acrylic window backdrop (Settings -> Window): a SkiaSharp
          SKRuntimeEffect frosted surface. Repackaged fork of KaranocaVe's LiquidGlassAvaloniaUI; the
          core Fluid.Avalonia library stays dependency-free (this is a demo-only dependency). -->
     <PackageReference Include="Fluid.Avalonia.Acrylic" Version="1.0.0" />

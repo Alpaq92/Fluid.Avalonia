@@ -10,9 +10,9 @@ public enum DemoBackdrop
     /// <summary>The OS's own backdrop — Mica (Windows), vibrancy (macOS), a KWin blur (KDE).</summary>
     SystemGlass,
 
-    /// <summary>A cross-platform frosted glass rendered in software (LiquidGlass) — works on any
+    /// <summary>A cross-platform frosted acrylic backdrop rendered in software — works on any
     /// platform, even where the OS offers no Mica / blur.</summary>
-    LiquidGlass,
+    Acrylic,
 
     /// <summary>An opaque, solid window.</summary>
     Solid,
@@ -40,7 +40,7 @@ public partial class MainWindow : Window
         WindowDecorations = WindowDecorations.BorderOnly;
 
         // Backdrop, seeded from the Windows "Transparency effects" setting: system glass (Mica / vibrancy /
-        // KWin blur) when on, else solid. The Settings page also offers Liquid glass — a cross-platform,
+        // KWin blur) when on, else solid. The Settings page also offers Acrylic — a cross-platform,
         // software-rendered alternative. The choice can change at runtime.
         _backdrop = TransparencyService.IsOsTransparencyEnabled() ? DemoBackdrop.SystemGlass : DemoBackdrop.Solid;
         ApplyBackdrop();
@@ -69,14 +69,14 @@ public partial class MainWindow : Window
 
     // System glass requests the OS backdrop (Mica / vibrancy / KWin blur); the granted level resolves
     // asynchronously, so the background reconcile happens in OnPropertyChanged when ActualTransparencyLevel
-    // changes (an eager reconcile here would read a stale level). Liquid glass and Solid use an opaque
-    // window — Liquid glass then shows its own SkiaSharp frosted layer (GlassBase + GlassLayer) over it,
+    // changes (an eager reconcile here would read a stale level). Acrylic and Solid use an opaque
+    // window — Acrylic then shows its own SkiaSharp frosted layer (AcrylicBase + AcrylicLayer) over it,
     // which needs no OS support, so it works on every platform.
     private void ApplyBackdrop()
     {
-        var glass = _backdrop == DemoBackdrop.LiquidGlass;
-        GlassBase.IsVisible = glass;
-        GlassLayer.IsVisible = glass;
+        var acrylic = _backdrop == DemoBackdrop.Acrylic;
+        AcrylicBase.IsVisible = acrylic;
+        AcrylicLayer.IsVisible = acrylic;
         TransparencyService.Apply(this, _backdrop == DemoBackdrop.SystemGlass);
     }
 

@@ -59,10 +59,10 @@
                     <TextBlock Classes="Body" Text="Backdrop" />
                     <TextBlock Classes="Caption" TextWrapping="Wrap"
                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                               Text="How the window paints its backdrop. System glass uses the OS effect — Mica on Windows, vibrancy on macOS, a KWin blur on KDE (on Windows it follows the “Transparency effects” setting). Liquid glass is a cross-platform frosted backdrop rendered in software, so it works anywhere — even where the OS has no Mica/blur. Solid turns it off." />
+                               Text="How the window paints its backdrop. System glass uses the OS effect — Mica on Windows, vibrancy on macOS, a KWin blur on KDE (on Windows it follows the “Transparency effects” setting). Acrylic is a cross-platform frosted backdrop rendered in software, so it works anywhere — even where the OS has no Mica/blur. Solid turns it off." />
                     <StackPanel Margin="0,8,0,0" Spacing="2">
                         <RadioButton x:Name="SystemGlassRadio" GroupName="backdrop" Content="System glass (Mica / vibrancy / KWin blur)" />
-                        <RadioButton x:Name="LiquidGlassRadio" GroupName="backdrop" Content="Liquid glass (cross-platform)" />
+                        <RadioButton x:Name="AcrylicRadio" GroupName="backdrop" Content="Acrylic (cross-platform)" />
                         <RadioButton x:Name="SolidBackdropRadio" GroupName="backdrop" Content="Solid" />
                     </StackPanel>
                 </StackPanel>

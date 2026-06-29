@@ -37,11 +37,11 @@ public partial class SettingsPage : UserControl
 
         // Window backdrop — lives on the desktop Window (the browser head has no window, so it's blocked
         // there). System glass needs OS compositor support, so it's disabled where unavailable (e.g. a
-        // non-KWin Linux session) — but Liquid glass is software-rendered and stays available there, which
+        // non-KWin Linux session) — but Acrylic is software-rendered and stays available there, which
         // is exactly why it's offered.
         if (DesktopWindow is not { } win)
         {
-            SystemGlassRadio.IsEnabled = LiquidGlassRadio.IsEnabled = SolidBackdropRadio.IsEnabled = false;
+            SystemGlassRadio.IsEnabled = AcrylicRadio.IsEnabled = SolidBackdropRadio.IsEnabled = false;
             ToolTip.SetTip(SystemGlassRadio, "Desktop only — the browser head has no window backdrop.");
         }
         else
@@ -50,7 +50,7 @@ public partial class SettingsPage : UserControl
             {
                 SystemGlassRadio.IsEnabled = false;
                 ToolTip.SetTip(SystemGlassRadio,
-                    "Unavailable — this desktop environment can't render a system backdrop (no compositor blur). Use Liquid glass instead.");
+                    "Unavailable — this desktop environment can't render a system backdrop (no compositor blur). Use Acrylic instead.");
                 if (win.Backdrop == DemoBackdrop.SystemGlass)
                     win.Backdrop = DemoBackdrop.Solid;
             }
@@ -58,12 +58,12 @@ public partial class SettingsPage : UserControl
             (win.Backdrop switch
             {
                 DemoBackdrop.SystemGlass => SystemGlassRadio,
-                DemoBackdrop.LiquidGlass => LiquidGlassRadio,
+                DemoBackdrop.Acrylic => AcrylicRadio,
                 _ => SolidBackdropRadio,
             }).IsChecked = true;
 
             SystemGlassRadio.IsCheckedChanged += (_, _) => { if (SystemGlassRadio.IsChecked == true) win.Backdrop = DemoBackdrop.SystemGlass; };
-            LiquidGlassRadio.IsCheckedChanged += (_, _) => { if (LiquidGlassRadio.IsChecked == true) win.Backdrop = DemoBackdrop.LiquidGlass; };
+            AcrylicRadio.IsCheckedChanged += (_, _) => { if (AcrylicRadio.IsChecked == true) win.Backdrop = DemoBackdrop.Acrylic; };
             SolidBackdropRadio.IsCheckedChanged += (_, _) => { if (SolidBackdropRadio.IsChecked == true) win.Backdrop = DemoBackdrop.Solid; };
         }
 
