@@ -7,7 +7,7 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:views="using:Fluid.Avalonia.Demo.Views"
-    xmlns:lg="using:LiquidGlassAvaloniaUI"
+    xmlns:acrylic="using:Fluid.Avalonia.Acrylic"
     Width="1100"
     Height="720"
     MinWidth="720"
@@ -17,7 +17,7 @@
     Background="Transparent">
 
     <Panel>
-        <!-- Liquid glass backdrop: a base surface with soft accent glows, frosted by a LiquidGlassSurface.
+        <!-- Liquid glass backdrop: a base surface with soft accent glows, frosted by an AcrylicSurface.
              Shown only in the Liquid glass mode — an opaque, software-rendered alternative to the OS
              Mica / vibrancy / KWin blur, so a glassy window is available on ANY platform (and tracks the
              accent via the DynamicResource glows). The opaque MainView shell renders on top. -->
@@ -32,7 +32,7 @@
             </Rectangle>
         </Panel>
 
-        <lg:LiquidGlassSurface x:Name="GlassLayer"
+        <acrylic:AcrylicSurface x:Name="GlassLayer"
                                IsHitTestVisible="False"
                                IsVisible="False"
                                CornerRadius="0"

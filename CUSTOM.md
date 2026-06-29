@@ -84,7 +84,7 @@ A reusable `Window` subclass that packages the WinUI 3 window chrome — an exte
 
 ### Window shell
 
-A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a choice of window backdrop from **Settings → Window** — **System glass** (the OS effect: Mica on Windows / vibrancy on macOS / KWin blur on KDE, via `TransparencyService`, following the Windows transparency setting), **Liquid glass** (a cross-platform, software-rendered frosted backdrop via the vendored `LiquidGlassAvaloniaUI` SkiaSharp shader — available even where the OS has no Mica/blur), or **Solid** — a dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
+A custom extended-client-area title bar (hamburger, app icon, title, window buttons) with a choice of window backdrop from **Settings → Window** — **System glass** (the OS effect: Mica on Windows / vibrancy on macOS / KWin blur on KDE, via `TransparencyService`, following the Windows transparency setting), **Liquid glass** (a cross-platform, software-rendered frosted backdrop via the `Fluid.Avalonia.Acrylic` package's SkiaSharp shader — available even where the OS has no Mica/blur), or **Solid** — a dark title bar, and a data-driven `NavigationView` rail with grouped, separated sections.
 
 ### System tray menu
 
