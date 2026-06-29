@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.9.0...v2.0.0) (2026-06-29)
+
+
+### Features
+
+* cross-platform "Liquid glass" window backdrop (demo) ([#33](https://github.com/Alpaq92/Fluid.Avalonia/issues/33)) ([338410a](https://github.com/Alpaq92/Fluid.Avalonia/commit/338410ad1111c015788d80c5a30b0e898cdf5cfe))
+
 ## [1.9.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v1.8.1...v1.9.0) (2026-06-24)
 
 
