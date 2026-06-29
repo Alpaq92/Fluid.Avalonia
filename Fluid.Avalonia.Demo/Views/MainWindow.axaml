@@ -17,11 +17,11 @@
     Background="Transparent">
 
     <Panel>
-        <!-- Liquid glass backdrop: a base surface with soft accent glows, frosted by an AcrylicSurface.
-             Shown only in the Liquid glass mode — an opaque, software-rendered alternative to the OS
+        <!-- Acrylic backdrop: a base surface with soft accent glows, frosted by an AcrylicSurface.
+             Shown only in the Acrylic mode — an opaque, software-rendered alternative to the OS
              Mica / vibrancy / KWin blur, so a glassy window is available on ANY platform (and tracks the
              accent via the DynamicResource glows). The opaque MainView shell renders on top. -->
-        <Panel x:Name="GlassBase"
+        <Panel x:Name="AcrylicBase"
                IsVisible="False"
                Background="{DynamicResource SolidBackgroundFillColorBaseBrush}">
             <!-- A uniform accent wash so the frost tints evenly across the whole window — no corner pooling. -->
@@ -32,7 +32,7 @@
             </Rectangle>
         </Panel>
 
-        <acrylic:AcrylicSurface x:Name="GlassLayer"
+        <acrylic:AcrylicSurface x:Name="AcrylicLayer"
                                IsHitTestVisible="False"
                                IsVisible="False"
                                CornerRadius="0"
