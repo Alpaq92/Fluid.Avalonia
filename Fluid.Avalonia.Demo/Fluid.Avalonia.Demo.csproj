@@ -22,7 +22,7 @@
   <ItemGroup>
     <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
-    <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.0" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.1" />
     <PackageReference Include="Avalonia.Labs.Controls" Version="12.0.2" />
     <!-- Fluent-themed ContentDialog. 0.12.2 declares Avalonia >= 12.0.0 (net8.0) and renders the dialog
          as an in-window overlay (no native popup), so it works on the Desktop and Browser (WASM) heads. -->
@@ -31,7 +31,7 @@
     <!-- The demo's cross-platform Acrylic window backdrop (Settings -> Window): a SkiaSharp
          SKRuntimeEffect frosted surface. Repackaged fork of KaranocaVe's LiquidGlassAvaloniaUI; the
          core Fluid.Avalonia library stays dependency-free (this is a demo-only dependency). -->
-    <PackageReference Include="Fluid.Avalonia.Acrylic" Version="1.0.0" />
+    <PackageReference Include="Fluid.Avalonia.Acrylic" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(FluidAvaloniaNativeAotDemo)' != 'true' And '$(PublishAot)' != 'true'">
