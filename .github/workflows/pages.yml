@@ -13,10 +13,14 @@ permissions:
   pages: write
   id-token: write
 
-# Allow one concurrent deployment; newer runs supersede in-progress ones.
+# Allow only one concurrent deployment, and let an in-progress production deploy COMPLETE rather than
+# cancelling it. A burst of pushes to main (e.g. several dependabot merges plus a release) would
+# otherwise supersede each other's deploys mid-run ("Canceling since a higher priority waiting request
+# for pages exists"). Runs still queue so the newest content wins; only intermediate queued runs are
+# skipped. Mirrors GitHub's official Pages workflow template.
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   build:
