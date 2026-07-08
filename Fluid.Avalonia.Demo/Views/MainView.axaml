@@ -38,6 +38,15 @@
         <Style Selector="Button.caption-close:pointerover TextBlock">
             <Setter Property="Foreground" Value="White" />
         </Style>
+
+        <!-- The nav pane is transparent on desktop (it floats over the window backdrop); as a narrow
+             overlay drawer it must be opaque, or the page content shows through it. -->
+        <Style Selector="SplitView#Split">
+            <Setter Property="PaneBackground" Value="Transparent" />
+        </Style>
+        <Style Selector="SplitView#Split.narrowNav">
+            <Setter Property="PaneBackground" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+        </Style>
     </UserControl.Styles>
 
     <!-- One app-wide ContentDialog host: any page opens it by id via DialogHost.Show(content,
@@ -102,8 +111,7 @@
             DisplayMode="Inline"
             IsPaneOpen="True"
             OpenPaneLength="280"
-            Background="Transparent"
-            PaneBackground="Transparent">
+            Background="Transparent">
 
             <SplitView.Pane>
                 <DockPanel Margin="0,4,0,0">
@@ -141,6 +149,7 @@
             </SplitView.Pane>
 
             <Border
+                x:Name="ContentBorder"
                 Background="{DynamicResource LayerFillColorDefaultBrush}"
                 BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1,1,0,0"

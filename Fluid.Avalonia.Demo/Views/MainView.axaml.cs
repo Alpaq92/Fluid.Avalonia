@@ -1,3 +1,4 @@
+using Avalonia;
 using Avalonia.Controls;
 using Fluid.Avalonia.Demo.Models;
 using Avalonia.Input;
@@ -209,6 +210,18 @@ public partial class MainView : UserControl
 
         Split.DisplayMode = narrow ? SplitViewDisplayMode.Overlay : SplitViewDisplayMode.Inline;
         Split.IsPaneOpen = !narrow;
+
+        // In the overlay drawer the pane floats over the content, so it must be opaque (a style keys the
+        // solid background off this class) or the page shows through it. The content should also sit
+        // flush and use the full width, dropping the desktop pane-seam border + wide insets.
+        if (narrow)
+            Split.Classes.Add("narrowNav");
+        else
+            Split.Classes.Remove("narrowNav");
+
+        ContentBorder.BorderThickness = narrow ? new Thickness(0) : new Thickness(1, 1, 0, 0);
+        ContentBorder.CornerRadius = narrow ? new CornerRadius(0) : new CornerRadius(8, 0, 0, 0);
+        ContentHost.Margin = narrow ? new Thickness(18, 20, 18, 24) : new Thickness(36, 28, 44, 28);
     }
 
     // In the narrow overlay mode, dismiss the drawer after navigating so the chosen page is visible.
