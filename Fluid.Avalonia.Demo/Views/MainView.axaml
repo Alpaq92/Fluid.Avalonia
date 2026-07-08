@@ -39,13 +39,31 @@
             <Setter Property="Foreground" Value="White" />
         </Style>
 
-        <!-- The nav pane is transparent on desktop (it floats over the window backdrop); as a narrow
-             overlay drawer it must be opaque, or the page content shows through it. -->
+        <!-- Responsive shell, all keyed off the SplitView's "narrowNav" class (toggled in code from the
+             measured width). Desktop: a transparent pane over the window backdrop, with the content
+             meeting the inline pane via a left border + rounded top-left seam. Narrow overlay drawer:
+             an opaque pane (or content shows through it) and flush, full-width content. Keeping every
+             delta here — rather than half here, half in code-behind — means each desktop value is
+             declared exactly once. -->
         <Style Selector="SplitView#Split">
             <Setter Property="PaneBackground" Value="Transparent" />
         </Style>
         <Style Selector="SplitView#Split.narrowNav">
             <Setter Property="PaneBackground" Value="{DynamicResource SolidBackgroundFillColorBaseBrush}" />
+        </Style>
+        <Style Selector="SplitView#Split Border#ContentBorder">
+            <Setter Property="BorderThickness" Value="1,1,0,0" />
+            <Setter Property="CornerRadius" Value="8,0,0,0" />
+        </Style>
+        <Style Selector="SplitView#Split.narrowNav Border#ContentBorder">
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="CornerRadius" Value="0" />
+        </Style>
+        <Style Selector="SplitView#Split ContentControl#ContentHost">
+            <Setter Property="Margin" Value="36,28,44,28" />
+        </Style>
+        <Style Selector="SplitView#Split.narrowNav ContentControl#ContentHost">
+            <Setter Property="Margin" Value="18,20,18,24" />
         </Style>
     </UserControl.Styles>
 
@@ -151,15 +169,13 @@
             <Border
                 x:Name="ContentBorder"
                 Background="{DynamicResource LayerFillColorDefaultBrush}"
-                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}"
-                BorderThickness="1,1,0,0"
-                CornerRadius="8,0,0,0">
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
                 <!-- The page inset lives on the content's Margin, NOT on ScrollViewer.Padding:
                      Avalonia's ScrollViewer subtracts its Padding from the scrollable extent, which
                      clips the last (vertical-padding worth of) content out of reach. As a Margin it's
                      counted into the content's desired size, so the whole page can scroll into view. -->
                 <ScrollViewer HorizontalScrollBarVisibility="Disabled">
-                    <ContentControl x:Name="ContentHost" Margin="36,28,44,28" HorizontalAlignment="Stretch" />
+                    <ContentControl x:Name="ContentHost" HorizontalAlignment="Stretch" />
                 </ScrollViewer>
             </Border>
         </SplitView>
