@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Avalonia" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Controls.ColorPicker" Version="$(AvaloniaVersion)" />
     <PackageReference Include="Avalonia.Controls.DataGrid" Version="12.0.1" />
     <PackageReference Include="Avalonia.Labs.Controls" Version="12.0.2" />
@@ -31,7 +30,7 @@
     <!-- The demo's cross-platform Acrylic window backdrop (Settings -> Window): a SkiaSharp
          SKRuntimeEffect frosted surface. Repackaged fork of KaranocaVe's LiquidGlassAvaloniaUI; the
          core Fluid.Avalonia library stays dependency-free (this is a demo-only dependency). -->
-    <PackageReference Include="Fluid.Avalonia.Acrylic" Version="1.0.2" />
+    <PackageReference Include="Fluid.Avalonia.Acrylic" Version="1.3.1" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(FluidAvaloniaNativeAotDemo)' != 'true' And '$(PublishAot)' != 'true'">
