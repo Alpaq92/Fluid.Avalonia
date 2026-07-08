@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v2.0.1...v2.0.2) (2026-07-08)
+
+
+### Bug Fixes
+
+* **demo:** collapse the nav into an overlay drawer on narrow viewports ([#42](https://github.com/Alpaq92/Fluid.Avalonia/issues/42)) ([55cd465](https://github.com/Alpaq92/Fluid.Avalonia/commit/55cd465def74d493fc2be8bb19d4cad1ed64b86f))
+
 ## [2.0.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v2.0.0...v2.0.1) (2026-07-01)
 
 
