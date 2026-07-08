@@ -209,6 +209,14 @@ public partial class MainView : UserControl
 
         Split.DisplayMode = narrow ? SplitViewDisplayMode.Overlay : SplitViewDisplayMode.Inline;
         Split.IsPaneOpen = !narrow;
+
+        // Everything the narrow overlay drawer changes visually — the opaque pane, and the flush,
+        // full-width content — is expressed as styles keyed off this class (see MainView.axaml), so
+        // here we only flip the class; the desktop values stay declared once, in that markup.
+        if (narrow)
+            Split.Classes.Add("narrowNav");
+        else
+            Split.Classes.Remove("narrowNav");
     }
 
     // In the narrow overlay mode, dismiss the drawer after navigating so the chosen page is visible.
