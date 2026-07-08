@@ -66,8 +66,8 @@
                        Classes="Caption" />
 
             <AutoCompleteBox x:Name="SearchBox" Grid.Column="3"
-                             Width="460" MaxWidth="560" Height="32"
-                             HorizontalAlignment="Center" VerticalAlignment="Center"
+                             MaxWidth="560" Height="32" Margin="12,0"
+                             HorizontalAlignment="Stretch" VerticalAlignment="Center"
                              FilterMode="Contains"
                              PlaceholderText="Search controls and samples…" />
 

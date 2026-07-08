@@ -1,6 +1,7 @@
 using Avalonia.Controls;
 using Fluid.Avalonia.Demo.Models;
 using Avalonia.Input;
+using Avalonia.Layout;
 using Avalonia.Styling;
 
 namespace Fluid.Avalonia.Demo.Views;
@@ -11,6 +12,11 @@ public partial class MainView : UserControl
     private const string RestoreGlyph = "";
 
     private Window? _window;
+
+    // Below this width (DIPs) the nav pane collapses into an overlay drawer instead of an always-open
+    // inline pane, so the page content isn't crushed into a sliver on phones / narrow windows.
+    private const double NavCollapseWidth = 720;
+    private bool? _navIsNarrow;
 
     public MainView()
     {
@@ -36,6 +42,9 @@ public partial class MainView : UserControl
         NavList.ContainerPrepared += OnNavContainerPrepared;
         NavList.SelectionChanged += OnNavChanged;
         FooterNav.SelectionChanged += OnFooterChanged;
+
+        // Collapse the pane to an overlay drawer on narrow viewports (see OnEffectiveViewportChanged).
+        EffectiveViewportChanged += OnEffectiveViewportChanged;
 
         // Functional search over the catalog (real pages only — no separators).
         SearchBox.ItemsSource = GalleryCatalog.Pages;
@@ -184,6 +193,31 @@ public partial class MainView : UserControl
     private void UpdateMaxGlyph() =>
         MaxGlyph.Text = _window?.WindowState == WindowState.Maximized ? RestoreGlyph : MaximizeGlyph;
 
+    // Collapse the nav pane into an overlay drawer on narrow (phone) viewports so the page content
+    // isn't squeezed into a sliver; restore the always-open inline pane when there's room again. Only
+    // act on an actual narrow<->wide transition, so we never fight a manual hamburger toggle in between.
+    private void OnEffectiveViewportChanged(object? sender, EffectiveViewportChangedEventArgs e)
+    {
+        var width = e.EffectiveViewport.Width;
+        if (width <= 0)
+            return;
+
+        var narrow = width < NavCollapseWidth;
+        if (_navIsNarrow == narrow)
+            return;
+        _navIsNarrow = narrow;
+
+        Split.DisplayMode = narrow ? SplitViewDisplayMode.Overlay : SplitViewDisplayMode.Inline;
+        Split.IsPaneOpen = !narrow;
+    }
+
+    // In the narrow overlay mode, dismiss the drawer after navigating so the chosen page is visible.
+    private void CloseNavIfOverlay()
+    {
+        if (_navIsNarrow == true)
+            Split.IsPaneOpen = false;
+    }
+
     private void OnNavChanged(object? sender, SelectionChangedEventArgs e)
     {
         if (NavList.SelectedItem is not GalleryItem item || item.IsSeparator)
@@ -192,6 +226,7 @@ public partial class MainView : UserControl
         FooterNav.SelectedItem = null;
         ContentHost.Content = new ItemPage(item);
         UpdatePageNavState();
+        CloseNavIfOverlay();
     }
 
     // Give separator rows a thin, non-interactive container theme; real rows keep the nav theme.
@@ -215,6 +250,7 @@ public partial class MainView : UserControl
         NavList.SelectedItem = null;
         ContentHost.Content = new ItemPage(GalleryCatalog.Settings);
         UpdatePageNavState();
+        CloseNavIfOverlay();
     }
 
     private void OnSearchSelected(object? sender, SelectionChangedEventArgs e)
