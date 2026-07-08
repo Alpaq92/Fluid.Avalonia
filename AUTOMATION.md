@@ -33,5 +33,5 @@ The owner can always force-merge through the ruleset's admin bypass.
 
 ## After it lands on `main`
 
-- **release-please** keeps a `chore(main): release X.Y.Z` PR up to date from the Conventional Commits since the last tag; merging it bumps `.release-please-manifest.json` + `CHANGELOG.md`, tags `vX.Y.Z`, cuts a GitHub Release, and **publishes the package to NuGet**.
+- **release-please** keeps a `chore(main): release X.Y.Z` PR up to date from the Conventional Commits since the last tag; merging it bumps `.release-please-manifest.json` + `CHANGELOG.md`, tags `vX.Y.Z`, cuts a GitHub Release, and **publishes the package to NuGet**. The publish is gated on release-please reporting a new release on the run that lands the release PR — if that's missed (e.g. the release PR is admin-merged and the tag already exists by the time a later run evaluates), the version tags but the package never pushes. Recover with the Release workflow's **`workflow_dispatch`**, which packs + pushes an existing tag by hand: `gh workflow run release.yml -f tag=vX.Y.Z`.
 - **[`pages.yml`](.github/workflows/pages.yml)** redeploys the WebAssembly demo to GitHub Pages.
