@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/Alpaq92/Fluid.Avalonia/compare/v2.0.2...v2.0.3) (2026-07-08)
+
+
+### Bug Fixes
+
+* **demo:** opaque nav drawer + full-width content on phones ([#44](https://github.com/Alpaq92/Fluid.Avalonia/issues/44)) ([641a1e0](https://github.com/Alpaq92/Fluid.Avalonia/commit/641a1e04626d57883f6efc48474577b1625930b0))
+
 ## [2.0.2](https://github.com/Alpaq92/Fluid.Avalonia/compare/v2.0.1...v2.0.2) (2026-07-08)
 
 
