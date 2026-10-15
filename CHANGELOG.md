@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/Alpaq92/Fluid.Avalonia/compare/v2.1.0...v2.1.1) (2026-10-03)
+
+
+### Bug Fixes
+
+* **deps:** Bump the nuget-minor-and-patch group with 1 update ([#58](https://github.com/Alpaq92/Fluid.Avalonia/issues/58)) ([788bb2d](https://github.com/Alpaq92/Fluid.Avalonia/commit/788bb2d9925a080483c66273d1a6bef81408ecdb))
+
 ## [2.1.0](https://github.com/Alpaq92/Fluid.Avalonia/compare/v2.0.3...v2.1.0) (2026-09-04)
 
 
