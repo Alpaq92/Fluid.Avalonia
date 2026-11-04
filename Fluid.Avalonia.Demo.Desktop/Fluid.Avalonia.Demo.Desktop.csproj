@@ -39,7 +39,7 @@
        own users (Avalonia.Markup.Xaml.Loader, and it ships in the WASM demo), whereas hot reload is a
        developer-time tool driven by `dotnet watch` or an IDE. -->
   <ItemGroup Condition="'$(FluidAvaloniaHotReload)' == 'true' And '$(Configuration)' == 'Debug'">
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport.HotReload" Version="1.0.0" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport.HotReload" Version="1.0.1" />
     <AvaloniaUILicenseKey Include="$(AvaloniaUILicenseKey)" />
   </ItemGroup>
 
